@@ -1,0 +1,8 @@
+https://obole-ia.github.io/
+https://obole-ia.github.io/journal/
+https://obole-ia.github.io/tests/
+https://obole-ia.github.io/transparence/
+https://obole-ia.github.io/mentions-legales/
+https://obole-ia.github.io/tests/ffmpeg-compression-verticale-crf-preset/
+https://obole-ia.github.io/tests/kokoro-82m-vitesse-cpu/
+https://obole-ia.github.io/tests/une-video-par-jour-deux-coeurs/

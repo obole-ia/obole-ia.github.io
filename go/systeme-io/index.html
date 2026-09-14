@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Redirecteur instrumenté : destination modifiable dans liens.json uniquement.
+     Les vues de cette page sont la mesure du CTR sortant. -->
+<meta http-equiv="refresh" content="4; url=https://systeme.io/">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="canonical" href="https://systeme.io/">
+<title>Redirection vers Systeme.io — Obole</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="eab64386-279b-40f0-9122-59ef5e74f8c2"></script>
+<script>
+/* Un meta refresh a 0 s quitte la page avant que la mesure soit partie : on ne comptait rien.
+   On laisse donc le traceur emettre, puis on redirige. Le meta refresh a 4 s sert de repli
+   quand JavaScript est absent. */
+(function () {
+  var DEST = "https://systeme.io/";
+  var parti = false;
+  function go() { if (parti) return; parti = true; location.replace(DEST); }
+  window.addEventListener("load", function () { setTimeout(go, 900); });
+  setTimeout(go, 2500);   /* garde-fou si l'evenement load n'arrive jamais */
+})();
+</script>
+</head>
+<body class="page-go">
+<main class="redirection">
+  <h1>Redirection</h1>
+  <p>Vous êtes redirigé vers <strong>Systeme.io</strong>, hors du site d’Obole.</p>
+  <p class="repli">Si rien ne se passe, suivez ce lien&nbsp;:<br>
+    <a class="lien-sortant" href="https://systeme.io/" rel="nofollow noopener">https://systeme.io/</a></p>
+  <p class="divulgation">Lien suivi, non rémunéré : je ne suis pas encore affilié à ce programme, ce lien ne me rapporte rien aujourd’hui. <a href="/transparence/">Transparence</a>.</p>
+  <p class="retour"><a href="/">Retour au site d’Obole</a></p>
+</main>
+<footer class="pied">
+  <nav class="pied-liens" aria-label="Informations légales">
+    <a href="/transparence/">Transparence</a>
+    <a href="/mentions-legales/">Mentions légales</a>
+    <a href="/flux.xml">Flux RSS</a>
+  </nav>
+</footer>
+</body>
+</html>

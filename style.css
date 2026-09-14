@@ -1,0 +1,340 @@
+/* Obole — feuille de style unique. Aucune police distante, aucune requete externe.
+   Fond #0a0a0a, texte #e8e8e8, accent #c8a951. Mono partout. */
+
+:root {
+  --fond: #0a0a0a;
+  --fond-bloc: #121212;
+  --texte: #e8e8e8;
+  --texte-faible: #9a9a9a;
+  --accent: #c8a951;
+  --bord: #2a2a2a;
+  --mono: ui-monospace, "DejaVu Sans Mono", "Liberation Mono", "Menlo", "Consolas", monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--fond); }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+
+.evitement {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: #0a0a0a;
+  padding: .5rem .75rem;
+  z-index: 10;
+}
+.evitement:focus { left: 0; }
+
+a { color: var(--accent); text-decoration: underline; text-underline-offset: .2em; }
+a:hover, a:focus { color: var(--texte); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- ossature ---------- */
+
+.entete, main, .pied {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1.25rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 1.5rem 1rem;
+  border-bottom: 1px solid var(--bord);
+}
+
+.marque {
+  color: var(--texte);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+.marque .piece { color: var(--accent); }
+
+.menu { display: flex; flex-wrap: wrap; gap: .25rem 1rem; font-size: .8125rem; }
+.menu a { color: var(--texte-faible); text-decoration: none; }
+.menu a:hover, .menu a:focus { color: var(--accent); text-decoration: underline; }
+.menu a[aria-current="page"] { color: var(--accent); }
+
+main { padding-block: 2.5rem 3rem; }
+
+h1 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  letter-spacing: .02em;
+  margin: 0 0 1rem;
+}
+h2 { font-size: 1.0625rem; margin: 2.5rem 0 .75rem; letter-spacing: .04em; }
+h3 { font-size: .9375rem; margin: 2rem 0 .5rem; color: var(--accent); letter-spacing: .04em; }
+h4 { font-size: .9375rem; margin: 1.5rem 0 .5rem; }
+
+p, ul, ol, pre, blockquote, table { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.25rem; }
+li { margin-bottom: .5rem; }
+strong { color: #fff; font-weight: 700; }
+hr { border: 0; border-top: 1px solid var(--bord); margin: 2rem 0; }
+
+.chapeau { color: var(--texte-faible); }
+.meta { color: var(--texte-faible); font-size: .8125rem; }
+.etiquette { color: var(--texte-faible); text-transform: uppercase; letter-spacing: .1em;
+  font-size: .75rem; }
+.plus { margin-top: 2rem; font-size: .875rem; }
+.vide { color: var(--texte-faible); }
+.separateur { color: var(--bord); padding: 0 .35rem; }
+.erreur { color: #ff6b6b; }
+
+code { background: var(--fond-bloc); border: 1px solid var(--bord); padding: 0 .25em;
+  font-size: .875em; }
+pre { background: var(--fond-bloc); border: 1px solid var(--bord); padding: .875rem;
+  overflow-x: auto; }
+pre code { background: none; border: 0; padding: 0; }
+blockquote { border-left: 2px solid var(--accent); padding-left: 1rem; margin-left: 0;
+  color: var(--texte-faible); }
+
+/* ---------- captures d'ecran ---------- */
+
+figure.capture { margin: 0 0 1.5rem; }
+figure.capture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--bord);
+  background: #000;
+}
+figure.capture figcaption {
+  color: var(--texte-faible);
+  font-size: .75rem;
+  line-height: 1.5;
+  margin-top: .5rem;
+}
+
+/* ---------- tableaux ---------- */
+
+.defilable { overflow-x: auto; margin: 0 0 1.5rem; }
+table { border-collapse: collapse; width: 100%; font-size: .875rem; }
+caption { text-align: left; color: var(--texte-faible); font-size: .8125rem;
+  padding-bottom: .5rem; }
+th, td { border: 1px solid var(--bord); padding: .5rem .625rem; text-align: left;
+  vertical-align: top; }
+th { color: var(--accent); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; font-size: .75rem; }
+.registre .col-jour { text-align: right; white-space: nowrap; }
+.registre .col-date { white-space: nowrap; color: var(--texte-faible); }
+.registre .col-solde { text-align: right; white-space: nowrap; color: var(--accent); }
+.registre td p { margin: 0 0 .5rem; }
+.registre td p:last-child { margin-bottom: 0; }
+
+/* ---------- accueil ---------- */
+
+.accroche h1 {
+  font-size: 2rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+}
+.promesse { font-size: 1rem; color: var(--texte); margin-bottom: 0; }
+
+.compteur {
+  border: 1px solid var(--bord);
+  background: var(--fond-bloc);
+  padding: 1.75rem 1.25rem;
+  margin: 2rem 0 2.5rem;
+  text-align: center;
+}
+.compteur-titre {
+  margin: 0 0 .75rem;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--texte-faible);
+  font-weight: 400;
+}
+.solde {
+  font-size: clamp(2.5rem, 13vw, 4.5rem);
+  line-height: 1.1;
+  margin: 0;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .01em;
+  animation: battement 1s steps(60) infinite;
+}
+@keyframes battement {
+  0%   { opacity: 1; }
+  45%  { opacity: .55; }
+  100% { opacity: 1; }
+}
+.solde .devise { margin-left: .28em; }
+.compteur-detail { margin: .75rem 0 0; font-size: .8125rem; }
+.compteur-note {
+  margin: 1rem auto 0;
+  max-width: 34rem;
+  color: var(--texte-faible);
+  font-size: .8125rem;
+  text-align: left;
+}
+
+.liste-tests { list-style: none; padding: 0; }
+.liste-tests li {
+  border-top: 1px solid var(--bord);
+  padding: .875rem 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+.liste-tests li:last-child { border-bottom: 1px solid var(--bord); }
+.liste-tests .resume { color: var(--texte-faible); font-size: .8125rem; }
+
+.episode-titre { color: var(--accent); margin-bottom: .25rem; }
+.episode-extrait { color: var(--texte-faible); margin-bottom: 1rem; }
+.episode-video {
+  display: block;
+  max-width: 270px;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--bord);
+  background: #000;
+}
+.episode-note { color: var(--texte-faible); font-size: .75rem; margin-top: .5rem; }
+.journal-extrait { border-left: 2px solid var(--accent); padding-left: 1rem; }
+
+/* ---------- lien sortant + divulgation ---------- */
+
+.sortant {
+  display: block;
+  border: 1px solid var(--bord);
+  border-left: 2px solid var(--accent);
+  background: var(--fond-bloc);
+  padding: .75rem .875rem;
+  margin: 1rem 0;
+}
+.lien-sortant { font-weight: 700; word-break: break-word; }
+.divulgation {
+  display: block;
+  margin-top: .375rem;
+  color: var(--texte-faible);
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
+.statut {
+  display: inline-block;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: .125rem .5rem;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 0 0 1rem;
+}
+.marque-completer {
+  display: inline-block;
+  background: var(--accent);
+  color: #0a0a0a;
+  padding: 0 .375rem;
+  letter-spacing: .04em;
+}
+
+/* ---------- texte legal ---------- */
+
+.texte h2 {
+  font-size: .9375rem;
+  color: var(--accent);
+  border-top: 1px solid var(--bord);
+  padding-top: 1.5rem;
+}
+.texte h2:first-of-type { border-top: 0; padding-top: 0; }
+
+/* ---------- redirecteur ---------- */
+
+.page-go main { max-width: 40rem; padding-block: 4rem 2rem; }
+.page-go h1 { font-size: 1.125rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--texte-faible); }
+.page-go .repli { border: 1px solid var(--bord); background: var(--fond-bloc);
+  padding: .875rem; }
+.page-go .retour { font-size: .875rem; margin-top: 2rem; }
+.page-go footer { max-width: 40rem; margin: 0 auto; padding: 1.5rem 1.25rem 3rem;
+  border-top: 1px solid var(--bord); }
+.page-go footer nav { display: flex; gap: 1rem; font-size: .8125rem; }
+
+/* ---------- pied de page ---------- */
+
+.pied {
+  border-top: 1px solid var(--bord);
+  padding-block: 1.5rem 3rem;
+}
+.pied-liens { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-bottom: .875rem; }
+.pied-liens a { font-size: .8125rem; }
+.pied-note { color: var(--texte-faible); font-size: .75rem; max-width: 40rem; margin: 0; }
+
+/* Le registre en tableau devient illisible sur telephone : on l'empile. */
+@media (max-width: 40rem) {
+  .registre, .registre tbody, .registre tr, .registre td { display: block; width: 100%; }
+  .registre thead { display: none; }
+  .registre caption { display: block; }
+  .registre tr {
+    border: 1px solid var(--bord);
+    padding: .875rem;
+    margin-bottom: 1rem;
+  }
+  .registre td { border: 0; padding: 0; }
+  .registre .col-jour, .registre .col-date, .registre .col-solde {
+    display: inline;
+    text-align: left;
+    white-space: normal;
+  }
+  .registre td[data-etiquette]::before {
+    content: attr(data-etiquette) " ";
+    color: var(--texte-faible);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .75rem;
+  }
+  .registre .col-jour::after, .registre .col-date::after {
+    content: " · ";
+    color: var(--bord);
+  }
+  .registre .col-fait { margin-top: .625rem; }
+}
+
+/* ---------- petits ecrans (des 360 px) ---------- */
+
+@media (max-width: 30rem) {
+  body { font-size: 15px; }
+  /* un tableau de 5 colonnes doit tenir dans 390 px sans defilement cache */
+  .defilable table { font-size: .8125rem; }
+  .defilable th, .defilable td { padding: .375rem .4375rem; }
+  /* une ligne de commande longue s'enroule plutot que de sortir de l'ecran :
+     rien n'est cache, et les \ de continuation restent visibles */
+  pre { padding: .75rem; }
+  pre code { white-space: pre-wrap; overflow-wrap: break-word; }
+  .entete, main, .pied { padding-left: 1rem; padding-right: 1rem; }
+  .accroche h1 { font-size: 1.625rem; letter-spacing: .14em; }
+  .compteur { padding: 1.25rem .875rem; }
+  main { padding-block: 2rem 2.5rem; }
+}
+
+/* ---------- mouvement reduit ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .solde { animation: none; opacity: 1; }
+  * { transition: none !important; }
+}
