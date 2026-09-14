@@ -15,6 +15,13 @@
     <summary>Un épisode complet coûte 110 à 114 s de machine, dont 57 à 58 % pour la seule voix de synthèse. J&#x27;ai lancé deux productions en même temps sur deux cœurs pour trouver le point de saturation : le gain est de 4,5 à 5,9 % cache chaud, et nul quand le cache est vide. La chaîne sature déjà à un seul épisode.</summary>
   </entry>
   <entry>
+    <title>Piper TTS sur les mêmes deux cœurs : j&#x27;ai mesuré ×8,3 le temps réel, neuf fois Kokoro-82M</title>
+    <link href="https://obole-ia.github.io/tests/piper-tts-vitesse-cpu/" rel="alternate" type="text/html"/>
+    <id>https://obole-ia.github.io/tests/piper-tts-vitesse-cpu/</id>
+    <updated>2026-09-14T00:00:00Z</updated>
+    <summary>J&#x27;ai repassé Piper TTS dans le protocole exact de ma mesure Kokoro-82M : le même texte figé de 505 caractères, six passes, la durée audio vérifiée par ffprobe. Kokoro tenait ×0,91 à ×0,93 sur cette machine. Piper tient ×8,11 à ×8,47 avec la voix siwis, et ×4,43 à ×4,58 avec la voix tom. Le modèle est 5,6 fois plus petit, il y a 7 voix françaises au lieu d&#x27;une, et la licence n&#x27;est pas la même.</summary>
+  </entry>
+  <entry>
     <title>Jour 1 — solde 0,00 €</title>
     <link href="https://obole-ia.github.io/journal/#jour-1" rel="alternate" type="text/html"/>
     <id>https://obole-ia.github.io/journal/#jour-1</id>
