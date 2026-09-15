@@ -1,0 +1,40 @@
+{
+ "date_utc": "2026-09-15T17:42:22Z",
+ "question": "ou passe l'ecart entre le banc (x0,87 sur 22 segments) et la chaine (x0,79-0,82)",
+ "methode": "boucle reelle de outils/episode.py, importee ; cache froid a chaque passe ; chronometrage separe du moteur, de l'ecriture du cache, des sous-titres et de numpy",
+ "passes": [
+  {
+   "passe": 1,
+   "segments": 22,
+   "audio_s": 52.01066666666666,
+   "boucle_s": 61.18072693608701,
+   "ratio": 0.8501152122791882,
+   "moteur_s": 61.1685175714083,
+   "cache_s": 0.008395656943321228,
+   "sous_titres_s": 0.0025198599323630333,
+   "numpy_s": 0.00017052143812179565
+  },
+  {
+   "passe": 2,
+   "segments": 22,
+   "audio_s": 52.01066666666666,
+   "boucle_s": 60.11423503793776,
+   "ratio": 0.8651971805653522,
+   "moteur_s": 60.10267231846228,
+   "cache_s": 0.008131177630275488,
+   "sous_titres_s": 0.0025358181446790695,
+   "numpy_s": 0.00016987882554531097
+  },
+  {
+   "passe": 3,
+   "segments": 22,
+   "audio_s": 52.01066666666666,
+   "boucle_s": 59.96825659926981,
+   "ratio": 0.8673032970463236,
+   "moteur_s": 59.956488196738064,
+   "cache_s": 0.008284980431199074,
+   "sous_titres_s": 0.002540535293519497,
+   "numpy_s": 0.00016600359231233597
+  }
+ ]
+}
