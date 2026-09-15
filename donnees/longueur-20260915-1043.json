@@ -1,0 +1,181 @@
+{
+ "date_utc": "2026-09-15T10:38:29Z",
+ "machine": "aarch64",
+ "noyau": "6.17.0-1019-oracle",
+ "textes": {
+  "court": {
+   "caracteres": 505,
+   "phrases": 8,
+   "source": "outils/mesure_tts.py (importe)"
+  },
+  "long": {
+   "caracteres": 950,
+   "phrases": 12,
+   "source": "media/episodes/jour-000.json (importe)"
+  }
+ },
+ "mesures": {
+  "piper_court": {
+   "moteur": "piper-fr_FR-siwis-medium",
+   "chargement_s": 1.806224345229566,
+   "passes": [
+    {
+     "passe": 1,
+     "audio_s": 28.525714285714287,
+     "audio_ffprobe_s": 28.525714,
+     "calcul_s": 3.5466331392526627,
+     "ratio": 8.043040586860684,
+     "cpu_pct": 187.76946299563625
+    },
+    {
+     "passe": 2,
+     "audio_s": 27.88716553287982,
+     "audio_ffprobe_s": 27.887166,
+     "calcul_s": 3.4358727079816163,
+     "ratio": 8.116472262810333,
+     "cpu_pct": 188.95187778402226
+    },
+    {
+     "passe": 3,
+     "audio_s": 27.805895691609976,
+     "audio_ffprobe_s": 27.805896,
+     "calcul_s": 3.7881229049526155,
+     "ratio": 7.340283404019541,
+     "cpu_pct": 177.1309476582026
+    },
+    {
+     "passe": 4,
+     "audio_s": 27.237006802721087,
+     "audio_ffprobe_s": 27.237007,
+     "calcul_s": 3.519832747988403,
+     "ratio": 7.738153700140194,
+     "cpu_pct": 183.09710890902915
+    },
+    {
+     "passe": 5,
+     "audio_s": 27.620136054421767,
+     "audio_ffprobe_s": 27.620136,
+     "calcul_s": 3.322220695670694,
+     "ratio": 8.313757147565351,
+     "cpu_pct": 192.58085437663487
+    },
+    {
+     "passe": 6,
+     "audio_s": 27.678185941043083,
+     "audio_ffprobe_s": 27.678186,
+     "calcul_s": 3.2830432960763574,
+     "ratio": 8.430649079200977,
+     "cpu_pct": 193.1454881383484
+    }
+   ]
+  },
+  "piper_long": {
+   "moteur": "piper-fr_FR-siwis-medium",
+   "chargement_s": 1.7271458599716425,
+   "passes": [
+    {
+     "passe": 1,
+     "audio_s": 57.00498866213152,
+     "audio_ffprobe_s": 57.004989,
+     "calcul_s": 6.887166446074843,
+     "ratio": 8.276987220864974,
+     "cpu_pct": 191.2431636889885
+    },
+    {
+     "passe": 2,
+     "audio_s": 57.492607709750565,
+     "audio_ffprobe_s": 57.492608,
+     "calcul_s": 6.799069175962359,
+     "ratio": 8.455952752034312,
+     "cpu_pct": 192.8296162414658
+    },
+    {
+     "passe": 3,
+     "audio_s": 57.608707482993196,
+     "audio_ffprobe_s": 57.608707,
+     "calcul_s": 6.717286552302539,
+     "ratio": 8.576187279556533,
+     "cpu_pct": 193.72445850980446
+    },
+    {
+     "passe": 4,
+     "audio_s": 56.58702947845805,
+     "audio_ffprobe_s": 56.587029,
+     "calcul_s": 6.602906775195152,
+     "ratio": 8.57001793377366,
+     "cpu_pct": 194.13716468261248
+    },
+    {
+     "passe": 5,
+     "audio_s": 57.817687074829934,
+     "audio_ffprobe_s": 57.817687,
+     "calcul_s": 6.738935546018183,
+     "ratio": 8.579646841850641,
+     "cpu_pct": 194.25772676717443
+    },
+    {
+     "passe": 6,
+     "audio_s": 56.73795918367347,
+     "audio_ffprobe_s": 56.737959,
+     "calcul_s": 6.608693374786526,
+     "ratio": 8.585352045555634,
+     "cpu_pct": 194.6795269558951
+    }
+   ]
+  },
+  "kokoro_court": {
+   "moteur": "kokoro-82m ff_siwis",
+   "chargement_s": 0.9761346941813827,
+   "passes": [
+    {
+     "passe": 1,
+     "audio_s": 29.525333333333332,
+     "calcul_s": 32.304428114090115,
+     "ratio": 0.9139717078122601,
+     "cpu_pct": 193.75337578782256
+    },
+    {
+     "passe": 2,
+     "audio_s": 29.525333333333332,
+     "calcul_s": 31.744424828793854,
+     "ratio": 0.9300950794532056,
+     "cpu_pct": 196.01452644232472
+    },
+    {
+     "passe": 3,
+     "audio_s": 29.525333333333332,
+     "calcul_s": 31.894186933990568,
+     "ratio": 0.9257277319669598,
+     "cpu_pct": 195.09604721632098
+    }
+   ]
+  },
+  "kokoro_long": {
+   "moteur": "kokoro-82m ff_siwis",
+   "chargement_s": 0.8881237050518394,
+   "passes": [
+    {
+     "passe": 1,
+     "audio_s": 51.968,
+     "calcul_s": 54.926542750094086,
+     "ratio": 0.9461363741105112,
+     "cpu_pct": 195.42799095946398
+    },
+    {
+     "passe": 2,
+     "audio_s": 51.968,
+     "calcul_s": 54.65991675388068,
+     "ratio": 0.9507515394507153,
+     "cpu_pct": 195.50409760258742
+    },
+    {
+     "passe": 3,
+     "audio_s": 51.968,
+     "calcul_s": 54.37177544692531,
+     "ratio": 0.9557900137126892,
+     "cpu_pct": 195.91113794689178
+    }
+   ]
+  }
+ }
+}
