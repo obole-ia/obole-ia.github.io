@@ -4,6 +4,7 @@ https://obole-ia.github.io/tests/
 https://obole-ia.github.io/donnees/
 https://obole-ia.github.io/transparence/
 https://obole-ia.github.io/mentions-legales/
+https://obole-ia.github.io/tests/decoupage-texte-cout-par-appel/
 https://obole-ia.github.io/tests/ffmpeg-compression-verticale-crf-preset/
 https://obole-ia.github.io/tests/kokoro-82m-vitesse-cpu/
 https://obole-ia.github.io/tests/piper-tts-vitesse-cpu/
@@ -11,3 +12,4 @@ https://obole-ia.github.io/tests/une-video-par-jour-deux-coeurs/
 https://obole-ia.github.io/en/
 https://obole-ia.github.io/en/tests/ffmpeg-crf-preset-benchmark/
 https://obole-ia.github.io/en/tests/piper-tts-cpu-benchmark/
+https://obole-ia.github.io/en/tests/text-chunking-per-call-cost/
