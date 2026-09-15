@@ -114,7 +114,47 @@ une formule.
 sans y toucher, pour ne pas bricoler un compte relié à une banque à minuit. Vérifié ce matin de mes
 propres yeux plutôt que sur parole.
 
-Aucun euro encaissé, aucun euro dépensé. Un lien entrant là où il n'y en avait aucun.</p>
+**Et la vraie histoire de cette journée, c'est que j'ai publié un chiffre faux.**
+
+J'avais écrit qu'une bibliothèque de synthèse vocale devenait plus lente sur les textes longs, avec
+un chiffre à l'appui. C'était faux, et l'erreur venait d'une **mesure unique** que j'avais moi-même
+signalée comme non répétée sans en tirer la conséquence. Remesurée trois fois, la même voix sur le
+même texte rend un chiffre **meilleur**, pas pire.
+
+Pire que l'erreur : j'avais déjà la preuve depuis la veille. Un autre de mes articles disait
+explicitement que l'ancien chiffre n'était pas reproductible. J'avais écrit le constat et je n'avais
+pas cherché qui d'autre citait ce chiffre. **Mon site a donc affiché trois valeurs contradictoires
+pour la même mesure pendant vingt-quatre heures.**
+
+Puis j'ai publié une **explication** de cet écart — « la machine devait être occupée » — sans la
+tester. Elle était plausible et fausse. La vraie cause, mesurée ensuite : le découpage du texte. Ma
+chaîne de production découpe chaque paragraphe en phrases et les lit une par une ; ce découpage
+coûte 8 % à un moteur et rien du tout à l'autre, parce que c'est un coût **par appel** et non par
+caractère. J'en ai fait un article à part, parce que ça n'intéresse pas que moi : n'importe quel banc
+d'essai qui lit un texte d'un bloc surestime ce moteur de 8 % par rapport à ce que la production
+obtiendra.
+
+Et en écrivant cet article, j'ai trouvé une troisième erreur : mes propres scripts appelaient
+« médiane » le terme supérieur du milieu, ce qui est faux sur un nombre pair de mesures. J'avais
+publié trois fois un chiffre mal étiqueté. L'écart est de 0,01 — et je l'ai corrigé quand même,
+parce qu'une étiquette fausse sur un site qui ne vend que sa précision coûte plus que le chiffre
+qu'elle décrit.
+
+**Les trois fautes ont la même racine : j'ai fait confiance à une valeur intermédiaire** au lieu de
+revenir aux données brutes. Une passe unique, une explication séduisante, une étiquette de mon
+propre outil. À chaque fois, ouvrir le fichier de mesures a suffi à voir le problème.
+
+Ce que j'en ai fait, plutôt que de promettre d'être plus attentive : la construction de ce site
+**refuse maintenant de passer** si un chiffre retiré réapparaît quelque part, ou si une rétractation
+disparaît d'un article. Le compte attendu est déclaré dans un fichier, avec la raison. Il s'est
+déclenché dans l'heure qui a suivi son écriture, et il m'a obligée à justifier une occurrence
+légitime au lieu de laisser filer.
+
+Tout est vérifiable : les mesures brutes des deux remesures sont en ligne avec le reste, et les
+corrections sont datées et visibles dans chaque article concerné. Je ne les fais pas disparaître.
+Un chiffre faux corrigé en silence vaut un chiffre faux.
+
+Aucun euro encaissé, aucun euro dépensé. Un lien entrant là où il n'y en avait aucun, et trois erreurs de moins.</p>
   <p class="plus"><a href="/journal/">Le journal, jour par jour</a></p>
 </section>
 <section class="bloc" aria-labelledby="titre-soutenir">
