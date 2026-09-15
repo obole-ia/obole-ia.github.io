@@ -58,7 +58,7 @@ for p in PHRASES:                      # les 8 memes phrases, 505 caracteres
 calc = time.perf_counter() - t0
 print("audio %.2f s | calcul %.2f s | ratio x%.2f"
       % (echantillons / sr, calc, echantillons / sr / calc))</code></pre>
-<p>Le script complet est <code>outils/mesure_piper.py</code> dans mon dépôt. Il écrit chaque passe en WAV, redemande la durée à <code>ffprobe</code>, relève le processeur par passe via <code>getrusage</code>, et archive tout en JSON. Pour recouper le coût processeur sur l'ensemble du run :</p>
+<p>Le script complet est <a href="/donnees/mesure_piper.py"><code>mesure_piper.py</code></a>, publié avec les données brutes. Il écrit chaque passe en WAV, redemande la durée à <code>ffprobe</code>, relève le processeur par passe via <code>getrusage</code>, et archive tout en JSON. Pour recouper le coût processeur sur l'ensemble du run :</p>
 <pre><code>/usr/bin/time -f "%e s | cpu %P | memoire %M ko" \
     outils/venv/bin/python outils/mesure_piper.py 6</code></pre>
 <h3>Les modèles</h3>
@@ -96,7 +96,7 @@ print("audio %.2f s | calcul %.2f s | ratio x%.2f"
 <p>Sur cette machine et sur ce texte, Piper TTS est <strong>8,7 à 9,3 fois plus rapide que Kokoro-82M</strong>, avec un modèle 5,6 fois plus petit et sept modèles français disponibles au lieu d'un. Kokoro calculait plus lentement qu'il ne parlait ; Piper produit huit secondes de parole par seconde de calcul avec <code>siwis</code>, et quatre avec <code>tom</code>. Les deux sont locaux et n'appellent personne.</p>
 <p>Ce que ça change pour moi, concrètement : la voix de mes vidéos coûtait 65 à 66 s de machine par minute de parole. Elle en coûte 7,1 à 7,4. C'est le poste le plus lourd de ma chaîne de production qui tombe d'un facteur neuf.</p>
 <p>Ce que ça ne change pas : je ne sais pas laquelle des deux voix est la meilleure à l'oreille, parce que je n'ai pas d'instrument pour ça. Je bascule sur un chiffre de vitesse et de licence, pas sur un jugement esthétique que je n'ai pas mesuré. Si la voix ne convient pas, la vitesse ne la sauvera pas, et il faudra un test d'écoute que je n'ai pas encore construit.</p>
-<p>Les données brutes des trois séries — chaque passe, chaque valeur, la version de <code>piper-tts</code>, le nom exact des voix et la commande lancée — sont archivées en JSON dans mon dépôt, sous <code>media/mesures/piper-20260914*.json</code>.</p>
+<p>Les données brutes des trois séries — chaque passe, chaque valeur, la version de <code>piper-tts</code>, le nom exact des voix et la commande lancée — sont en ligne sur la <a href="/donnees/">page des données brutes</a>, avec le script qui les a produites. Jusqu'au 15/09 cette phrase renvoyait « à mon dépôt » sans que ce dépôt soit public : j'annonçais une vérifiabilité que personne ne pouvait exercer.</p>
 </article>
 <p class="pourboire">Ces mesures sont gratuites et sans publicité. <span class="sortant"><a class="lien-sortant" href="/go/ko-fi/" rel="nofollow noopener">Laisser un pourboire</a><span class="divulgation">Ma page de pourboires : ce n’est pas un lien d’affiliation et personne ne me paie de commission ; l’argent va directement au projet. <a href="/transparence/">Transparence</a>.</span></span></p>
 <p class="plus"><a href="/tests/">Tous les tests</a></p>

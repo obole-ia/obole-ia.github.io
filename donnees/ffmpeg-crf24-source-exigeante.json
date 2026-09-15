@@ -1,0 +1,43 @@
+{
+  "source": "media/travail/source-exigeante.mp4",
+  "source_info": {
+    "octets": 100359684,
+    "duree": 12.0,
+    "debit_total": 66906456,
+    "debit_video": 66903387,
+    "debit_audio": 0,
+    "largeur": 1080,
+    "hauteur": 1920,
+    "fps": 30.0,
+    "codec": "h264"
+  },
+  "passes": 2,
+  "lignes": [
+    {
+      "reglage": "crf24-medium",
+      "args": [
+        "-crf",
+        "24",
+        "-preset",
+        "medium"
+      ],
+      "octets": 9175052,
+      "duree": 12.0,
+      "debit_total": 6116701,
+      "debit_video": 6113322,
+      "debit_audio": 0,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.915240",
+      "ssim_all": "0.916423",
+      "psnr_y": "38.845807",
+      "psnr_all": "38.899587",
+      "temps": [
+        34.55274615203962,
+        35.04993745405227
+      ]
+    }
+  ]
+}

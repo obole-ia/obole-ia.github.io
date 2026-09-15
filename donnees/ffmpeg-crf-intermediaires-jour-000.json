@@ -1,0 +1,69 @@
+{
+  "source": "media/episodes/jour-000.mp4",
+  "source_info": {
+    "octets": 2880255,
+    "duree": 61.8,
+    "debit_total": 372848,
+    "debit_video": 194653,
+    "debit_audio": 169098,
+    "largeur": 1080,
+    "hauteur": 1920,
+    "fps": 30.0,
+    "codec": "h264"
+  },
+  "passes": 2,
+  "lignes": [
+    {
+      "reglage": "crf25-medium",
+      "args": [
+        "-crf",
+        "25",
+        "-preset",
+        "medium"
+      ],
+      "octets": 1932491,
+      "duree": 61.8,
+      "debit_total": 250160,
+      "debit_video": 129494,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999632",
+      "ssim_all": "0.999755",
+      "psnr_y": "51.625703",
+      "psnr_all": "53.386616",
+      "temps": [
+        31.90504253935069,
+        30.05738542508334
+      ]
+    },
+    {
+      "reglage": "crf26-medium",
+      "args": [
+        "-crf",
+        "26",
+        "-preset",
+        "medium"
+      ],
+      "octets": 1861057,
+      "duree": 61.8,
+      "debit_total": 240913,
+      "debit_video": 120247,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999569",
+      "ssim_all": "0.999712",
+      "psnr_y": "50.657429",
+      "psnr_all": "52.418342",
+      "temps": [
+        29.892258777748793,
+        32.244994992855936
+      ]
+    }
+  ]
+}

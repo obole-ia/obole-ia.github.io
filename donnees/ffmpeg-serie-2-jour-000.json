@@ -1,0 +1,225 @@
+{
+  "source": "media/episodes/jour-000.mp4",
+  "source_info": {
+    "octets": 2880255,
+    "duree": 61.8,
+    "debit_total": 372848,
+    "debit_video": 194653,
+    "debit_audio": 169098,
+    "largeur": 1080,
+    "hauteur": 1920,
+    "fps": 30.0,
+    "codec": "h264"
+  },
+  "passes": 2,
+  "lignes": [
+    {
+      "reglage": "crf20-medium",
+      "args": [
+        "-crf",
+        "20",
+        "-preset",
+        "medium"
+      ],
+      "octets": 2311157,
+      "duree": 61.8,
+      "debit_total": 299178,
+      "debit_video": 178513,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999845",
+      "ssim_all": "0.999897",
+      "psnr_y": "56.361270",
+      "psnr_all": "58.122183",
+      "temps": [
+        30.289863584097475,
+        30.201244166120887
+      ]
+    },
+    {
+      "reglage": "crf23-medium",
+      "args": [
+        "-crf",
+        "23",
+        "-preset",
+        "medium"
+      ],
+      "octets": 2074372,
+      "duree": 61.8,
+      "debit_total": 268527,
+      "debit_video": 147861,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999741",
+      "ssim_all": "0.999827",
+      "psnr_y": "53.440293",
+      "psnr_all": "55.201205",
+      "temps": [
+        32.211327005177736,
+        29.973880257923156
+      ]
+    },
+    {
+      "reglage": "crf28-medium",
+      "args": [
+        "-crf",
+        "28",
+        "-preset",
+        "medium"
+      ],
+      "octets": 1746910,
+      "duree": 61.8,
+      "debit_total": 226137,
+      "debit_video": 105471,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999400",
+      "ssim_all": "0.999600",
+      "psnr_y": "48.857463",
+      "psnr_all": "50.618375",
+      "temps": [
+        30.014448863919824,
+        31.841045634821057
+      ]
+    },
+    {
+      "reglage": "crf32-medium",
+      "args": [
+        "-crf",
+        "32",
+        "-preset",
+        "medium"
+      ],
+      "octets": 1581776,
+      "duree": 61.8,
+      "debit_total": 204760,
+      "debit_video": 84094,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.998798",
+      "ssim_all": "0.999199",
+      "psnr_y": "45.524957",
+      "psnr_all": "47.285869",
+      "temps": [
+        29.7972765089944,
+        30.383659275248647
+      ]
+    },
+    {
+      "reglage": "crf23-veryfast",
+      "args": [
+        "-crf",
+        "23",
+        "-preset",
+        "veryfast"
+      ],
+      "octets": 1873445,
+      "duree": 61.8,
+      "debit_total": 242517,
+      "debit_video": 121851,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999581",
+      "ssim_all": "0.999721",
+      "psnr_y": "50.399433",
+      "psnr_all": "52.160346",
+      "temps": [
+        22.574904595967382,
+        22.81753939623013
+      ]
+    },
+    {
+      "reglage": "crf23-slow",
+      "args": [
+        "-crf",
+        "23",
+        "-preset",
+        "slow"
+      ],
+      "octets": 2070974,
+      "duree": 61.8,
+      "debit_total": 268087,
+      "debit_video": 147421,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999749",
+      "ssim_all": "0.999833",
+      "psnr_y": "53.595333",
+      "psnr_all": "55.356245",
+      "temps": [
+        33.846423375885934,
+        37.23826942592859
+      ]
+    },
+    {
+      "reglage": "crf28-veryfast",
+      "args": [
+        "-crf",
+        "28",
+        "-preset",
+        "veryfast"
+      ],
+      "octets": 1580722,
+      "duree": 61.8,
+      "debit_total": 204624,
+      "debit_video": 83958,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999000",
+      "ssim_all": "0.999334",
+      "psnr_y": "46.045955",
+      "psnr_all": "47.806867",
+      "temps": [
+        22.654116371180862,
+        22.87880564527586
+      ]
+    },
+    {
+      "reglage": "2pass-2M",
+      "args": [
+        "__2PASS__",
+        "2M",
+        "-preset",
+        "medium"
+      ],
+      "octets": 5839424,
+      "duree": 61.8,
+      "debit_total": 755912,
+      "debit_video": 635246,
+      "debit_audio": 111611,
+      "largeur": 1080,
+      "hauteur": 1920,
+      "fps": 30.0,
+      "codec": "h264",
+      "ssim_y": "0.999997",
+      "ssim_all": "0.999998",
+      "psnr_y": "78.683243",
+      "psnr_all": "80.444156",
+      "temps": [
+        49.5251842699945,
+        47.50239786459133
+      ]
+    }
+  ]
+}

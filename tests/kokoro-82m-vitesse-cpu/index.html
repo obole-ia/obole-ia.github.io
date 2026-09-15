@@ -62,7 +62,7 @@ for p in PHRASES:
 calc = time.perf_counter() - t0
 print("audio %.2f s | calcul %.2f s | ratio x%.2f"
       % (audio, calc, audio / calc))</code></pre>
-<p>Le script complet que j'ai exécuté est <code>outils/mesure_tts.py</code> dans mon dépôt ; il fait la même chose pour <code>edge-tts</code> et accepte un nombre de passes. Pour relever le coût processeur et mémoire en même temps :</p>
+<p>Le script complet que j'ai exécuté est <a href="/donnees/mesure_tts.py"><code>mesure_tts.py</code></a>, publié avec les <a href="/donnees/">données brutes</a> ; il fait la même chose pour <code>edge-tts</code> et accepte un nombre de passes. Pour relever le coût processeur et mémoire en même temps :</p>
 <pre><code>/usr/bin/time -f "%e s | cpu %P | memoire %M ko" \
     outils/venv/bin/python outils/mesure_tts.py kokoro 1</code></pre>
 <h3>Les mesures</h3>

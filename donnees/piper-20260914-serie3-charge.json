@@ -1,0 +1,241 @@
+{
+  "outil": "piper-tts",
+  "version_piper": "1.8.0",
+  "version_onnxruntime": "1.30.0",
+  "python": "3.12.3",
+  "machine": "aarch64",
+  "noyau": "6.17.0-1019-oracle",
+  "date_utc": "2026-09-14T12:00:28.928127Z",
+  "protocole": {
+    "source_du_texte": "outils/mesure_tts.py (importe, non recopie)",
+    "caracteres": 505,
+    "phrases": 8,
+    "texte": [
+      "Je suis une intelligence artificielle et je pars de zero euro.",
+      "Ce serveur a deux coeurs et onze gigaoctets de memoire vive.",
+      "Il n'a aucune carte graphique, donc tout passe par le processeur.",
+      "La documentation annonce six fois le temps reel sur processeur.",
+      "Je mesure le temps de calcul et la duree audio produite.",
+      "Le rapport des deux donne le debit reel de la synthese.",
+      "Si le rapport est inferieur a un, la machine calcule plus lentement qu'elle ne parle.",
+      "Je publie le chiffre que j'obtiens, pas celui que j'espere."
+    ],
+    "passes_demandees": 6,
+    "synthese": "phrase par phrase, modele charge une seule fois",
+    "duree_audio": "comptee en echantillons puis verifiee par ffprobe",
+    "commande": "outils/venv/bin/python outils/mesure_piper.py 6"
+  },
+  "voix_mesurees": [
+    {
+      "voix": "fr_FR-siwis-medium",
+      "modele": "outils/modeles/piper/fr_FR-siwis-medium.onnx",
+      "modele_octets": 63201294,
+      "config_octets": 4875,
+      "sample_rate_hz": 22050,
+      "chargement_modele_s": 1.7624720381572843,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 6.301680078264326,
+          "audio_echantillons_s": 27.596916099773242,
+          "audio_ffprobe_s": 27.596916,
+          "ecart_echantillons_ffprobe_s": -9.977324211263294e-08,
+          "ratio_echantillons": 4.3792950065745435,
+          "ratio_ffprobe": 4.3792949907417436,
+          "cpu_pourcent": 130.56802150873764,
+          "wav_octets": 1217068,
+          "wav": "media/tts/mesure-piper/fr_FR-siwis-medium-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 6.437459881883115,
+          "audio_echantillons_s": 27.527256235827664,
+          "audio_ffprobe_s": 27.527256,
+          "ecart_echantillons_ffprobe_s": -2.3582766317531423e-07,
+          "ratio_echantillons": 4.2761052870088365,
+          "ratio_ffprobe": 4.276105250375185,
+          "cpu_pourcent": 120.41319312630006,
+          "wav_octets": 1213996,
+          "wav": "media/tts/mesure-piper/fr_FR-siwis-medium-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 6.241567650809884,
+          "audio_echantillons_s": 27.85233560090703,
+          "audio_ffprobe_s": 27.852336,
+          "ecart_echantillons_ffprobe_s": 3.9909297200324545e-07,
+          "ratio_echantillons": 4.462394250792588,
+          "ratio_ffprobe": 4.462394314733732,
+          "cpu_pourcent": 130.10052048296455,
+          "wav_octets": 1228332,
+          "wav": "media/tts/mesure-piper/fr_FR-siwis-medium-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 6.590593091212213,
+          "audio_echantillons_s": 28.08453514739229,
+          "audio_ffprobe_s": 28.084535,
+          "ecart_echantillons_ffprobe_s": -1.4739229214910665e-07,
+          "ratio_echantillons": 4.261306191826612,
+          "ratio_ffprobe": 4.2613061694625705,
+          "cpu_pourcent": 117.91655003496197,
+          "wav_octets": 1238572,
+          "wav": "media/tts/mesure-piper/fr_FR-siwis-medium-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 6.204773508943617,
+          "audio_echantillons_s": 27.422766439909296,
+          "audio_ffprobe_s": 27.422766,
+          "ecart_echantillons_ffprobe_s": -4.39909296545693e-07,
+          "ratio_echantillons": 4.4196240846473875,
+          "ratio_ffprobe": 4.419624013748861,
+          "cpu_pourcent": 130.20618703253015,
+          "wav_octets": 1209388,
+          "wav": "media/tts/mesure-piper/fr_FR-siwis-medium-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 6.352647440042347,
+          "audio_echantillons_s": 28.003265306122447,
+          "audio_ffprobe_s": 28.003265,
+          "ecart_echantillons_ffprobe_s": -3.061224482792113e-07,
+          "ratio_echantillons": 4.408125206132292,
+          "ratio_ffprobe": 4.408125157944123,
+          "cpu_pourcent": 124.88409084366113,
+          "wav_octets": 1234988,
+          "wav": "media/tts/mesure-piper/fr_FR-siwis-medium-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 6.204773508943617,
+          "max": 6.590593091212213,
+          "mediane": 6.327163759153336
+        },
+        "audio_ffprobe_s": {
+          "min": 27.422766,
+          "max": 28.084535,
+          "mediane": 27.724626
+        },
+        "ratio_ffprobe": {
+          "min": 4.2613061694625705,
+          "max": 4.462394314733732,
+          "mediane": 4.393710074342933
+        },
+        "cpu_pourcent": {
+          "min": 117.91655003496197,
+          "max": 130.56802150873764,
+          "mediane": 127.49230566331283
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.39909296545693e-07
+      }
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "modele": "outils/modeles/piper/fr_FR-tom-medium.onnx",
+      "modele_octets": 63511038,
+      "config_octets": 4959,
+      "sample_rate_hz": 44100,
+      "chargement_modele_s": 1.9623784581199288,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 12.496465595904738,
+          "audio_echantillons_s": 31.451428571428572,
+          "audio_ffprobe_s": 31.451429,
+          "ecart_echantillons_ffprobe_s": 4.285714290119813e-07,
+          "ratio_echantillons": 2.516825924102543,
+          "ratio_ffprobe": 2.516825958397954,
+          "cpu_pourcent": 130.3408381753782,
+          "wav_octets": 2774060,
+          "wav": "media/tts/mesure-piper/fr_FR-tom-medium-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 12.092552008572966,
+          "audio_echantillons_s": 30.615510204081634,
+          "audio_ffprobe_s": 30.61551,
+          "ecart_echantillons_ffprobe_s": -2.0408163337037877e-07,
+          "ratio_echantillons": 2.5317658491257173,
+          "ratio_ffprobe": 2.5317658322490786,
+          "cpu_pourcent": 127.448019153227,
+          "wav_octets": 2700332,
+          "wav": "media/tts/mesure-piper/fr_FR-tom-medium-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 12.171321688219905,
+          "audio_echantillons_s": 30.307845804988663,
+          "audio_ffprobe_s": 30.307846,
+          "ecart_echantillons_ffprobe_s": 1.9501133863286668e-07,
+          "ratio_echantillons": 2.490103094910581,
+          "ratio_ffprobe": 2.4901031109327803,
+          "cpu_pourcent": 123.21301157058898,
+          "wav_octets": 2673196,
+          "wav": "media/tts/mesure-piper/fr_FR-tom-medium-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 12.128765505738556,
+          "audio_echantillons_s": 30.44716553287982,
+          "audio_ffprobe_s": 30.447166,
+          "ecart_echantillons_ffprobe_s": 4.6712018075822925e-07,
+          "ratio_echantillons": 2.510326835692731,
+          "ratio_ffprobe": 2.510326874206146,
+          "cpu_pourcent": 122.67452110406667,
+          "wav_octets": 2685484,
+          "wav": "media/tts/mesure-piper/fr_FR-tom-medium-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 13.839118253905326,
+          "audio_echantillons_s": 30.731609977324265,
+          "audio_ffprobe_s": 30.73161,
+          "ecart_echantillons_ffprobe_s": 2.2675735067423375e-08,
+          "ratio_echantillons": 2.22063352689771,
+          "ratio_ffprobe": 2.2206335285362346,
+          "cpu_pourcent": 111.41402737597753,
+          "wav_octets": 2710572,
+          "wav": "media/tts/mesure-piper/fr_FR-tom-medium-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 12.731915348675102,
+          "audio_echantillons_s": 30.789659863945577,
+          "audio_ffprobe_s": 30.78966,
+          "ecart_echantillons_ffprobe_s": 1.3605442461539496e-07,
+          "ratio_echantillons": 2.418305417585861,
+          "ratio_ffprobe": 2.4183054282719536,
+          "cpu_pourcent": 121.05596509172418,
+          "wav_octets": 2715692,
+          "wav": "media/tts/mesure-piper/fr_FR-tom-medium-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 12.092552008572966,
+          "max": 13.839118253905326,
+          "mediane": 12.333893642062321
+        },
+        "audio_ffprobe_s": {
+          "min": 30.307846,
+          "max": 31.451429,
+          "mediane": 30.673560000000002
+        },
+        "ratio_ffprobe": {
+          "min": 2.2206335285362346,
+          "max": 2.5317658322490786,
+          "mediane": 2.5002149925694632
+        },
+        "cpu_pourcent": {
+          "min": 111.41402737597753,
+          "max": 130.3408381753782,
+          "mediane": 122.94376633732782
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.6712018075822925e-07
+      }
+    }
+  ],
+  "memoire_max_ko": 422052
+}
