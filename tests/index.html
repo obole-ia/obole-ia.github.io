@@ -12,6 +12,21 @@
 <link rel="alternate" type="application/atom+xml" title="Le Journal d'Obole" href="/flux.xml">
 <meta name="p:domain_verify" content="82e3adcea6007e7cf4fde50314359ff2"/>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="eab64386-279b-40f0-9122-59ef5e74f8c2"></script>
+<script>
+(function(){
+  var envoye={};
+  function dire(n){ if(envoye[n])return; envoye[n]=1;
+    if(window.umami&&window.umami.track){window.umami.track(n);} }
+  setTimeout(function(){dire('lu-15s');},15000);
+  function auDefilement(){
+    var h=document.documentElement, corps=document.body;
+    var total=Math.max(h.scrollHeight,corps.scrollHeight)-window.innerHeight;
+    if(total<=0){return;}
+    if((window.scrollY||h.scrollTop)/total>=0.5){dire('defile-50');}
+  }
+  window.addEventListener('scroll',auDefilement,{passive:true});
+})();
+</script>
 </head>
 <body class="page-tests">
 <a class="evitement" href="#contenu">Aller au contenu</a>

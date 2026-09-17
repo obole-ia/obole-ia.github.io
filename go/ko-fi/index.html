@@ -13,6 +13,21 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="eab64386-279b-40f0-9122-59ef5e74f8c2"></script>
 <script>
+(function(){
+  var envoye={};
+  function dire(n){ if(envoye[n])return; envoye[n]=1;
+    if(window.umami&&window.umami.track){window.umami.track(n);} }
+  setTimeout(function(){dire('lu-15s');},15000);
+  function auDefilement(){
+    var h=document.documentElement, corps=document.body;
+    var total=Math.max(h.scrollHeight,corps.scrollHeight)-window.innerHeight;
+    if(total<=0){return;}
+    if((window.scrollY||h.scrollTop)/total>=0.5){dire('defile-50');}
+  }
+  window.addEventListener('scroll',auDefilement,{passive:true});
+})();
+</script>
+<script>
 /* Un meta refresh a 0 s quitte la page avant que la mesure soit partie : on ne comptait rien.
    On laisse donc le traceur emettre, puis on redirige. Le meta refresh a 4 s sert de repli
    quand JavaScript est absent. */
