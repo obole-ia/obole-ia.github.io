@@ -1,0 +1,120 @@
+{
+  "etiquette": "serie-3-cache-vide",
+  "date": "2026-09-17T04:11:57+0000",
+  "mode": "serie",
+  "passes_demandees": 3,
+  "cache": "vide",
+  "episode": "media/episodes/jour-000.json",
+  "preset": "veryfast",
+  "crf": 20,
+  "machine": {
+    "coeurs": 2,
+    "architecture": "aarch64",
+    "processeur": "Neoverse-N1",
+    "memoire": "11Gi",
+    "noyau": "6.17.0-1019-oracle",
+    "python": "3.12.3",
+    "ffmpeg": "6.1.1-3ubuntu5",
+    "gpu": "aucun",
+    "charge_avant": [
+      0.34228515625,
+      0.9609375,
+      0.84228515625
+    ],
+    "charge_apres": [
+      3.41455078125,
+      2.22802734375,
+      1.41943359375
+    ]
+  },
+  "passes": [
+    {
+      "total_s": 107.26911235693842,
+      "etapes_s": {
+        "chargement_voix": 1.1225299751386046,
+        "synthese": 61.86687793582678,
+        "ecriture_wav_ass": 0.005297357216477394,
+        "loudnorm": 1.0027054999954998,
+        "rendu_encodage": 43.20939591201022,
+        "sonde": 0.0620634350925684
+      },
+      "somme_etapes_s": 107.26887011528015,
+      "dessine_s": 4.679645433090627,
+      "images_dessinees": 517,
+      "images_ecrites": 1854,
+      "cpu_cumule_s": 201.157022,
+      "rss_max_ko": 883920,
+      "synthese_calcul_s": 61.86183500289917,
+      "synthese_audio_s": 52.01066666666666,
+      "segments_en_cache": 0,
+      "duree_visee_s": 62.38066666666667,
+      "duree_mp4_s": 61.8,
+      "poids_octets": 2880255,
+      "plans": 12,
+      "cartons": 30,
+      "resolution": "1080x1920",
+      "cache_lu": false,
+      "passe": 1
+    },
+    {
+      "total_s": 105.48610965022817,
+      "etapes_s": {
+        "chargement_voix": 0.8282429599203169,
+        "synthese": 60.409755144268274,
+        "ecriture_wav_ass": 0.0039053079672157764,
+        "loudnorm": 1.0026192627847195,
+        "rendu_encodage": 43.178626174572855,
+        "sonde": 0.062697758898139
+      },
+      "somme_etapes_s": 105.48584660841152,
+      "dessine_s": 4.843493503984064,
+      "images_dessinees": 517,
+      "images_ecrites": 1854,
+      "cpu_cumule_s": 200.078723,
+      "rss_max_ko": 901316,
+      "synthese_calcul_s": 60.404961585998535,
+      "synthese_audio_s": 52.01066666666666,
+      "segments_en_cache": 0,
+      "duree_visee_s": 62.38066666666667,
+      "duree_mp4_s": 61.8,
+      "poids_octets": 2880255,
+      "plans": 12,
+      "cartons": 30,
+      "resolution": "1080x1920",
+      "cache_lu": false,
+      "passe": 2
+    },
+    {
+      "total_s": 104.70199604937807,
+      "etapes_s": {
+        "chargement_voix": 0.8462253287434578,
+        "synthese": 59.59357674373314,
+        "ecriture_wav_ass": 0.004505552351474762,
+        "loudnorm": 1.0015936195850372,
+        "rendu_encodage": 43.19389588851482,
+        "sonde": 0.06198851531371474
+      },
+      "somme_etapes_s": 104.70178564824164,
+      "dessine_s": 4.767500132322311,
+      "images_dessinees": 517,
+      "images_ecrites": 1854,
+      "cpu_cumule_s": 199.48776099999992,
+      "rss_max_ko": 901316,
+      "synthese_calcul_s": 59.58822274208069,
+      "synthese_audio_s": 52.01066666666666,
+      "segments_en_cache": 0,
+      "duree_visee_s": 62.38066666666667,
+      "duree_mp4_s": 61.8,
+      "poids_octets": 2880255,
+      "plans": 12,
+      "cartons": 30,
+      "resolution": "1080x1920",
+      "cache_lu": false,
+      "passe": 3
+    }
+  ],
+  "fourchette_s": [
+    104.70199604937807,
+    107.26911235693842
+  ]
+}
