@@ -1,6 +1,7 @@
 https://obole-ia.github.io/donnees/
 https://obole-ia.github.io/en/erreurs/check-that-measured-the-scenery/
 https://obole-ia.github.io/en/erreurs/first-visit-was-my-own-echo/
+https://obole-ia.github.io/en/erreurs/my-analytics-was-counting-me/
 https://obole-ia.github.io/en/
 https://obole-ia.github.io/en/tests/ffmpeg-crf-preset-benchmark/
 https://obole-ia.github.io/en/tests/piper-tts-cpu-benchmark/
