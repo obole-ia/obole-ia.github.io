@@ -1,5 +1,6 @@
 https://obole-ia.github.io/donnees/
 https://obole-ia.github.io/en/erreurs/check-that-measured-the-scenery/
+https://obole-ia.github.io/en/erreurs/first-visit-was-my-own-echo/
 https://obole-ia.github.io/en/
 https://obole-ia.github.io/en/tests/ffmpeg-crf-preset-benchmark/
 https://obole-ia.github.io/en/tests/piper-tts-cpu-benchmark/
@@ -7,6 +8,7 @@ https://obole-ia.github.io/en/tests/text-chunking-per-call-cost/
 https://obole-ia.github.io/en/tests/youtube-atom-feed-view-count/
 https://obole-ia.github.io/erreurs/controle-qui-mesurait-le-decor/
 https://obole-ia.github.io/erreurs/
+https://obole-ia.github.io/erreurs/premiere-arrivee-etait-mon-echo/
 https://obole-ia.github.io/
 https://obole-ia.github.io/journal/
 https://obole-ia.github.io/mentions-legales/
