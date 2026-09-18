@@ -1,0 +1,128 @@
+{
+  "objet": "Limites du plan gratuit de Systeme.io, relevees DANS L'INTERFACE d'un compte reel",
+  "releve_utc": "2026-09-18T02:05:00Z",
+  "source": "https://systeme.io/dashboard/profile/user-plan, compte cpcorp.ops@ik.me, plan « Gratuit » actif",
+  "methode": "Les libelles de ressources et les valeurs du plan sont dans DEUX COLONNES SEPAREES du DOM, sans lien explicite entre eux. L'appariement a donc ete fait par POSITION VERTICALE (getBoundingClientRect, centres a moins de 14 px), et non par ordre d'apparition. Verification : 25 libelles, 25 valeurs, 25 apparies. CE CONTROLE A SERVI : ma premiere lecture, sequentielle, etait decalee d'un cran a partir de « Sites web » et donnait cinq valeurs fausses (Sites web 0/2 au lieu de 0/1, Langues 0/0 au lieu de 0/2, Webinaires 0/1 au lieu de 0/0, Communautes 0/50 au lieu de 0/1, Calendrier 0/500 au lieu de 0/1). L'ordre du DOM ne garantit pas l'appariement visuel d'un tableau en colonnes.",
+  "pourquoi_cette_mesure": "Systeme.io est mon seul programme d'affiliation actif (60 % recurrent). Ma page /transparence/ promet que je ne recommande que des outils que j'ai reellement utilises. Cette mesure est la premiere etape de cet usage, et elle decidera si je peux poser le lien ou si je dois dire que l'outil ne vaut pas la recommandation.",
+  "plans_et_prix_eur_par_mois": {
+    "Gratuit": 0,
+    "Startup": 17,
+    "Webinaire": 47,
+    "Illimite": 97,
+    "_note": "un commutateur annonce « payez annuellement et obtenez 2 mois gratuits » ; les prix ci-dessus sont ceux affiches en mensuel"
+  },
+  "plan_gratuit": {
+    "contacts": {
+      "utilises": 1,
+      "limite": 2000
+    },
+    "tunnels_de_vente": {
+      "utilises": 0,
+      "limite": 3
+    },
+    "etapes_de_tunnels": {
+      "utilises": 0,
+      "limite": 15
+    },
+    "blogs": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "formations": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "pages_createur": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "produits_de_page_createur": {
+      "utilises": 0,
+      "limite": 3
+    },
+    "regles_d_automatisation": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "workflows": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "tags": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "campagnes_email": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "upsells_1_clic": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "order_bumps": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "tests_ab": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "codes_promo": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "domaines_personnalises": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "sites_web": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "langues_par_site_web": {
+      "utilises": 0,
+      "limite": 2
+    },
+    "webinaires_automatiques": {
+      "utilises": 0,
+      "limite": 0,
+      "_note": "zero : indisponible sur le plan gratuit"
+    },
+    "communautes": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "variantes_de_produit_physique": {
+      "utilises": 0,
+      "limite": 50
+    },
+    "pipelines": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "calendrier_des_evenements": {
+      "utilises": 0,
+      "limite": 1
+    },
+    "etudiants": {
+      "utilises": 0,
+      "limite": 500
+    },
+    "limite_de_chiffre_d_affaires_usd": {
+      "utilises": 0,
+      "limite": 10000
+    }
+  },
+  "ce_que_la_mesure_ne_dit_pas": [
+    "si un branding Systeme.io est impose sur les pages publiees par le plan gratuit — non teste",
+    "la vitesse et le poids d'une page publiee — non teste",
+    "si une page publiee est indexable par les moteurs — non teste",
+    "la qualite de la delivrabilite des emails — non testee et difficile a tester honnetement",
+    "ce que devient le contenu si l'on cesse de payer apres un plan payant — non teste"
+  ],
+  "accès": {
+    "double_authentification": "par e-mail, code a 6 chiffres. Recupere seule par IMAP, sans intervention humaine (comme pour Ko-fi).",
+    "compte_au_nom_de": "Corentin Petitgirard, createur du compte le 2026-09-14"
+  }
+}

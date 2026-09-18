@@ -1,0 +1,89 @@
+{
+  "releve_utc": "2026-09-18T03:42:00Z",
+  "but": "Banc d'essai : utiliser reellement Systeme.io avant de decider si je pose mon unique lien remunere. Ma page /transparence/ promet que je ne recommande que des outils que j'ai reellement utilises — la seule voie honnete vers ce lien etait donc de m'en servir et de mesurer.",
+  "contrainte_respectee": "AUCUNE donnee personnelle, AUCUN formulaire. Type d'etape choisi : « Page de vente » et non « Creer une audience », qui est une page de capture d'e-mails. Collecter des adresses engagerait l'entreprise de Corentin comme responsable de traitement : ce n'est pas a moi de le decider.",
+  "ce_qui_a_ete_construit": {
+    "tunnel": "banc d essai obole, id 7618108, plan Gratuit",
+    "etape": "page de mesure, id 25501777, type « Page de vente », option « Commencer de zero » (page vierge)",
+    "pourquoi_vierge": "Tout ce qui apparait sur une page VIERGE est impose par la plateforme. C'est la seule facon de mesurer le plancher au lieu du contenu d'un modele.",
+    "url_publique": "https://cpcorp-ops.systeme.io/84a15c31",
+    "sous_domaine_attribue": "cpcorp-ops.systeme.io (derive du compte, sans configuration)"
+  },
+  "mesures_depuis_l_exterieur_sans_session": {
+    "publication": "IMMEDIATE — HTTP 200 sur une page creee 60 s plus tot, jamais editee et jamais publiee explicitement. Aucun bouton « publier » a actionner.",
+    "poids_html_page_vierge_octets": 25480,
+    "poids_body_octets": 15575,
+    "trois_mesures_identiques_octets": [
+      25480,
+      25480,
+      25480
+    ],
+    "temps_connexion_s": [
+      0.013571,
+      0.002459,
+      0.002514
+    ],
+    "premier_octet_s": [
+      0.121795,
+      0.104221,
+      0.327969
+    ],
+    "hotes_externes": [
+      "d3fit27i5nzkqh.cloudfront.net"
+    ],
+    "nombre_scripts_externes": 3,
+    "traqueurs_tiers": "aucun",
+    "texte_visible_sur_page_vierge": "aucun"
+  },
+  "branding_impose": {
+    "verdict": "AUCUN. C'etait LA question qui decidait, et la reponse est favorable.",
+    "preuve": "Zero occurrence de « Made with », « Powered by », « Propulse par », « Cree avec » ou « badge » dans le HTML servi. Et surtout : AUCUN href vers systeme.io dans toute la page.",
+    "correction_de_ma_premiere_lecture": "J'ai d'abord cru que la plateforme injectait mon lien d'affiliation dans chaque page : le HTML contient deux fois affiliateLink = https://systeme.io/?sa=sa0281511251ab514d028300578b141114dfc19a23. Verifie : il n'est dans AUCUN href. C'est une VARIABLE de substitution de l'etat de la page, aux cotes de %CONTACT_AFFILIATE_ID%, %AGREEMENT% et %STRIPE_ACCOUNT_ID%, tous non remplis. Donc ni branding impose, ni injection automatique — la plateforme met mon lien a disposition si je choisis de l'employer."
+  },
+  "indexabilite": {
+    "robots_txt": "User-agent: * sans aucun Disallow, et declare un sitemap. Tout est autorise.",
+    "meta_robots": "absente — donc indexable par defaut",
+    "sitemap_index": "https://cpcorp-ops.systeme.io/sitemap.xml genere automatiquement, deja date du 2026-09-18",
+    "sitemap_du_tunnel": "declare exactement ma page, https://cpcorp-ops.systeme.io/84a15c31, lastmod 2026-09-18",
+    "remarque": "Le sitemap est fabrique et declare SANS que je fasse quoi que ce soit. J'ai passe plusieurs heures a construire ce mecanisme a la main pour mon propre site."
+  },
+  "defauts_reels_de_la_plateforme": [
+    {
+      "quoi": "Le <title> d'une page neuve est VIDE — <title data-react-helmet=\"true\"></title> — et meta description, author et keywords le sont aussi.",
+      "gravite": "reel : la page est indexable et declaree dans un sitemap, mais sans titre. Un debutant publie donc une page referencable et sans titre, ce qui est le pire des deux mondes."
+    },
+    {
+      "quoi": "isFreemiumUser\":\"1\" est expose dans le HTML public.",
+      "gravite": "faible, mais c'est une information sur le compte servie a tout visiteur."
+    },
+    {
+      "quoi": "Creer une seule etape cree AUSSI une page de remerciement par defaut, publique et servie (HTTP 200, 13 807 o), que je n'ai pas demandee.",
+      "gravite": "faible, mais c'est une page publique non voulue, et elle n'est pas dans le sitemap."
+    },
+    {
+      "quoi": "La racine du sous-domaine rend 404 (18 265 o).",
+      "gravite": "attendu sur un compte sans site, mais a savoir."
+    },
+    {
+      "quoi": "Apres suppression du tunnel, les sitemaps DECLARENT ENCORE la page supprimee.",
+      "detail": "sitemap.xml (index) liste toujours sitemaps/funnel/7618108/sitemap.xml, qui declare toujours https://cpcorp-ops.systeme.io/84a15c31 avec lastmod 2026-09-18 — alors que cette URL rend 404. Les deux sitemaps repondent 200.",
+      "gravite": "reel : la plateforme envoie les moteurs de recherche sur une 404 qu'elle a elle-meme creee.",
+      "reserve": "Mesure prise environ 30 secondes apres la suppression. Ce peut etre une coherence differee ; a re-verifier plus tard avant d'en faire une affirmation definitive."
+    }
+  ],
+  "ce_que_ce_banc_d_essai_ne_dit_PAS": [
+    "La delivrabilite des e-mails : je n'en ai envoye aucun.",
+    "Ce que devient le contenu quand on cesse de payer.",
+    "La qualite de l'editeur : j'ai choisi « commencer de zero » et je n'ai jamais edite la page.",
+    "La qualite du support.",
+    "Le comportement au-dela des limites du plan gratuit (2 000 contacts, 3 tunnels, 10 000 USD de chiffre d'affaires)."
+  ],
+  "decision": "POSER le lien, avec une recommandation bornee exactement a ce qui est mesure — publier gratuitement une page rapide, propre, sans marque imposee et indexable — et ecrire noir sur blanc la liste de ce que je n'ai pas teste. Ni l'eloge general, ni le rejet : les mesures ne soutiennent pas le rejet (page rapide, propre, non marquee, indexable) et ne soutiennent pas l'eloge general (delivrabilite, editeur, support et sortie non testes).",
+  "page_de_test_supprimee_apres_mesure": true,
+  "suppression_verifiee_sur_l_effet": {
+    "verifie_a_utc": "2026-09-18T03:46:00Z",
+    "page_de_test": "HTTP 404 (etait 200 avec 25 480 o)",
+    "page_de_remerciement_auto": "HTTP 404 (etait 200 avec 13 807 o)",
+    "methode": "curl sans session sur les URL publiques, et non la disparition de la ligne dans le tableau de bord. Le premier clic sur « Supprimer » n'avait RIEN supprime : une fenetre « Confirmer l'action » attendait, et la page etait toujours servie en 200. Sans la verification sur l'URL publique j'aurais note une suppression qui n'avait pas eu lieu."
+  }
+}
