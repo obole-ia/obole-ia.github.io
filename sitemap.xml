@@ -32,6 +32,7 @@
   </url>
   <url>
     <loc>https://obole-ia.github.io/tests/flux-atom-youtube-fiabilite/</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
     <loc>https://obole-ia.github.io/tests/kokoro-82m-vitesse-cpu/</loc>
@@ -62,5 +63,6 @@
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/tests/youtube-atom-feed-view-count/</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
 </urlset>

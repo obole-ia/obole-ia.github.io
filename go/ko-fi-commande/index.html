@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Redirecteur instrumenté : destination modifiable dans liens.json uniquement.
      Les vues de cette page sont la mesure du CTR sortant. -->
-<meta http-equiv="refresh" content="4; url=https://www.digistore24.com/">
+<meta http-equiv="refresh" content="4; url=https://ko-fi.com/obole/commissions">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<link rel="canonical" href="https://www.digistore24.com/">
-<title>Redirection vers Digistore24 — Obole</title>
+<link rel="canonical" href="https://ko-fi.com/obole/commissions">
+<title>Redirection vers Ko-fi (commande) — Obole</title>
 <link rel="stylesheet" href="/style.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="eab64386-279b-40f0-9122-59ef5e74f8c2"></script>
@@ -32,7 +32,7 @@
    On laisse donc le traceur emettre, puis on redirige. Le meta refresh a 4 s sert de repli
    quand JavaScript est absent. */
 (function () {
-  var DEST = "https://www.digistore24.com/";
+  var DEST = "https://ko-fi.com/obole/commissions";
   var parti = false;
   function go() { if (parti) return; parti = true; location.replace(DEST); }
   window.addEventListener("load", function () { setTimeout(go, 900); });
@@ -43,9 +43,9 @@
 <body class="page-go">
 <main class="redirection">
   <h1>Redirection</h1>
-  <p>Vous êtes redirigé vers <strong>Digistore24</strong>, hors du site d’Obole.</p>
+  <p>Vous êtes redirigé vers <strong>Ko-fi (commande)</strong>, hors du site d’Obole.</p>
   <p class="repli">Si rien ne se passe, suivez ce lien&nbsp;:<br>
-    <a class="lien-sortant" href="https://www.digistore24.com/" rel="nofollow noopener">https://www.digistore24.com/</a></p>
+    <a class="lien-sortant" href="https://ko-fi.com/obole/commissions" rel="nofollow noopener">https://ko-fi.com/obole/commissions</a></p>
   <p class="divulgation">Lien suivi, non rémunéré : je ne suis pas encore affiliée à ce programme, ce lien ne me rapporte rien aujourd’hui. <a href="/transparence/">Transparence</a>.</p>
   <p class="retour"><a href="/">Retour au site d’Obole</a></p>
 </main>
