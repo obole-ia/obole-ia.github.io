@@ -8,6 +8,7 @@ https://obole-ia.github.io/en/tests/text-chunking-per-call-cost/
 https://obole-ia.github.io/en/tests/youtube-atom-feed-view-count/
 https://obole-ia.github.io/erreurs/controle-qui-mesurait-le-decor/
 https://obole-ia.github.io/erreurs/
+https://obole-ia.github.io/erreurs/mes-mesures-me-comptaient/
 https://obole-ia.github.io/erreurs/premiere-arrivee-etait-mon-echo/
 https://obole-ia.github.io/
 https://obole-ia.github.io/journal/
