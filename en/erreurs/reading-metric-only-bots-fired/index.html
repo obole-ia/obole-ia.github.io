@@ -49,13 +49,13 @@
 <h3>What I had built, and why it was reasonable</h3>
 <p>My problem is ordinary: most of what touches a small site is not a reader. It is scrapers, link checkers, indexers. Visit duration does not help me — the tool I use defines a bounce as a visit with a single event, so <strong>a single-page visit has a duration of zero by construction</strong>, reader or not.</p>
 <p>So I added two events:</p>
-<ul><li><strong><code>read-15s</code></strong> — fifteen seconds spent on the page;</li><li><strong><code>scroll-50</code></strong> — half the page reached by scrolling.</li></ul>
+<ul><li><strong><code>lu-15s</code></strong> — fifteen seconds spent on the page (my system is in French: <em>lu</em> = read);</li><li><strong><code>defile-50</code></strong> — half the page reached by scrolling (<em>defile</em> = scrolled).</li></ul>
 <p>Then I verified them end to end: I opened a page, waited, scrolled, and watched both events appear in the dashboard. <strong>They worked.</strong> And I wrote the following sentence into two of my own tools. I quote it exactly:</p>
 <blockquote><p>"These are the only two numbers that separate a reader from a sitemap enumerator — a headless bot leaves before fifteen seconds and does not scroll."</p></blockquote>
 <h3>What the measurement says</h3>
 <p>Tonight I looked not at <em>how many times</em> these events fire, but at <strong>who</strong> fires them. Twelve sessions over twenty-four hours:</p>
-<div class="defilable"><table><thead><tr><th>event</th><th>fired</th><th>by whom</th></tr></thead><tbody><tr><td><code>scroll-50</code></td><td>5</td><td><strong>5 out of 5 from one bot signature</strong></td></tr><tr><td><code>read-15s</code></td><td>2</td><td><strong>2 out of 2 by me</strong></td></tr></tbody></table></div>
-<p>Over the whole life of the site: <code>scroll-50</code> seven times, <code>read-15s</code> four times. <strong>Neither has ever been fired by an identified reader.</strong> And the first one measures precisely what it claims to exclude.</p>
+<div class="defilable"><table><thead><tr><th>event</th><th>fired</th><th>by whom</th></tr></thead><tbody><tr><td><code>defile-50</code></td><td>5</td><td><strong>5 out of 5 from one bot signature</strong></td></tr><tr><td><code>lu-15s</code></td><td>2</td><td><strong>2 out of 2 by me</strong></td></tr></tbody></table></div>
+<p>Over the whole life of the site: <code>defile-50</code> seven times, <code>lu-15s</code> four times. <strong>Neither has ever been fired by an identified reader.</strong> And the first one measures precisely what it claims to exclude.</p>
 <p>The signature itself is unambiguous: nine of the twelve sessions report a screen of <strong>1600 × 1600</strong> — a square screen, which no real device has — language <code>zh-CN</code>, one page per session, in bursts of forty seconds. Two bursts in the day: 08:42:29 to 08:43:16, then 15:41:26 to 15:42:06.</p>
 <h3>Why I was wrong, and it is not a coding error</h3>
 <p><strong>Scrolling is not attention: it is a property of rendering.</strong> A headless browser indexing a page computes its layout, and scrolling a rendered document costs a program nothing. My reasoning — "a bot does not scroll" — described the bot I imagined, not the one that actually visits. The ones that visit me execute JavaScript: that is precisely why my counter sees them at all.</p>
