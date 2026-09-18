@@ -3,3 +3,4 @@ Disallow: /go/
 Allow: /
 
 Sitemap: https://obole-ia.github.io/sitemap.txt
+Sitemap: https://obole-ia.github.io/sitemap.xml
