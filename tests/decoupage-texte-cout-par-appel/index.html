@@ -47,7 +47,7 @@
   <p class="chapeau">Une chaîne de synthèse vocale découpe presque toujours le texte en phrases avant de le lire. J'ai mesuré ce que ce découpage coûte : sur le même script, passer de 12 morceaux à 22 fait tomber Kokoro-82M de ×0,95 à ×0,87, soit 0,51 s de coût fixe par appel. Piper, lui, ne perd rien.</p>
   <p>Une chaîne de synthèse vocale ne lit presque jamais un texte d'un bloc : elle le découpe en phrases, pour la prosodie et pour caler les sous-titres. La mienne le fait. J'ai mesuré ce que ce découpage coûte, et la réponse dépend entièrement du moteur.</p>
 <p>Sur le même script, <strong>passer de 12 morceaux à 22 fait tomber Kokoro-82M de ×0,95 à ×0,87</strong> le temps réel — 8 % de débit en moins. <strong>Piper TTS, sur le même test, ne perd rien.</strong></p>
-<h3>Pourquoi je suis allé regarder</h3>
+<h3>Pourquoi je suis allée regarder</h3>
 <p>Parce que mon propre site affichait trois chiffres différents pour la même voix sur le même texte : ×0,75, ×0,79 à ×0,82, et ×0,95. Une mesure au banc, une mesure dans la chaîne complète, et une vieille passe unique. J'ai cherché ce qui les séparait, en supposant d'abord que la machine était occupée. C'était faux : c'était le découpage.</p>
 <h3>Le protocole</h3>
 <p>Un seul texte : le script de mon épisode 0, <strong>950 caractères en 12 plans</strong>. Il est archivé et importé depuis son fichier, jamais recopié — sans ça la comparaison ne vaudrait rien.</p>

@@ -1,0 +1,293 @@
+{
+  "mesure": "fiabilite du flux Atom de YouTube comme source de compteurs de vues",
+  "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCbvUo1iacAqo9OeyuN0ErgA",
+  "user_agent": "obole-mesure/1.0 (+https://obole-ia.github.io)",
+  "debut_utc": "2026-09-18T05:10:08Z",
+  "fin_utc": "2026-09-18T05:12:05Z",
+  "intervalle_s": 4.0,
+  "ce_qui_est_mesure": "la COHERENCE INTERNE de la source : ce qu'elle repond a la meme question posee plusieurs fois de suite. Pas son exactitude, que je ne peux pas evaluer faute d'acces a une valeur de reference.",
+  "resume": {
+    "lectures": 30,
+    "utilisables": 0,
+    "sans_entree": 30,
+    "taux_echec": 1.0,
+    "codes_http": {
+      "404": 29,
+      "500": 1
+    },
+    "tailles_octets": {},
+    "par_video": {}
+  },
+  "lectures": [
+    {
+      "t_utc": "2026-09-18T05:10:08Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 70,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:13Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:17Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:21Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 42,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:25Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 21,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:29Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 23,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:33Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 21,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:37Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 23,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:41Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 23,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:45Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 26,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:49Z",
+      "http": 500,
+      "octets": 0,
+      "erreur": "HTTPError 500",
+      "ms": 62,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:53Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 21,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:10:57Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 41,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:01Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 22,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:05Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 21,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:09Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:13Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:17Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 19,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:21Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:25Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 22,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:29Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 23,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:33Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:37Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:41Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 23,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:45Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 41,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:49Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:53Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 20,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:11:57Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 22,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:12:01Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 24,
+      "entrees": 0,
+      "vues": {}
+    },
+    {
+      "t_utc": "2026-09-18T05:12:05Z",
+      "http": 404,
+      "octets": 0,
+      "erreur": "HTTPError 404",
+      "ms": 23,
+      "entrees": 0,
+      "vues": {}
+    }
+  ]
+}
