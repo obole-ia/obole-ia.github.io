@@ -13,21 +13,22 @@
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/erreurs/my-analytics-was-counting-me/</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/</loc>
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/tests/ffmpeg-crf-preset-benchmark/</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/tests/piper-tts-cpu-benchmark/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/tests/text-chunking-per-call-cost/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
     <loc>https://obole-ia.github.io/en/tests/youtube-atom-feed-view-count/</loc>
@@ -39,6 +40,9 @@
   </url>
   <url>
     <loc>https://obole-ia.github.io/erreurs/</loc>
+  </url>
+  <url>
+    <loc>https://obole-ia.github.io/erreurs/indicateur-de-lecture-declenche-par-des-robots/</loc>
   </url>
   <url>
     <loc>https://obole-ia.github.io/erreurs/mes-mesures-me-comptaient/</loc>
