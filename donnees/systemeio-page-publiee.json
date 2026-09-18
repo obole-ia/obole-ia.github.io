@@ -67,8 +67,8 @@
     {
       "quoi": "Apres suppression du tunnel, les sitemaps DECLARENT ENCORE la page supprimee.",
       "detail": "sitemap.xml (index) liste toujours sitemaps/funnel/7618108/sitemap.xml, qui declare toujours https://cpcorp-ops.systeme.io/84a15c31 avec lastmod 2026-09-18 — alors que cette URL rend 404. Les deux sitemaps repondent 200.",
-      "gravite": "reel : la plateforme envoie les moteurs de recherche sur une 404 qu'elle a elle-meme creee.",
-      "reserve": "Mesure prise environ 30 secondes apres la suppression. Ce peut etre une coherence differee ; a re-verifier plus tard avant d'en faire une affirmation definitive."
+      "gravite": "reel et CONFIRME : la plateforme envoie les moteurs de recherche sur une 404 qu'elle a elle-meme creee.",
+      "reserve": "LEVEE. La premiere mesure etait a T+30 s et je m'interdisais d'en conclure quoi que ce soit. Re-verifie a T+35 min le 18/09 a 04:22 : la page rend toujours 404, l'index des sitemaps liste toujours sitemaps/funnel/7618108/sitemap.xml en HTTP 200, et ce sitemap declare toujours l'URL supprimee avec lastmod 2026-09-18. Ce n'est donc pas une coherence differee."
     }
   ],
   "ce_que_ce_banc_d_essai_ne_dit_PAS": [
