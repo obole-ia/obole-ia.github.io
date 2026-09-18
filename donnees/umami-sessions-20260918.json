@@ -1,0 +1,198 @@
+[
+  {
+    "id": "fc21a768",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T15:42:06Z",
+    "fin": "2026-09-18T15:42:06Z",
+    "visites": 1,
+    "vues": 1,
+    "ev": 0,
+    "activite": [
+      "2026-09-18T15:42:06Z vue /erreurs/"
+    ]
+  },
+  {
+    "id": "ba7d6193",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T15:41:28Z",
+    "fin": "2026-09-18T15:41:28Z",
+    "visites": 1,
+    "vues": 1,
+    "ev": 0,
+    "activite": [
+      "2026-09-18T15:41:28Z vue /en/erreurs/check-that-measured-the-scenery/"
+    ]
+  },
+  {
+    "id": "0d212b07",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:43:14Z",
+    "fin": "2026-09-18T15:41:26Z",
+    "visites": 2,
+    "vues": 1,
+    "ev": 1,
+    "activite": [
+      "2026-09-18T15:41:26Z defile-50 /en/erreurs/check-that-measured-the-scenery/",
+      "2026-09-18T08:43:14Z vue /tests/flux-atom-youtube-fiabilite/"
+    ]
+  },
+  {
+    "id": "d3ef0d2b",
+    "pays": "FR",
+    "os": "Linux",
+    "nav": "chrome",
+    "ecran": "390x844",
+    "langue": "en-US",
+    "debut": "2026-09-18T14:25:20Z",
+    "fin": "2026-09-18T14:26:09Z",
+    "visites": 1,
+    "vues": 2,
+    "ev": 2,
+    "activite": [
+      "2026-09-18T14:26:09Z lu-15s /erreurs/controle-qui-mesurait-le-decor/",
+      "2026-09-18T14:25:54Z vue /erreurs/controle-qui-mesurait-le-decor/",
+      "2026-09-18T14:25:34Z lu-15s /?utm_source=test&utm_medium=controle-mobile",
+      "2026-09-18T14:25:20Z vue /?utm_source=test&utm_medium=controle-mobile"
+    ]
+  },
+  {
+    "id": "f01479af",
+    "pays": "US",
+    "os": "Linux",
+    "nav": "chrome",
+    "ecran": "1600x1200",
+    "langue": "en-US",
+    "debut": "2026-09-18T13:02:26Z",
+    "fin": "2026-09-18T13:02:26Z",
+    "visites": 1,
+    "vues": 1,
+    "ev": 0,
+    "activite": [
+      "2026-09-18T13:02:26Z vue /"
+    ]
+  },
+  {
+    "id": "64039ddf",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:43:16Z",
+    "fin": "2026-09-18T08:43:16Z",
+    "visites": 1,
+    "vues": 0,
+    "ev": 1,
+    "activite": [
+      "2026-09-18T08:43:16Z defile-50 /tests/flux-atom-youtube-fiabilite/"
+    ]
+  },
+  {
+    "id": "a3071e1e",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:43:05Z",
+    "fin": "2026-09-18T08:43:05Z",
+    "visites": 1,
+    "vues": 1,
+    "ev": 0,
+    "activite": [
+      "2026-09-18T08:43:05Z vue /outils/"
+    ]
+  },
+  {
+    "id": "2f50a2a5",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:43:04Z",
+    "fin": "2026-09-18T08:43:04Z",
+    "visites": 1,
+    "vues": 0,
+    "ev": 1,
+    "activite": [
+      "2026-09-18T08:43:04Z defile-50 /outils/"
+    ]
+  },
+  {
+    "id": "62c6f23a",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:42:37Z",
+    "fin": "2026-09-18T08:42:37Z",
+    "visites": 1,
+    "vues": 0,
+    "ev": 1,
+    "activite": [
+      "2026-09-18T08:42:37Z defile-50 /en/tests/youtube-atom-feed-view-count/"
+    ]
+  },
+  {
+    "id": "7894e139",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:42:36Z",
+    "fin": "2026-09-18T08:42:36Z",
+    "visites": 1,
+    "vues": 1,
+    "ev": 0,
+    "activite": [
+      "2026-09-18T08:42:36Z vue /en/tests/youtube-atom-feed-view-count/"
+    ]
+  },
+  {
+    "id": "5e44ce2d",
+    "pays": "CN",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1600x1600",
+    "langue": "zh-CN",
+    "debut": "2026-09-18T08:42:29Z",
+    "fin": "2026-09-18T08:42:29Z",
+    "visites": 1,
+    "vues": 0,
+    "ev": 1,
+    "activite": [
+      "2026-09-18T08:42:29Z defile-50 /donnees/?utm_source=devto&utm_medium=article&utm_campaign=youtube-atom-feed-view-count"
+    ]
+  },
+  {
+    "id": "a99a7c9d",
+    "pays": "CL",
+    "os": "Windows 10",
+    "nav": "chrome",
+    "ecran": "1920x1080",
+    "langue": "en-US",
+    "debut": "2026-09-18T04:27:09Z",
+    "fin": "2026-09-18T04:27:09Z",
+    "visites": 1,
+    "vues": 1,
+    "ev": 0,
+    "activite": [
+      "2026-09-18T04:27:09Z vue /?utm_source=youtube&utm_medium=commentaire"
+    ]
+  }
+]
