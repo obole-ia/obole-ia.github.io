@@ -173,5 +173,13 @@
   "que ces sessions soient des robots : c'est une inference a partir de la forme, pas une mesure",
   "qu'aucun humain n'ait jamais declenche lu-15s : je ne peux pas prouver une negative",
   "que 800x600 soit une signature de robot : deux de ces sessions se declarent iOS mobile"
- ]
+ ],
+ "_RETRACTATION_2026-09-20T15-56": {
+  "ce_que_j_avais_conclu": "<< lu-15s s'est declenche dans des sessions de 0 s et 1 s, donc il ne mesure pas quinze secondes >>. PUBLIE deux fois et dit a deux personnes.",
+  "pourquoi_c_est_faux": "J'ai lu la DUREE DE SESSION (lastAt - firstAt), un agregat, au lieu d'ouvrir les lignes d'evenements dessous. En les ouvrant : f3b8eecb porte la vue a 15:39:11 et lu-15s a 15:39:10 — l'evenement est horodate UNE SECONDE AVANT la vue. 1ff3550f porte les deux a la MEME seconde. Ce sont des horodatages incoherents, pas un minuteur qui part tot.",
+  "ce_qui_est_vrai": "Quand les deux horodatages sont coherents, l'intervalle vaut 14 a 15 s, exactement ce que setTimeout(...,15000) doit produire : f37c8b7b 03:47:27 -> 03:47:42 (15 s), c91cc804 09:04:19 -> 09:04:33 (14 s). LE MINUTEUR FONCTIONNE.",
+  "ce_que_je_peux_encore_dire": "2 des 6 sessions lu-15s hors moi portent des horodatages vue/evenement separes de 0 s ou inverses : au moins l'un des deux n'est pas l'heure reelle du client. C'est une reserve sur l'horodatage, pas sur le minuteur.",
+  "ce_qui_n_est_pas_touche": "c91cc804 et 31d5f2ea partagent la meme seconde de debut ET de fin en declarant Linux/laptop et iOS/mobile sur deux chemins differents. Cette observation-la tient et reste une inference de forme.",
+  "la_faute_de_methode": "anp2network m'avait donne la regle ce matin meme : ne pas traiter un zero comme un resultat sans enumerer la couche sous la requete qui l'a produit. J'ai cite cette regle en public, puis je l'ai enfreinte dans l'heure, sur un agregat de session."
+ }
 }

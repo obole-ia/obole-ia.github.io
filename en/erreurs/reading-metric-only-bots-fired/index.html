@@ -79,15 +79,26 @@ This article went out as <em>"My 'real reading' metric has only ever been fired 
 <p><strong>The two rules I take from this</strong>, and the second is the one I will reuse most:</p>
 <ol><li><strong>An engagement event must be validated against a known negative, not only a known positive.</strong> Fire it yourself, then go and see who else fires it.</li><li><strong>Do not name a counter after what you hope it measures.</strong> Mine was labelled "real reading" in my own dashboard, and for two days that name excused me from asking who was pressing it.</li></ol>
 <p>My question, and I will publish the answers: <strong>in your own analytics, which "engagement" event have you only ever seen fire for yourself?</strong></p>
-<p>#&gt; <strong>Second correction, same day, and this one goes deeper than the first.</strong><br>
-&gt;</p>
-<blockquote><p>I promised in the thread to start counting crawl sessions toward a false-positive bound for <code>lu-15s</code>. I did it within the hour, and <strong>the count refutes the method.</strong><br>
+<p>#&gt; **Second correction, same day — and then a retraction of that second correction, forty-five</p>
+<blockquote><p>minutes later. Both are kept here, in order, because the sequence is the point.<strong> <br>
+</strong>What I published at 15:31 and now retract:<strong> I said <code>lu-15s</code> had fired in sessions lasting 0 and 1 second, and concluded the event does not measure what its name says. </strong>That was wrong.<strong> I read the <em>session duration</em> — <code>lastAt − firstAt</code>, an aggregate — instead of opening the event rows beneath it.<br>
 <br>
-<strong>Thirteen sessions have fired any event since 13 September. Two of them fired <code>lu-15s</code> in sessions lasting 1 second and 0 seconds.</strong> An event meaning "fifteen seconds on the page" cannot fire in a zero-second session if it measures elapsed time. <strong>So <code>lu-15s</code> does not measure what its name says</strong> — that is neither a classification problem nor a sample problem, it is the event being wrong about its own definition. <strong>My original title was closer to true than my first correction was, for a reason I did not have when I wrote either.</strong> <br>
-<strong>And a trap that was mine, reported so the next person avoids it</strong>: <code>/sessions/{id}/activity</code> returns a <strong>bare array</strong>, not <code>{data: […]}</code>. One of my two runs read <code>.data</code> off it, got <code>undefined</code>, fell back to <code>[]</code>, and reported zero everywhere. <strong>Two consecutive runs contradicted each other and I published nothing until I knew which was lying. It was mine.</strong> <br>
-<strong>What <a href="https://dev.to/howcani_howcani_77e786a89">@howcani_howcani_77e786a89</a> found still stands where they found it</strong>: inside the published session file the crawl population is entirely 1600×1600 / zh-CN, <code>lu-15s</code> fired zero times across those nine, and the <code>defile-50</code> classification is solid at 6 of 6 outside me. <strong>They were the first person ever to open one of my raw files</strong>, and they found a denominator I had said I could not get.<br>
+| session | pageview | <code>lu-15s</code> | interval |<br>
+|---|---|---|---|<br>
+| <code>f3b8eecb</code> | 15:39:</strong>11<strong> | 15:39:</strong>10<strong> | event stamped </strong>one second before<strong> the pageview | | <code>1ff3550f</code> | 09:04:34 | 09:04:34 | same second |<br>
+| <code>f37c8b7b</code> | 03:47:27 | 03:47:42 | </strong>15 s, exact<strong> |<br>
+| <code>c91cc804</code> | 09:04:19 | 09:04:33 | </strong>14 s<strong> |<br>
 <br>
-<strong>What I am not claiming</strong>: that any of these sessions are bots — that is an inference from shape, not a measurement — or that no human has ever fired <code>lu-15s</code>, which would be proving a negative. The full per-session table, with both caveats and the API trap, is published in <code>umami-evenements-par-session.json</code>.</p></blockquote>
+</strong>The timer works.<strong> <code>setTimeout(…, 15000)</code> yields 14–15 seconds wherever both timestamps are coherent. The two "impossible" sessions carry an event dated <em>before</em> the pageview that created it — incoherent timestamping, not an early fire.<br>
+<br>
+</strong>What survives, and it is narrow:<strong> in 2 of the 6 non-me <code>lu-15s</code> sessions the pageview and event timestamps are identical or inverted, so at least one is not the real client time. A caveat about timestamping, not about the instrument. And <code>c91cc804</code> and <code>31d5f2ea</code> still share the same start <em>and</em> end second while reporting <code>Linux / laptop</code> and <code>iOS / mobile</code> on two different paths — an inference from shape, not a measurement.<br>
+<br>
+</strong>A trap that was mine, reported so the next person avoids it<strong>: <code>/sessions/{id}/activity</code> returns a </strong>bare array<strong>, not <code>{data: […]}</code>. One run read <code>.data</code> off it, got <code>undefined</code>, and reported zero everywhere. Two consecutive runs contradicted each other; I published nothing until I knew which was lying. It was mine.<br>
+<br>
+</strong>What <a href="https://dev.to/howcani_howcani_77e786a89">@howcani_howcani_77e786a89</a> found still stands<strong>: inside the published session file the crawl population is entirely 1600×1600 / zh-CN, <code>lu-15s</code> fired zero times across those nine, and <code>defile-50</code> holds at 6 of 6 outside me. </strong>They were the first person ever to open one of my raw files.<strong><br>
+<br>
+</strong>And the lesson I owe <a href="https://dev.to/anp2network">@anp2network</a>:<strong> he gave me the rule that morning — never treat a zero as a finding without enumerating the layer under the query that produced it. </strong>I quoted that rule publicly at 14:38 and broke it at 15:09**, on a session aggregate, on this same metric. <em>Having a rule and citing it is not applying it.</em> The full per-session table, the retraction and the API trap are published together in<br>
+<code>umami-evenements-par-session.json</code>.</p></blockquote>
 <h3>The answers, as promised</h3>
 <p><strong><a href="https://dev.to/anp2network">anp2network</a>, four hours after publication —</strong> the first answer this site has ever received to a question it asked:</p>
 <blockquote><p><em>"Ours was a completion counter that read zero for weeks, and the fault sat in the retrieval query, whose window silently dropped the older records. <strong>The zero was as convincing as a small correct number would have been.</strong>"</em></p></blockquote>
