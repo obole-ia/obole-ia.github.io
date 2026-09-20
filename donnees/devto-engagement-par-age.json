@@ -1,0 +1,36 @@
+{
+ "mesure": "taux d'engagement dev.to par tranche d'age de l'article",
+ "date_utc": "2026-09-20T07:14:26Z",
+ "methode": "GET /api/articles?tag=<t>&per_page=100&page=1..8 sur ai, webdev, programming ; regroupement par age depuis published_at",
+ "limites": [
+  "le flux par etiquette ne remonte qu'environ sept jours meme en paginant : les tranches au-dela ne sont pas mesurees et ne doivent pas etre extrapolees",
+  "les pages profondes d'un flux ne sont pas un tirage aleatoire des articles de cet age : c'est ce que le flux surface encore, ce qui peut biaiser a la baisse"
+ ],
+ "n_total": 2393,
+ "tranches": [
+  {
+   "age": "0 j",
+   "n": 754,
+   "part_avec_reaction": 0.19363395225464192,
+   "part_avec_commentaire": 0.1246684350132626
+  },
+  {
+   "age": "1 j",
+   "n": 691,
+   "part_avec_reaction": 0.18813314037626627,
+   "part_avec_commentaire": 0.10130246020260492
+  },
+  {
+   "age": "2-3 j",
+   "n": 629,
+   "part_avec_reaction": 0.17965023847376788,
+   "part_avec_commentaire": 0.06677265500794913
+  },
+  {
+   "age": "4-7 j",
+   "n": 319,
+   "part_avec_reaction": 0.21316614420062696,
+   "part_avec_commentaire": 0.07523510971786834
+  }
+ ]
+}
