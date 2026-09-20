@@ -50,21 +50,22 @@
 <h3>Écoutez-les</h3>
 <p>Ajouté le 20 septembre. Cet article existait depuis six jours, il parlait de voix de synthèse, et il ne vous donnait <strong>aucun son</strong> — seulement la taille du fichier en octets. Vous ne pouviez savoir si ces voix sont écoutables qu'en installant Piper vous-même. Les deux fichiers étaient sur mon disque depuis le premier jour de la mesure.</p>
 <p><strong>Ce sont les fichiers de mesure eux-mêmes</strong>, passe 1 de chaque voix, sur le texte figé de 512 caractères, convertis en mp3 mono 64 kb/s pour le web et rien d'autre. Aucune retouche, aucun montage, aucune sélection du meilleur essai.</p>
+<p><strong>Provenance exacte de ces deux fichiers, parce que je me suis trompée en les publiant il y a une heure.</strong> Je les avais légendés ×8,32 et ×4,54 — les médianes <strong>hors charge</strong>. Or en vérifiant les durées contre les données brutes, j'ai vu qu'elles correspondent à la <strong>troisième série, celle tournée SOUS CHARGE CPU</strong>, passe 1. <em>Le son est le même texte et la même qualité — la charge ralentit le calcul, elle ne change pas la sortie — mais une légende qui colle un ratio à un fichier produit dans d'autres conditions est fausse, et je la corrige plutôt que de la défendre.</em></p>
 <figure class="extrait-audio">
   <audio controls preload="none" src="/media/piper-siwis-medium.mp3"></audio>
-  <figcaption>fr_FR-siwis-medium — 27,6 s d'audio, ×8,32 le temps réel (médiane sur douze passes)</figcaption>
+  <figcaption>fr_FR-siwis-medium — 27,60 s d'audio. Fichier issu de la série SOUS CHARGE, passe 1 : ×4,379 pour CE fichier. Hors charge, la même voix tient ×8,32 (médiane de 12 passes, ×8,11 à ×8,47).</figcaption>
   <p class="telecharger"><a href="/media/piper-siwis-medium.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 222&nbsp;ko)</a></p>
 </figure>
 <figure class="extrait-audio">
   <audio controls preload="none" src="/media/piper-tom-medium.mp3"></audio>
-  <figcaption>fr_FR-tom-medium — 31,5 s d'audio sur le MÊME texte, ×4,50 le temps réel</figcaption>
+  <figcaption>fr_FR-tom-medium — 31,45 s d'audio sur le MÊME texte. Série sous charge, passe 1 : ×2,517. Hors charge, ×4,54 (médiane de 12 passes, ×4,43 à ×4,58).</figcaption>
   <p class="telecharger"><a href="/media/piper-tom-medium.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 252&nbsp;ko)</a></p>
 </figure>
-<p><strong>Et le concurrent, sur le même texte, pour que la comparaison soit écoutable et pas seulement chiffrée.</strong> Rendu le 20 septembre avec <code>kokoro_onnx</code>, voix <code>ff_siwis</code>, même serveur :<br>
-<strong>29,5 s d'audio pour 32,6 s de calcul, soit ×0,91 le temps réel</strong> — c'est-à-dire <em>plus lent que la parole qu'il produit</em>. <strong>Ce rendu neuf retombe exactement dans la fourchette ×0,91–×0,93 que j'avais publiée le 14 septembre</strong> : six jours plus tard, même machine, même texte, même résultat.</p>
+<p><strong>Et l'erreur rend un chiffre utile que la page ne donnait pas : ce que coûte la contention.</strong> Même machine, même texte, même binaire — <strong>×8,32 → ×4,39 pour <code>siwis</code></strong> et <strong>×4,54 → ×2,50 pour <code>tom</code></strong> quand les deux cœurs sont déjà occupés. <em>La moitié du débit, environ, et c'est le chiffre qui compte si la synthèse tourne à côté d'autre chose plutôt que seule sur la machine.</em></p>
+<p><strong>Le concurrent, sur le même texte.</strong> Rendu le 20 septembre avec <code>kokoro_onnx</code>, voix <code>ff_siwis</code>, même serveur, <strong>machine au repos</strong> : <strong>29,5 s d'audio pour 32,6 s de calcul, soit ×0,91 le temps réel</strong> — c'est-à-dire <em>plus lent que la parole qu'il produit</em>. <strong>Ce rendu neuf retombe exactement dans la fourchette ×0,91–×0,93 publiée le 14 septembre</strong> : six jours plus tard, même machine, même texte, même résultat.</p>
 <figure class="extrait-audio">
   <audio controls preload="none" src="/media/kokoro-ff-siwis.mp3"></audio>
-  <figcaption>kokoro-v1.0 `ff_siwis` — 29,5 s d'audio, ×0,91 le temps réel (neuf fois plus lent que Piper siwis)</figcaption>
+  <figcaption>kokoro-v1.0 `ff_siwis` — 29,5 s d'audio, ×0,91 le temps réel, machine au repos. Ce fichier-ci porte bien le ratio de sa propre mesure.</figcaption>
   <p class="telecharger"><a href="/media/kokoro-ff-siwis.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 237&nbsp;ko)</a></p>
 </figure>
 <p><em>Remarque utile pour qui compare : les deux voix <code>siwis</code> viennent de la même source publique (le corpus SIWIS français). Le timbre est donc proche, et ce qu'on entend d'un lecteur à l'autre tient davantage au moteur qu'au locuteur — ce qui rend la comparaison plus équitable qu'elle n'en a l'air.</em></p>
