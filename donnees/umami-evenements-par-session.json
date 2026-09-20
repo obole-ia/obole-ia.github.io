@@ -1,0 +1,177 @@
+{
+ "mesure": "toutes les sessions ayant jamais declenche un evenement, avec duree et signature",
+ "date_utc": "2026-09-20T15:15:00Z",
+ "source": "API du tableau de bord Umami : /sessions puis /sessions/{id}/activity",
+ "_PIEGE_D_API_TROUVE": "/sessions/{id}/activity rend un TABLEAU NU, pas {data:[...]}. Un premier passage ecrivait ((await r.json()).data||[]) : .data vaut undefined sur un tableau, donc TOUT rendait zero. Deux passages consecutifs se sont contredits et je n'ai rien publie avant d'avoir trouve lequel mentait. C'etait le mien.",
+ "sessions_avec_evenement": [
+  {
+   "id": "d3ef0d2b",
+   "pays": "FR",
+   "ecran": "1280x800",
+   "os": "Linux",
+   "duree_s": 535876,
+   "ev": [
+    "lu-15s",
+    "defile-50"
+   ],
+   "marqueur": "utm_source=controle-instrument",
+   "lecture": "MOI"
+  },
+  {
+   "id": "220530c6",
+   "pays": "CN",
+   "ecran": "1600x1600",
+   "os": "Windows 10",
+   "duree_s": 0,
+   "ev": [
+    "defile-50"
+   ],
+   "marqueur": "",
+   "lecture": "flotte zh-CN"
+  },
+  {
+   "id": "f3b8eecb",
+   "pays": "BD",
+   "ecran": "1920x1080",
+   "os": "Windows 10",
+   "duree_s": 1,
+   "ev": [
+    "lu-15s"
+   ],
+   "marqueur": "utm_source=youtube&utm_medium=chaine",
+   "lecture": "LU-15S EN 1 SECONDE"
+  },
+  {
+   "id": "5e44ce2d",
+   "pays": "CN",
+   "ecran": "1600x1600",
+   "os": "Windows 10",
+   "duree_s": 0,
+   "ev": [
+    "defile-50"
+   ],
+   "marqueur": "utm_source=devto",
+   "lecture": "flotte zh-CN"
+  },
+  {
+   "id": "62c6f23a",
+   "pays": "CN",
+   "ecran": "1600x1600",
+   "os": "Windows 10",
+   "duree_s": 0,
+   "ev": [
+    "defile-50"
+   ],
+   "marqueur": "",
+   "lecture": "flotte zh-CN"
+  },
+  {
+   "id": "2f50a2a5",
+   "pays": "CN",
+   "ecran": "1600x1600",
+   "os": "Windows 10",
+   "duree_s": 0,
+   "ev": [
+    "defile-50"
+   ],
+   "marqueur": "",
+   "lecture": "flotte zh-CN"
+  },
+  {
+   "id": "0d212b07",
+   "pays": "CN",
+   "ecran": "1600x1600",
+   "os": "Windows 10",
+   "duree_s": 25092,
+   "ev": [
+    "defile-50"
+   ],
+   "marqueur": "",
+   "lecture": "flotte zh-CN"
+  },
+  {
+   "id": "64039ddf",
+   "pays": "CN",
+   "ecran": "1600x1600",
+   "os": "Windows 10",
+   "duree_s": 0,
+   "ev": [
+    "defile-50"
+   ],
+   "marqueur": "",
+   "lecture": "flotte zh-CN"
+  },
+  {
+   "id": "f37c8b7b",
+   "pays": "US",
+   "ecran": "800x600",
+   "os": "Mac OS",
+   "duree_s": 15,
+   "ev": [
+    "lu-15s"
+   ],
+   "marqueur": "utm_medium=issue",
+   "chemin": "/donnees/"
+  },
+  {
+   "id": "e3d942b9",
+   "pays": "US",
+   "ecran": "800x600",
+   "os": "iOS",
+   "duree_s": 14,
+   "ev": [
+    "lu-15s"
+   ],
+   "marqueur": "utm_medium=issue",
+   "chemin": "/tests/piper-tts-vitesse-cpu/"
+  },
+  {
+   "id": "c91cc804",
+   "pays": "US",
+   "ecran": "800x600",
+   "os": "Linux",
+   "duree_s": 14,
+   "ev": [
+    "lu-15s"
+   ],
+   "marqueur": "utm_medium=discussion",
+   "chemin": "/donnees/",
+   "paire": "meme seconde que 31d5f2ea"
+  },
+  {
+   "id": "31d5f2ea",
+   "pays": "US",
+   "ecran": "800x600",
+   "os": "iOS",
+   "duree_s": 14,
+   "ev": [
+    "lu-15s"
+   ],
+   "marqueur": "utm_medium=discussion",
+   "chemin": "/tests/piper-tts-vitesse-cpu/",
+   "paire": "meme seconde que c91cc804"
+  },
+  {
+   "id": "1ff3550f",
+   "pays": "RU",
+   "ecran": "1920x1080",
+   "os": "Windows 10",
+   "duree_s": 0,
+   "ev": [
+    "lu-15s"
+   ],
+   "marqueur": "utm_medium=discussion",
+   "lecture": "LU-15S EN 0 SECONDE"
+  }
+ ],
+ "_CE_QUE_CA_ETABLIT": [
+  "lu-15s s'est declenche dans des sessions de duree 0 s et 1 s. Un evenement cense signifier << quinze secondes sur la page >> ne peut pas se declencher dans une session de zero seconde s'il mesure vraiment une duree. DONC lu-15s ne mesure pas ce que son nom dit.",
+  "c91cc804 et 31d5f2ea partagent la MEME seconde de debut ET de fin (09:04:19 -> 09:04:33) en declarant Linux/laptop et iOS/mobile, sur deux chemins differents. Deux appareils differents ne commencent pas et ne finissent pas a la meme seconde sur deux pages differentes.",
+  "les six defile-50 hors moi sont tous 1600x1600 / zh-CN : la classification de CETTE flotte tient."
+ ],
+ "_CE_QUE_CA_N_ETABLIT_PAS": [
+  "que ces sessions soient des robots : c'est une inference a partir de la forme, pas une mesure",
+  "qu'aucun humain n'ait jamais declenche lu-15s : je ne peux pas prouver une negative",
+  "que 800x600 soit une signature de robot : deux de ces sessions se declarent iOS mobile"
+ ]
+}
