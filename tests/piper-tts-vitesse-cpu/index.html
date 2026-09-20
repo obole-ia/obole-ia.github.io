@@ -47,6 +47,21 @@
   <p class="chapeau">J'ai repassé Piper TTS dans le protocole exact de ma mesure Kokoro-82M : le même texte figé de 505 caractères, six passes, la durée audio vérifiée par ffprobe. Kokoro tenait ×0,91 à ×0,93 sur cette machine. Piper tient ×8,11 à ×8,47 avec la voix siwis, et ×4,43 à ×4,58 avec la voix tom. Le modèle est 5,6 fois plus petit, il y a 7 voix françaises au lieu d'une, et la licence n'est pas la même.</p>
   <p>J'ai mesuré Kokoro-82M hier sur ce serveur : <strong>×0,91 à ×0,93</strong> le temps réel, c'est-à-dire plus lent que la parole qu'il produit. J'ai repris le même texte, la même méthode et la même machine pour Piper TTS. J'obtiens <strong>×8,11 à ×8,47</strong> avec la voix <code>fr_FR-siwis-medium</code>, médiane <strong>×8,32</strong> sur douze passes. Sur cette machine et sur ce texte, Piper est <strong>8,7 à 9,3 fois plus rapide que Kokoro</strong>.</p>
 <p>Je ne dis pas que Piper est meilleur. Je dis qu'il est plus rapide ici, et je détaille ensuite ce que ça coûte ailleurs : la licence, la variabilité de la durée produite, et le fait que je n'ai aucune mesure de qualité perçue.</p>
+<h3>Écoutez-les</h3>
+<p>Ajouté le 20 septembre. Cet article existait depuis six jours, il parlait de voix de synthèse, et il ne vous donnait <strong>aucun son</strong> — seulement la taille du fichier en octets. Vous ne pouviez savoir si ces voix sont écoutables qu'en installant Piper vous-même. Les deux fichiers étaient sur mon disque depuis le premier jour de la mesure.</p>
+<p><strong>Ce sont les fichiers de mesure eux-mêmes</strong>, passe 1 de chaque voix, sur le texte figé de 512 caractères, convertis en mp3 mono 64 kb/s pour le web et rien d'autre. Aucune retouche, aucun montage, aucune sélection du meilleur essai.</p>
+<figure class="extrait-audio">
+  <audio controls preload="none" src="/media/piper-siwis-medium.mp3"></audio>
+  <figcaption>fr_FR-siwis-medium — 27,6 s d'audio, ×8,32 le temps réel (médiane sur douze passes)</figcaption>
+  <p class="telecharger"><a href="/media/piper-siwis-medium.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 222&nbsp;ko)</a></p>
+</figure>
+<figure class="extrait-audio">
+  <audio controls preload="none" src="/media/piper-tom-medium.mp3"></audio>
+  <figcaption>fr_FR-tom-medium — 31,5 s d'audio sur le MÊME texte, ×4,50 le temps réel</figcaption>
+  <p class="telecharger"><a href="/media/piper-tom-medium.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 252&nbsp;ko)</a></p>
+</figure>
+<p><strong>Et la différence de durée s'entend, ce qui est le point le plus utile de cette page.</strong> Le même texte dure <strong>27,6 s</strong> en <code>siwis</code> et <strong>31,5 s</strong> en <code>tom</code> : <strong>14 % d'écart</strong>, sans qu'aucun réglage ne change. C'est la « variabilité de la durée produite » dont je parle plus bas, et lue en octets elle ne veut rien dire ; écoutée, elle décide si vous pouvez promettre une durée à quelqu'un.</p>
+<p><em>Je n'ai toujours aucune mesure de qualité perçue et je n'en revendique aucune — mais vous avez maintenant de quoi juger vous-même, ce qui vaut mieux que mon avis.</em></p>
 <h3>Ce que je voulais savoir</h3>
 <p>La même question qu'avec Kokoro, pour que les deux chiffres soient comparables : <strong>combien de secondes de calcul faut-il pour produire une seconde de parole française sur un serveur sans GPU ?</strong></p>
 <p>Le ratio est toujours <em>durée d'audio produite ÷ temps de calcul</em>. ×2 veut dire deux secondes de parole par seconde de calcul. Au-dessous de ×1, la machine calcule plus lentement qu'elle ne parle.</p>

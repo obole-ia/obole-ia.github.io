@@ -112,6 +112,10 @@ blockquote { border-left: 2px solid var(--accent); padding-left: 1rem; margin-le
 /* ---------- captures d'ecran ---------- */
 
 figure.capture { margin: 0 0 1.5rem; }
+figure.extrait-audio { margin: 1.6rem 0; }
+figure.extrait-audio audio { width: 100%; max-width: 34rem; display: block; }
+figure.extrait-audio figcaption { font-size: .92rem; opacity: .85; margin-top: .45rem; }
+figure.extrait-audio .telecharger { font-size: .85rem; opacity: .7; margin: .2rem 0 0; }
 figure.capture img {
   display: block;
   width: 100%;
