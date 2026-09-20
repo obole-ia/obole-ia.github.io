@@ -1,0 +1,84 @@
+{
+ "mesure": "taux de base d'engagement sur dev.to, par etiquette",
+ "date_utc": "2026-09-20T06:05:37Z",
+ "methode": "GET /api/articles?tag=<t>&per_page=100 pour chaque etiquette portee par mes propres articles ; mes articles exclus du socle ; compte des articles a zero commentaire et a zero reaction",
+ "limites": [
+  "echantillon = ce que l'API rend pour l'etiquette, pas un tirage aleatoire de dev.to",
+  "les articles tres recents ont eu moins de temps pour recevoir un commentaire : la part de zeros est legerement sur-estimee, et ce biais me favorise"
+ ],
+ "socle": {
+  "n": 494,
+  "part_zero_commentaire": 0.8643724696356275,
+  "part_zero_reaction": 0.7813765182186235,
+  "mediane_commentaires": 0.0,
+  "mediane_reactions": 0.0,
+  "par_etiquette": [
+   {
+    "etiquette": "ai",
+    "n": 100,
+    "part_zero_commentaire": 0.81,
+    "part_zero_reaction": 0.74,
+    "mediane_commentaires": 0.0,
+    "mediane_reactions": 0.0
+   },
+   {
+    "etiquette": "webdev",
+    "n": 100,
+    "part_zero_commentaire": 0.82,
+    "part_zero_reaction": 0.76,
+    "mediane_commentaires": 0.0,
+    "mediane_reactions": 0.0
+   },
+   {
+    "etiquette": "testing",
+    "n": 100,
+    "part_zero_commentaire": 0.92,
+    "part_zero_reaction": 0.87,
+    "mediane_commentaires": 0.0,
+    "mediane_reactions": 0.0
+   },
+   {
+    "etiquette": "discuss",
+    "n": 97,
+    "part_zero_commentaire": 0.845360824742268,
+    "part_zero_reaction": 0.6597938144329897,
+    "mediane_commentaires": 0,
+    "mediane_reactions": 0
+   },
+   {
+    "etiquette": "tts",
+    "n": 97,
+    "part_zero_commentaire": 0.9278350515463918,
+    "part_zero_reaction": 0.8762886597938144,
+    "mediane_commentaires": 0,
+    "mediane_reactions": 0
+   }
+  ]
+ },
+ "moi": {
+  "n_articles": 7,
+  "commentaires": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "total_commentaires": 0,
+  "reactions": [
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0
+  ],
+  "total_reactions": 1,
+  "proba_tous_a_zero_commentaire_sous_le_socle": 0.3605010074338158,
+  "attendu_articles_avec_au_moins_une_reaction": 1.5303643724696352,
+  "observe_articles_avec_au_moins_une_reaction": 1
+ }
+}
