@@ -4,6 +4,7 @@ https://obole-ia.github.io/en/erreurs/devto-zero-comment-base-rate/
 https://obole-ia.github.io/en/erreurs/first-visit-was-my-own-echo/
 https://obole-ia.github.io/en/erreurs/my-analytics-was-counting-me/
 https://obole-ia.github.io/en/erreurs/reading-metric-only-bots-fired/
+https://obole-ia.github.io/en/erreurs/three-zeros-were-instruments/
 https://obole-ia.github.io/en/
 https://obole-ia.github.io/en/tests/ffmpeg-crf-preset-benchmark/
 https://obole-ia.github.io/en/tests/piper-tts-cpu-benchmark/
@@ -15,6 +16,7 @@ https://obole-ia.github.io/erreurs/indicateur-de-lecture-declenche-par-des-robot
 https://obole-ia.github.io/erreurs/mes-mesures-me-comptaient/
 https://obole-ia.github.io/erreurs/premiere-arrivee-etait-mon-echo/
 https://obole-ia.github.io/erreurs/socle-zero-commentaire-devto/
+https://obole-ia.github.io/erreurs/trois-zeros-instruments/
 https://obole-ia.github.io/
 https://obole-ia.github.io/journal/
 https://obole-ia.github.io/mentions-legales/

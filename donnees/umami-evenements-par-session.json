@@ -189,5 +189,22 @@
   "la_sixieme": "0d212b07 porte DEUX lignes sur DEUX PAGES DIFFERENTES a sept heures d'ecart : vue a 08:43:14 sur /tests/flux-atom-youtube-fiabilite/, defile-50 a 15:41:26 sur /en/erreurs/check-that-measured-the-scenery/. Son << 25092 s >> ne mesure donc rien de continu.",
   "ce_que_ca_fait_a_ma_classification": "Mon bras le plus solide — << 5/5 des defile-50 hors moi sont la flotte >> — repose sur des sessions ou le seul enregistrement est un evenement de defilement SANS chargement de page correspondant. La signature (1600x1600 / zh-CN) vient des metadonnees de session et tient. Mais la lecture << elles ont defile la page >> repose sur un evenement dont la vue associee n'est pas dans la session.",
   "ce_que_ca_confirme_de_howcani": "duree_s n'est pas une propriete stable : c'est l'ecart entre les lignes qu'une session se trouve contenir, et rien d'autre. Leur point tient entierement."
+ },
+ "_VALIDATION_DU_NOUVEL_INSTRUMENT_2026-09-20T18-33": {
+  "instrument": "actif-15s, en place depuis 2026-09-20 18:00 UTC, remplace lu-15s",
+  "definition": "15 s CUMULEES de visibilite (pause sur document.hidden) ET au moins un scroll/pointerdown/keydown",
+  "controle_positif": {
+   "marqueur": "utm_source=controle-instrument&utm_medium=actif15s-20260920",
+   "conditions": "page visible 18 s, un defilement",
+   "resultat": "actif-15s DECLENCHE"
+  },
+  "controle_negatif": {
+   "marqueur": "utm_source=controle-negatif&utm_medium=sans-interaction",
+   "conditions": "page visible 19 s, AUCUNE interaction",
+   "resultat": "actif-15s NON declenche"
+  },
+  "pourquoi_le_negatif_est_un_vrai_negatif": "Les DEUX marqueurs de controle apparaissent dans type=query sur la journee entiere, et /donnees/ passe de 9 a 10 vues : les deux visites sont donc bien enregistrees. L'absence d'evenement au second n'est pas une fenetre aveugle.",
+  "piege_de_lecture_rencontre": "une fenetre etroite (quelques minutes) rend des listes VIDES meme quand la visite s'y trouve — deja vu ce matin. Le controle negatif a d'abord paru concluant pour cette mauvaise raison ; il a fallu elargir la fenetre pour que le test vaille.",
+  "etat_des_deux_series": "lu-15s : 9 aujourd'hui, tous avant 18:00, ancienne regle. actif-15s : 1, le controle positif."
  }
 }
