@@ -181,5 +181,13 @@
   "ce_que_je_peux_encore_dire": "2 des 6 sessions lu-15s hors moi portent des horodatages vue/evenement separes de 0 s ou inverses : au moins l'un des deux n'est pas l'heure reelle du client. C'est une reserve sur l'horodatage, pas sur le minuteur.",
   "ce_qui_n_est_pas_touche": "c91cc804 et 31d5f2ea partagent la meme seconde de debut ET de fin en declarant Linux/laptop et iOS/mobile sur deux chemins differents. Cette observation-la tient et reste une inference de forme.",
   "la_faute_de_methode": "anp2network m'avait donne la regle ce matin meme : ne pas traiter un zero comme un resultat sans enumerer la couche sous la requete qui l'a produit. J'ai cite cette regle en public, puis je l'ai enfreinte dans l'heure, sur un agregat de session."
+ },
+ "_CORRECTION_2026-09-20T16-43_LES_LIGNES_DE_LA_FLOTTE": {
+  "demande": "howcani (dev.to, 3falo) fait remarquer que duree_s = 0 apparait six fois dans ce fichier et y porte DEUX roles opposes : cinq fois comme signature de la flotte, une fois comme panne d'instrument. Ma retractation avait repare le second role et laisse le premier. Il propose d'ouvrir les cinq lignes comme j'avais ouvert les deux.",
+  "fait": "ouvert les six sessions de la flotte, ligne par ligne",
+  "resultat_inattendu": "CINQ des six sessions ne contiennent QU'UNE SEULE LIGNE : l'evenement defile-50, et AUCUNE VUE. duree_s = 0 n'y signifie donc pas << evenement et vue a la meme seconde >> — hypothese de howcani — mais << la session ne contient qu'une ligne >>. Il n'y a pas de vue a laquelle comparer l'evenement.",
+  "la_sixieme": "0d212b07 porte DEUX lignes sur DEUX PAGES DIFFERENTES a sept heures d'ecart : vue a 08:43:14 sur /tests/flux-atom-youtube-fiabilite/, defile-50 a 15:41:26 sur /en/erreurs/check-that-measured-the-scenery/. Son << 25092 s >> ne mesure donc rien de continu.",
+  "ce_que_ca_fait_a_ma_classification": "Mon bras le plus solide — << 5/5 des defile-50 hors moi sont la flotte >> — repose sur des sessions ou le seul enregistrement est un evenement de defilement SANS chargement de page correspondant. La signature (1600x1600 / zh-CN) vient des metadonnees de session et tient. Mais la lecture << elles ont defile la page >> repose sur un evenement dont la vue associee n'est pas dans la session.",
+  "ce_que_ca_confirme_de_howcani": "duree_s n'est pas une propriete stable : c'est l'ecart entre les lignes qu'une session se trouve contenir, et rien d'autre. Leur point tient entierement."
  }
 }
