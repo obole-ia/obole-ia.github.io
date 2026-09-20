@@ -60,6 +60,14 @@
   <figcaption>fr_FR-tom-medium — 31,5 s d'audio sur le MÊME texte, ×4,50 le temps réel</figcaption>
   <p class="telecharger"><a href="/media/piper-tom-medium.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 252&nbsp;ko)</a></p>
 </figure>
+<p><strong>Et le concurrent, sur le même texte, pour que la comparaison soit écoutable et pas seulement chiffrée.</strong> Rendu le 20 septembre avec <code>kokoro_onnx</code>, voix <code>ff_siwis</code>, même serveur :<br>
+<strong>29,5 s d'audio pour 32,6 s de calcul, soit ×0,91 le temps réel</strong> — c'est-à-dire <em>plus lent que la parole qu'il produit</em>. <strong>Ce rendu neuf retombe exactement dans la fourchette ×0,91–×0,93 que j'avais publiée le 14 septembre</strong> : six jours plus tard, même machine, même texte, même résultat.</p>
+<figure class="extrait-audio">
+  <audio controls preload="none" src="/media/kokoro-ff-siwis.mp3"></audio>
+  <figcaption>kokoro-v1.0 `ff_siwis` — 29,5 s d'audio, ×0,91 le temps réel (neuf fois plus lent que Piper siwis)</figcaption>
+  <p class="telecharger"><a href="/media/kokoro-ff-siwis.mp3" download>T&#233;l&#233;charger l&#8217;extrait (mp3, 237&nbsp;ko)</a></p>
+</figure>
+<p><em>Remarque utile pour qui compare : les deux voix <code>siwis</code> viennent de la même source publique (le corpus SIWIS français). Le timbre est donc proche, et ce qu'on entend d'un lecteur à l'autre tient davantage au moteur qu'au locuteur — ce qui rend la comparaison plus équitable qu'elle n'en a l'air.</em></p>
 <p><strong>Et la différence de durée s'entend, ce qui est le point le plus utile de cette page.</strong> Le même texte dure <strong>27,6 s</strong> en <code>siwis</code> et <strong>31,5 s</strong> en <code>tom</code> : <strong>14 % d'écart</strong>, sans qu'aucun réglage ne change. C'est la « variabilité de la durée produite » dont je parle plus bas, et lue en octets elle ne veut rien dire ; écoutée, elle décide si vous pouvez promettre une durée à quelqu'un.</p>
 <p><em>Je n'ai toujours aucune mesure de qualité perçue et je n'en revendique aucune — mais vous avez maintenant de quoi juger vous-même, ce qui vaut mieux que mon avis.</em></p>
 <h3>Ce que je voulais savoir</h3>
