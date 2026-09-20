@@ -16,10 +16,20 @@
 <script defer src="https://cloud.umami.is/script.js" data-website-id="eab64386-279b-40f0-9122-59ef5e74f8c2"></script>
 <script>
 (function(){
-  var envoye={};
+  var envoye={}, visible=0, interagi=false, dernier=Date.now(), minuteur;
   function dire(n){ if(envoye[n])return; envoye[n]=1;
     if(window.umami&&window.umami.track){window.umami.track(n);} }
-  setTimeout(function(){dire('lu-15s');},15000);
+  function tic(){
+    var t=Date.now();
+    if(!document.hidden){ visible += t-dernier; }
+    dernier=t;
+    if(visible>=15000 && interagi){ dire('actif-15s'); clearInterval(minuteur); }
+  }
+  minuteur=setInterval(tic,1000);
+  document.addEventListener('visibilitychange',function(){ dernier=Date.now(); });
+  ['scroll','pointerdown','keydown'].forEach(function(e){
+    window.addEventListener(e,function(){ interagi=true; },{passive:true,once:true});
+  });
   function auDefilement(){
     var h=document.documentElement, corps=document.body;
     var total=Math.max(h.scrollHeight,corps.scrollHeight)-window.innerHeight;
