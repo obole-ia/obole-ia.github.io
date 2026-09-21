@@ -1,0 +1,503 @@
+{
+  "outil": "piper-tts",
+  "question": "pour K flux simultanes a 1 fil sur 2 coeurs ARM, quel est le debit agrege, et bat-il un seul processus a 2 fils",
+  "origine": "csukuangfj (COLLABORATOR k2-fsa/sherpa-onnx), discussion #3968, 2026-09-21T02:31:15Z : \"I suggest that you set num_threads to 1\"",
+  "version_piper": "1.8.0",
+  "version_onnxruntime": "1.30.0",
+  "machine": "aarch64",
+  "coeurs": 2,
+  "date_utc": "2026-09-21T03:25:44.424072Z",
+  "protocole": {
+    "source_du_texte": "outils/mesure_tts.py (importe, non recopie)",
+    "passes_par_bras": 6,
+    "K_testes": [
+      1,
+      2
+    ],
+    "synchronisation": "multiprocessing.Barrier avant chaque passe",
+    "pourquoi_barriere": "sans elle un enfant qui finit tot mesure une machine libre, et le chiffre est faux dans le sens qui m'arrange",
+    "controle": "% de processeur par enfant < 110 %, et somme > 150 % a K=2",
+    "commande": "outils/venv/bin/python outils/mesure_piper_parallele.py 6"
+  },
+  "bras": [
+    {
+      "voix": "fr_FR-siwis-medium",
+      "flux_simultanes": 1,
+      "fils_par_flux": 1,
+      "mural_total_s": 34.83669624198228,
+      "enfants": [
+        {
+          "rang": 0,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 5.4610629682429135,
+              "audio_s": 27.55047619047619,
+              "ratio": 5.044892606199064,
+              "rtf": 0.19822027505029935,
+              "cpu_pourcent": 99.98372169945516
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 5.485881541855633,
+              "audio_s": 27.921995464852607,
+              "ratio": 5.0897919052418725,
+              "rtf": 0.19647168658705289,
+              "cpu_pourcent": 100.94408633779663
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 5.521850592922419,
+              "audio_s": 28.026485260770976,
+              "ratio": 5.075560229154636,
+              "rtf": 0.19702258565584116,
+              "cpu_pourcent": 99.7791212797743
+            },
+            {
+              "passe": 4,
+              "temps_calcul_s": 5.476775959134102,
+              "audio_s": 27.86394557823129,
+              "ratio": 5.087654814829541,
+              "rtf": 0.1965542153302522,
+              "cpu_pourcent": 100.44948051644951
+            },
+            {
+              "passe": 5,
+              "temps_calcul_s": 5.489031564909965,
+              "audio_s": 27.910385487528345,
+              "ratio": 5.084755873140283,
+              "rtf": 0.19666627561854058,
+              "cpu_pourcent": 99.98519657064531
+            },
+            {
+              "passe": 6,
+              "temps_calcul_s": 5.433626017998904,
+              "audio_s": 27.654965986394558,
+              "ratio": 5.089596872288853,
+              "rtf": 0.19647921536667556,
+              "cpu_pourcent": 99.97381089544645
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 5.044892606199064,
+              "max": 5.0897919052418725,
+              "mediane": 5.086205343984912
+            },
+            "rtf": {
+              "min": 0.19647168658705289,
+              "max": 0.19822027505029935,
+              "mediane": 0.19661024547439637
+            },
+            "cpu_pourcent": {
+              "min": 99.7791212797743,
+              "max": 100.94408633779663,
+              "mediane": 99.98445913505023
+            }
+          }
+        }
+      ],
+      "debit_par_flux_mediane": [
+        5.086205343984912
+      ],
+      "debit_agrege_mediane": 5.086205343984912,
+      "cpu_somme_medianes": 99.98445913505023,
+      "controle_tenu": true
+    },
+    {
+      "voix": "fr_FR-siwis-medium",
+      "flux_simultanes": 2,
+      "fils_par_flux": 1,
+      "mural_total_s": 36.992509638890624,
+      "enfants": [
+        {
+          "rang": 0,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 5.745323716197163,
+              "audio_s": 27.921995464852607,
+              "ratio": 4.8599516483527605,
+              "rtf": 0.2057633639912738,
+              "cpu_pourcent": 98.1415021768723
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 5.737931184936315,
+              "audio_s": 27.78267573696145,
+              "ratio": 4.841932543544405,
+              "rtf": 0.20652910609695882,
+              "cpu_pourcent": 98.18552747356676
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 5.853974596131593,
+              "audio_s": 27.991655328798185,
+              "ratio": 4.781649607310484,
+              "rtf": 0.20913284789231262,
+              "cpu_pourcent": 95.8733917927962
+            },
+            {
+              "passe": 4,
+              "temps_calcul_s": 5.670646276324987,
+              "audio_s": 27.70140589569161,
+              "ratio": 4.8850526987277085,
+              "rtf": 0.20470608234389073,
+              "cpu_pourcent": 98.0989772404769
+            },
+            {
+              "passe": 5,
+              "temps_calcul_s": 5.473811058793217,
+              "audio_s": 27.30666666666667,
+              "ratio": 4.988602341836554,
+              "rtf": 0.20045694795385316,
+              "cpu_pourcent": 99.80108815090126
+            },
+            {
+              "passe": 6,
+              "temps_calcul_s": 5.659066995140165,
+              "audio_s": 27.654965986394558,
+              "ratio": 4.886841949413888,
+              "rtf": 0.20463113199720664,
+              "cpu_pourcent": 98.0658119927867
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 4.781649607310484,
+              "max": 4.988602341836554,
+              "mediane": 4.8725021735402345
+            },
+            "rtf": {
+              "min": 0.20045694795385316,
+              "max": 0.20913284789231262,
+              "mediane": 0.20523472316758226
+            },
+            "cpu_pourcent": {
+              "min": 95.8733917927962,
+              "max": 99.80108815090126,
+              "mediane": 98.1202397086746
+            }
+          }
+        },
+        {
+          "rang": 1,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 5.7296171258203685,
+              "audio_s": 27.631746031746033,
+              "ratio": 4.822616489891497,
+              "rtf": 0.20735631831725826,
+              "cpu_pourcent": 97.4365629919933
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 5.8751674252562225,
+              "audio_s": 28.11936507936508,
+              "ratio": 4.786138512152913,
+              "rtf": 0.20893670282646656,
+              "cpu_pourcent": 97.03612828959291
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 5.908987900242209,
+              "audio_s": 27.817505668934242,
+              "ratio": 4.7076599476187795,
+              "rtf": 0.2124197607998042,
+              "cpu_pourcent": 94.62806650476986
+            },
+            {
+              "passe": 4,
+              "temps_calcul_s": 5.729122763965279,
+              "audio_s": 27.527256235827664,
+              "ratio": 4.804794271291773,
+              "rtf": 0.20812545627081533,
+              "cpu_pourcent": 97.19606699692888
+            },
+            {
+              "passe": 5,
+              "temps_calcul_s": 5.940194638911635,
+              "audio_s": 28.43283446712018,
+              "ratio": 4.786515627092256,
+              "rtf": 0.2089202413421319,
+              "cpu_pourcent": 96.61516749645645
+            },
+            {
+              "passe": 6,
+              "temps_calcul_s": 5.747002048883587,
+              "audio_s": 28.11936507936508,
+              "ratio": 4.89287542273063,
+              "rtf": 0.20437879847795454,
+              "cpu_pourcent": 97.70696012003015
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 4.7076599476187795,
+              "max": 4.89287542273063,
+              "mediane": 4.795654949192015
+            },
+            "rtf": {
+              "min": 0.20437879847795454,
+              "max": 0.2124197607998042,
+              "mediane": 0.20852284880647362
+            },
+            "cpu_pourcent": {
+              "min": 94.62806650476986,
+              "max": 97.70696012003015,
+              "mediane": 97.1160976432609
+            }
+          }
+        }
+      ],
+      "debit_par_flux_mediane": [
+        4.8725021735402345,
+        4.795654949192015
+      ],
+      "debit_agrege_mediane": 9.66815712273225,
+      "cpu_somme_medianes": 195.2363373519355,
+      "controle_tenu": true
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "flux_simultanes": 1,
+      "fils_par_flux": 1,
+      "mural_total_s": 70.91000216919929,
+      "enfants": [
+        {
+          "rang": 0,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 11.533887737896293,
+              "audio_s": 30.958004535147392,
+              "ratio": 2.6840910227893318,
+              "rtf": 0.3725656065720122,
+              "cpu_pourcent": 100.35337834934693
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 11.34342880686745,
+              "audio_s": 30.63873015873016,
+              "ratio": 2.7010113679367476,
+              "rtf": 0.37023168871883777,
+              "cpu_pourcent": 100.21126939253182
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 11.509410647675395,
+              "audio_s": 31.22503401360544,
+              "ratio": 2.713000254266894,
+              "rtf": 0.36859561602592616,
+              "cpu_pourcent": 100.21725137011823
+            },
+            {
+              "passe": 4,
+              "temps_calcul_s": 11.56389959109947,
+              "audio_s": 31.364353741496597,
+              "ratio": 2.712264448027306,
+              "rtf": 0.3686956117893753,
+              "cpu_pourcent": 100.20943980626716
+            },
+            {
+              "passe": 5,
+              "temps_calcul_s": 11.40126057388261,
+              "audio_s": 30.963809523809523,
+              "ratio": 2.715823335775672,
+              "rtf": 0.3682124631698062,
+              "cpu_pourcent": 99.98505802168481
+            },
+            {
+              "passe": 6,
+              "temps_calcul_s": 11.387192675843835,
+              "audio_s": 30.789659863945577,
+              "ratio": 2.703885034742678,
+              "rtf": 0.3698382095210522,
+              "cpu_pourcent": 99.84782310849455
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 2.6840910227893318,
+              "max": 2.715823335775672,
+              "mediane": 2.7080747413849924
+            },
+            "rtf": {
+              "min": 0.3682124631698062,
+              "max": 0.3725656065720122,
+              "mediane": 0.3692669106552138
+            },
+            "cpu_pourcent": {
+              "min": 99.84782310849455,
+              "max": 100.35337834934693,
+              "mediane": 100.2103545993995
+            }
+          }
+        }
+      ],
+      "debit_par_flux_mediane": [
+        2.7080747413849924
+      ],
+      "debit_agrege_mediane": 2.7080747413849924,
+      "cpu_somme_medianes": 100.2103545993995,
+      "controle_tenu": true
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "flux_simultanes": 2,
+      "fils_par_flux": 1,
+      "mural_total_s": 74.79795977659523,
+      "enfants": [
+        {
+          "rang": 0,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 11.778787534683943,
+              "audio_s": 30.598095238095237,
+              "ratio": 2.5977287686016717,
+              "rtf": 0.38495165934443915,
+              "cpu_pourcent": 98.46536382329955
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 11.89159300364554,
+              "audio_s": 30.91736961451247,
+              "ratio": 2.599935063791227,
+              "rtf": 0.384624990803347,
+              "cpu_pourcent": 97.77397356633054
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 11.696524562314153,
+              "audio_s": 30.940589569161,
+              "ratio": 2.645280604877336,
+              "rtf": 0.37803172871574087,
+              "cpu_pourcent": 99.058972075613
+            },
+            {
+              "passe": 4,
+              "temps_calcul_s": 12.009497188962996,
+              "audio_s": 31.358548752834466,
+              "ratio": 2.6111458506067757,
+              "rtf": 0.38297362813632985,
+              "cpu_pourcent": 97.96315211940927
+            },
+            {
+              "passe": 5,
+              "temps_calcul_s": 11.741688197944313,
+              "audio_s": 30.783854875283446,
+              "ratio": 2.6217571405679942,
+              "rtf": 0.3814235821184237,
+              "cpu_pourcent": 98.20213929730077
+            },
+            {
+              "passe": 6,
+              "temps_calcul_s": 12.16770573798567,
+              "audio_s": 31.166984126984126,
+              "ratio": 2.5614511723180224,
+              "rtf": 0.39040369412743303,
+              "cpu_pourcent": 96.33463573503957
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 2.5614511723180224,
+              "max": 2.645280604877336,
+              "mediane": 2.6055404571990013
+            },
+            "rtf": {
+              "min": 0.37803172871574087,
+              "max": 0.39040369412743303,
+              "mediane": 0.3837993094698384
+            },
+            "cpu_pourcent": {
+              "min": 96.33463573503957,
+              "max": 99.058972075613,
+              "mediane": 98.08264570835502
+            }
+          }
+        },
+        {
+          "rang": 1,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 12.061668672133237,
+              "audio_s": 30.83609977324263,
+              "ratio": 2.5565367953179674,
+              "rtf": 0.3911541589510452,
+              "cpu_pourcent": 97.12301273094194
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 11.730522798374295,
+              "audio_s": 30.52843537414966,
+              "ratio": 2.6024786702925566,
+              "rtf": 0.3842490666359949,
+              "cpu_pourcent": 97.89868872333248
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 12.10072586638853,
+              "audio_s": 30.975419501133786,
+              "ratio": 2.5597984652451617,
+              "rtf": 0.39065575418423665,
+              "cpu_pourcent": 95.95160759943123
+            },
+            {
+              "passe": 4,
+              "temps_calcul_s": 11.767359738238156,
+              "audio_s": 30.807074829931974,
+              "ratio": 2.618010795558843,
+              "rtf": 0.38196939512105377,
+              "cpu_pourcent": 97.74317481452374
+            },
+            {
+              "passe": 5,
+              "temps_calcul_s": 12.140603066887707,
+              "audio_s": 31.166984126984126,
+              "ratio": 2.5671693535545193,
+              "rtf": 0.38953409856478444,
+              "cpu_pourcent": 96.33675473584425
+            },
+            {
+              "passe": 6,
+              "temps_calcul_s": 11.581345878075808,
+              "audio_s": 30.888344671201814,
+              "ratio": 2.6670772979568227,
+              "rtf": 0.37494226386542057,
+              "cpu_pourcent": 99.36071438626163
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 2.5565367953179674,
+              "max": 2.6670772979568227,
+              "mediane": 2.584824011923538
+            },
+            "rtf": {
+              "min": 0.37494226386542057,
+              "max": 0.3911541589510452,
+              "mediane": 0.3868915826003897
+            },
+            "cpu_pourcent": {
+              "min": 95.95160759943123,
+              "max": 99.36071438626163,
+              "mediane": 97.43309377273283
+            }
+          }
+        }
+      ],
+      "debit_par_flux_mediane": [
+        2.6055404571990013,
+        2.584824011923538
+      ],
+      "debit_agrege_mediane": 5.190364469122539,
+      "cpu_somme_medianes": 195.51573948108785,
+      "controle_tenu": true
+    }
+  ],
+  "controle_tenu": true
+}

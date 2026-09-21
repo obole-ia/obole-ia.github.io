@@ -1,0 +1,430 @@
+{
+  "_note": "Comparaison de ma table de fils a celle que csukuangfj m'a donnee le 2026-09-21T02:31:15Z dans k2-fsa/sherpa-onnx#3968. Tous les chiffres sont derives des archives brutes et de sa page HTML telechargee, aucun recopie.",
+  "date_utc": "2026-09-21T03:17:51.530628Z",
+  "sa_table": {
+    "url": "https://k2-fsa.github.io/sherpa/onnx/tts/pretrained_models/rtf.html",
+    "machine": "Raspberry Pi 4 Model B Rev 1.5 (4 coeurs) — texte de la page, cite",
+    "modeles": 16,
+    "acceleration_1_vers_2_fils": {
+      "min": 1.6024340770791077,
+      "max": 1.7568339453284374,
+      "mediane": 1.7129198966408268
+    },
+    "acceleration_1_vers_4_fils": {
+      "min": 2.1680672268907566,
+      "max": 2.745693563009973,
+      "mediane": 2.659203980099502
+    },
+    "lignes": [
+      {
+        "modele": "vits-melo-tts-zh_en (Chinese + English, 1 speaker)",
+        "rtf": {
+          "1": 6.727,
+          "2": 3.877,
+          "3": 2.914,
+          "4": 2.518
+        }
+      },
+      {
+        "modele": "vits-piper-en_US-glados (English, 1 speaker)",
+        "rtf": {
+          "1": 0.812,
+          "2": 0.48,
+          "3": 0.391,
+          "4": 0.349
+        }
+      },
+      {
+        "modele": "vits-piper-en_US-libritts_r-medium (English, 904 speakers)",
+        "rtf": {
+          "1": 0.79,
+          "2": 0.493,
+          "3": 0.392,
+          "4": 0.357
+        }
+      },
+      {
+        "modele": "ljspeech (English, single-speaker)",
+        "rtf": {
+          "1": 6.057,
+          "2": 3.517,
+          "3": 2.535,
+          "4": 2.206
+        }
+      },
+      {
+        "modele": "VCTK (English, multi-speaker, 109 speakers)",
+        "rtf": {
+          "1": 6.079,
+          "2": 3.483,
+          "3": 2.537,
+          "4": 2.226
+        }
+      },
+      {
+        "modele": "csukuangfj/sherpa-onnx-vits-zh-ll (Chinese, 5 speakers)",
+        "rtf": {
+          "1": 4.275,
+          "2": 2.494,
+          "3": 1.84,
+          "4": 1.593
+        }
+      },
+      {
+        "modele": "csukuangfj/vits-zh-hf-fanchen-C (Chinese, 187 speakers)",
+        "rtf": {
+          "1": 4.306,
+          "2": 2.451,
+          "3": 1.846,
+          "4": 1.6
+        }
+      },
+      {
+        "modele": "csukuangfj/vits-zh-hf-fanchen-wnj (Chinese, 1 male)",
+        "rtf": {
+          "1": 4.276,
+          "2": 2.505,
+          "3": 1.827,
+          "4": 1.608
+        }
+      },
+      {
+        "modele": "csukuangfj/vits-zh-hf-theresa (Chinese, 804 speakers)",
+        "rtf": {
+          "1": 6.032,
+          "2": 3.448,
+          "3": 2.566,
+          "4": 2.21
+        }
+      },
+      {
+        "modele": "csukuangfj/vits-zh-hf-eula (Chinese, 804 speakers)",
+        "rtf": {
+          "1": 6.011,
+          "2": 3.473,
+          "3": 2.537,
+          "4": 2.231
+        }
+      },
+      {
+        "modele": "aishell3 (Chinese, multi-speaker, 174 speakers)",
+        "rtf": {
+          "1": 0.365,
+          "2": 0.22,
+          "3": 0.171,
+          "4": 0.156
+        }
+      },
+      {
+        "modele": "en_US-lessac-medium (English, single-speaker)",
+        "rtf": {
+          "1": 0.774,
+          "2": 0.482,
+          "3": 0.39,
+          "4": 0.357
+        }
+      },
+      {
+        "modele": "matcha-icefall-zh-baker (Chinese, 1 female speaker)",
+        "rtf": {
+          "1": 0.892,
+          "2": 0.536,
+          "3": 0.432,
+          "4": 0.391
+        }
+      },
+      {
+        "modele": "matcha-icefall-en_US-ljspeech (American English, 1 female speaker)",
+        "rtf": {
+          "1": 0.941,
+          "2": 0.561,
+          "3": 0.451,
+          "4": 0.411
+        }
+      },
+      {
+        "modele": "kokoro-en-v0_19 (English, 11 speakers)",
+        "rtf": {
+          "1": 6.629,
+          "2": 3.87,
+          "3": 2.999,
+          "4": 2.774
+        }
+      },
+      {
+        "modele": "kokoro-multi-lang-v1_1 (Chinese + English, 103 speakers)",
+        "rtf": {
+          "1": 7.635,
+          "2": 4.47,
+          "3": 3.43,
+          "4": 3.191
+        }
+      }
+    ]
+  },
+  "ma_table": {
+    "machine": "aarch64, 2 coeurs, 6.17.0-1019-oracle",
+    "controle_cpu_tenu_partout": true,
+    "bras": [
+      {
+        "voix": "fr_FR-siwis-medium",
+        "fils": 1,
+        "rtf": {
+          "min": 0.19625485201070306,
+          "max": 0.20004720310240975,
+          "mediane": 0.19727352576531654
+        },
+        "ratio": {
+          "min": 4.9988202008906475,
+          "max": 5.095415424151978,
+          "mediane": 5.069116736751036
+        },
+        "cpu_pourcent": {
+          "min": 99.75245077514298,
+          "max": 100.62237133082128,
+          "mediane": 99.98383302002512
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-siwis-medium",
+        "fils": 2,
+        "rtf": {
+          "min": 0.11977591185953426,
+          "max": 0.12393086855576894,
+          "mediane": 0.12142460711937617
+        },
+        "ratio": {
+          "min": 8.0690146987068,
+          "max": 8.348924124015335,
+          "mediane": 8.235563003456129
+        },
+        "cpu_pourcent": {
+          "min": 187.47157702502022,
+          "max": 191.07471874199052,
+          "mediane": 190.34459080113933
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-siwis-medium",
+        "fils": 3,
+        "rtf": {
+          "min": 0.17905352547335893,
+          "max": 0.18236210767660502,
+          "mediane": 0.1810714117076898
+        },
+        "ratio": {
+          "min": 5.483595318899073,
+          "max": 5.584922147477004,
+          "mediane": 5.522776431022205
+        },
+        "cpu_pourcent": {
+          "min": 192.37171972832704,
+          "max": 193.89170698356165,
+          "mediane": 192.9036036836213
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-siwis-medium",
+        "fils": 4,
+        "rtf": {
+          "min": 0.18939648754764168,
+          "max": 0.198579128911266,
+          "mediane": 0.19438307693491505
+        },
+        "ratio": {
+          "min": 5.0357759422282715,
+          "max": 5.279928962507583,
+          "mediane": 5.144509995923286
+        },
+        "cpu_pourcent": {
+          "min": 192.7060534722048,
+          "max": 193.36042036048795,
+          "mediane": 193.12613998603928
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-tom-medium",
+        "fils": 1,
+        "rtf": {
+          "min": 0.36937521083651287,
+          "max": 0.372371042843785,
+          "mediane": 0.36977919119908964
+        },
+        "ratio": {
+          "min": 2.685493459327648,
+          "max": 2.707274258430419,
+          "mediane": 2.704316698910081
+        },
+        "cpu_pourcent": {
+          "min": 99.8027196370564,
+          "max": 100.35203579376079,
+          "mediane": 100.14952302360797
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-tom-medium",
+        "fils": 2,
+        "rtf": {
+          "min": 0.2185240214320134,
+          "max": 0.22491818356335824,
+          "mediane": 0.22093548022168857
+        },
+        "ratio": {
+          "min": 4.446061159471819,
+          "max": 4.576155945908754,
+          "mediane": 4.526304385640032
+        },
+        "cpu_pourcent": {
+          "min": 184.4509167765801,
+          "max": 186.27121675583845,
+          "mediane": 185.38351722151793
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-tom-medium",
+        "fils": 3,
+        "rtf": {
+          "min": 0.30451633143852874,
+          "max": 0.31113638284021666,
+          "mediane": 0.3051173355960589
+        },
+        "ratio": {
+          "min": 3.2140246372715198,
+          "max": 3.283896122339387,
+          "mediane": 3.2774299704954863
+        },
+        "cpu_pourcent": {
+          "min": 187.6465405307194,
+          "max": 189.1972183804044,
+          "mediane": 188.94056498223512
+        },
+        "controle_cpu_tenu": true
+      },
+      {
+        "voix": "fr_FR-tom-medium",
+        "fils": 4,
+        "rtf": {
+          "min": 0.3001163033886447,
+          "max": 0.3049731957004559,
+          "mediane": 0.3013419464827872
+        },
+        "ratio": {
+          "min": 3.2789766907325135,
+          "max": 3.3320415742460336,
+          "mediane": 3.3184892265182633
+        },
+        "cpu_pourcent": {
+          "min": 187.33657866979343,
+          "max": 189.02930431435715,
+          "mediane": 188.21315833922006
+        },
+        "controle_cpu_tenu": true
+      }
+    ],
+    "acceleration": {
+      "fr_FR-siwis-medium": {
+        "1_vers_2": 1.6246585469399215,
+        "1_vers_3": 1.0894791392237135,
+        "1_vers_4": 1.0148698584052627,
+        "2_vers_3": 0.6705896086754785
+      },
+      "fr_FR-tom-medium": {
+        "1_vers_2": 1.6736976371022436,
+        "1_vers_3": 1.2119245551115974,
+        "1_vers_4": 1.2271082586247632,
+        "2_vers_3": 0.7241000574093317
+      }
+    }
+  },
+  "ce_que_ca_montre": {
+    "1_l_acceleration_1_vers_2_fils_est_la_meme_sur_les_deux_machines": {
+      "chez_moi": {
+        "fr_FR-siwis-medium": 1.6246585469399215,
+        "fr_FR-tom-medium": 1.6736976371022436
+      },
+      "chez_lui_16_modeles": {
+        "min": 1.6024340770791077,
+        "max": 1.7568339453284374
+      },
+      "mes_valeurs_sont_dans_son_intervalle": true
+    },
+    "2_sur_2_coeurs_trois_fils_est_PIRE_que_deux": {
+      "fr_FR-siwis-medium": {
+        "2_vers_3": 0.6705896086754785,
+        "perte_relative": -0.32941039132452155
+      },
+      "fr_FR-tom-medium": {
+        "2_vers_3": 0.7241000574093317,
+        "perte_relative": -0.2758999425906683
+      }
+    },
+    "3_mes_chiffres_publies_etaient_des_chiffres_a_deux_fils": {
+      "fr_FR-siwis-medium": {
+        "14_09_mediane_des_series_2_fils_implicites": 8.312872325411693,
+        "21_09_a_2_fils_explicites": 8.235563003456129,
+        "ecart_relatif": -0.009299953004118264
+      },
+      "fr_FR-tom-medium": {
+        "14_09_mediane_des_series_2_fils_implicites": 4.540143928645236,
+        "21_09_a_2_fils_explicites": 4.526304385640032,
+        "ecart_relatif": -0.0030482608531166027
+      }
+    },
+    "4_deux_flux_a_un_fil_battent_un_processus_a_deux_fils": {
+      "fr_FR-siwis-medium": {
+        "1_flux_1_fil": 5.086205343984912,
+        "2_flux_1_fil_par_flux": [
+          4.8725021735402345,
+          4.795654949192015
+        ],
+        "2_flux_agrege": 9.66815712273225,
+        "1_processus_2_fils": 8.235563003456129,
+        "gain_2x1fil_contre_1x2fils": 0.17395217772906602,
+        "cout_par_flux_du_second_flux": [
+          -0.04201622938747629,
+          -0.05712517980354659
+        ],
+        "cpu_somme_a_2_flux": 195.2363373519355
+      },
+      "fr_FR-tom-medium": {
+        "1_flux_1_fil": 2.7080747413849924,
+        "2_flux_1_fil_par_flux": [
+          2.6055404571990013,
+          2.584824011923538
+        ],
+        "2_flux_agrege": 5.190364469122539,
+        "1_processus_2_fils": 4.526304385640032,
+        "gain_2x1fil_contre_1x2fils": 0.14671131830843653,
+        "cout_par_flux_du_second_flux": [
+          -0.0378624277310573,
+          -0.04551230716712795
+        ],
+        "cpu_somme_a_2_flux": 195.51573948108785
+      }
+    }
+  },
+  "ce_que_ca_ne_montre_pas": [
+    "Que ma machine soit plus rapide que la sienne : elle l'est, mais les voix et les textes diffèrent, donc les RTF absolus ne se comparent pas ligne a ligne. Seule la FORME de l'acceleration se compare, parce qu'elle est un rapport interne a chaque machine.",
+    "Que 3 et 4 fils soient mauvais en general : ils sont mauvais SUR 2 COEURS. Sa table montre le contraire sur 4 coeurs, ou 1->4 fils gagne encore un facteur 2.17 a 2.75.",
+    "Que mon chiffre de contention du 14/09 (x8,32 -> x4,39) soit explique. L'archive de cette serie NE DIT PAS quelle etait la charge concurrente : c'est un defaut de mon propre enregistrement, releve aujourd'hui. Je sais seulement que la serie du 21/09, dont la charge EST enregistree, donne un cout de contention beaucoup plus petit quand chaque flux est a 1 fil.",
+    "Que ces resultats valent pour sherpa-onnx. Je mesure piper-tts 1.8.0 + onnxruntime 1.30.0 en Python. csukuangfj repond que le profil de contention ne changerait pas ; je n'ai pas verifie cela moi-meme.",
+    "Que 2 voix fassent une table. Il en publie 16 ; j'en mesure 2."
+  ],
+  "archives_brutes": [
+    "media/mesures/piper-fils-20260921.json",
+    "media/mesures/piper-parallele-20260921.json",
+    "media/mesures/piper-20260914.json",
+    "media/mesures/piper-20260914-serie2.json",
+    "media/mesures/piper-20260914-serie3-charge.json"
+  ],
+  "outils": [
+    "outils/mesure_piper_fils.py",
+    "outils/mesure_piper_parallele.py"
+  ]
+}

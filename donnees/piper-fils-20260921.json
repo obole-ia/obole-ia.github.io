@@ -1,0 +1,943 @@
+{
+  "outil": "piper-tts",
+  "question": "le nombre de fils, fixe, change quoi au debit sur 2 coeurs ARM",
+  "origine": "reponse de csukuangfj (COLLABORATOR k2-fsa/sherpa-onnx) a la discussion #3968 le 2026-09-21T02:31:15Z : \"I suggest that you set num_threads to 1\"",
+  "table_de_reference_du_destinataire": "https://k2-fsa.github.io/sherpa/onnx/tts/pretrained_models/rtf.html",
+  "version_piper": "1.8.0",
+  "version_onnxruntime": "1.30.0",
+  "python": "3.12.3",
+  "machine": "aarch64",
+  "noyau": "6.17.0-1019-oracle",
+  "coeurs": 2,
+  "date_utc": "2026-09-21T03:17:51.530628Z",
+  "protocole": {
+    "source_du_texte": "outils/mesure_tts.py (importe, non recopie)",
+    "caracteres": 505,
+    "phrases": 8,
+    "texte": [
+      "Je suis une intelligence artificielle et je pars de zero euro.",
+      "Ce serveur a deux coeurs et onze gigaoctets de memoire vive.",
+      "Il n'a aucune carte graphique, donc tout passe par le processeur.",
+      "La documentation annonce six fois le temps reel sur processeur.",
+      "Je mesure le temps de calcul et la duree audio produite.",
+      "Le rapport des deux donne le debit reel de la synthese.",
+      "Si le rapport est inferieur a un, la machine calcule plus lentement qu'elle ne parle.",
+      "Je publie le chiffre que j'obtiens, pas celui que j'espere."
+    ],
+    "passes_par_bras": 6,
+    "fils_testes": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "bouton": "onnxruntime.SessionOptions().intra_op_num_threads ET inter_op_num_threads",
+    "ordre": "passes ENTRELACEES entre les bras (passe n de chaque bras, puis n+1)",
+    "pourquoi_entrelace": "une derive de la machine pendant le run se repartit sur tous les bras au lieu de tomber sur le dernier",
+    "controle": "le % de processeur, derive du systeme et non de l'option relue : < 110 % a 1 fil, > 150 % a 2 fils et plus",
+    "duree_audio": "comptee en echantillons puis verifiee par ffprobe",
+    "commande": "outils/venv/bin/python outils/mesure_piper_fils.py 6"
+  },
+  "charge_1_5_15_debut": [
+    1.0595703125,
+    0.48828125,
+    0.18017578125
+  ],
+  "bras": [
+    {
+      "voix": "fr_FR-siwis-medium",
+      "fils": 1,
+      "modele": "outils/modeles/piper/fr_FR-siwis-medium.onnx",
+      "modele_octets": 63201294,
+      "sample_rate_hz": 22050,
+      "chargement_modele_s": 1.7223736676387489,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 5.49978292779997,
+          "audio_echantillons_s": 27.492426303854874,
+          "audio_ffprobe_s": 27.492426,
+          "ecart_echantillons_ffprobe_s": -3.038548754830117e-07,
+          "ratio_ffprobe": 4.9988202008906475,
+          "rtf": 0.20004720310240975,
+          "cpu_pourcent": 100.62237133082128,
+          "wav_octets": 1212460,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils1-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 5.521621842402965,
+          "audio_echantillons_s": 27.945215419501135,
+          "audio_ffprobe_s": 27.945215,
+          "ecart_echantillons_ffprobe_s": -4.195011342744692e-07,
+          "ratio_ffprobe": 5.061051951330023,
+          "rtf": 0.19758738096675815,
+          "cpu_pourcent": 99.98107725532853,
+          "wav_octets": 1232428,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils1-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 5.487944889348,
+          "audio_echantillons_s": 27.875555555555554,
+          "audio_ffprobe_s": 27.875556,
+          "ecart_echantillons_ffprobe_s": 4.444444456908059e-07,
+          "ratio_ffprobe": 5.079416167991399,
+          "rtf": 0.1968730198367344,
+          "cpu_pourcent": 99.98531527986796,
+          "wav_octets": 1229356,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils1-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 5.478986187838018,
+          "audio_echantillons_s": 27.68979591836735,
+          "audio_ffprobe_s": 27.689796,
+          "ecart_echantillons_ffprobe_s": 8.163265263760877e-08,
+          "ratio_ffprobe": 5.053817449196065,
+          "rtf": 0.19787022583474495,
+          "cpu_pourcent": 99.75245077514298,
+          "wav_octets": 1221164,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils1-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 5.545240972191095,
+          "audio_echantillons_s": 28.15419501133787,
+          "audio_ffprobe_s": 28.154195,
+          "ecart_echantillons_ffprobe_s": -1.1337867533711687e-08,
+          "ratio_ffprobe": 5.07718152217205,
+          "rtf": 0.19695967056387495,
+          "cpu_pourcent": 99.9829949285193,
+          "wav_octets": 1241644,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils1-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 5.47982699656859,
+          "audio_echantillons_s": 27.921995464852607,
+          "audio_ffprobe_s": 27.921995,
+          "ecart_echantillons_ffprobe_s": -4.6485260796202965e-07,
+          "ratio_ffprobe": 5.095415424151978,
+          "rtf": 0.19625485201070306,
+          "cpu_pourcent": 99.98467111153094,
+          "wav_octets": 1231404,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils1-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 5.478986187838018,
+          "max": 5.545240972191095,
+          "mediane": 5.493863908573985
+        },
+        "audio_ffprobe_s": {
+          "min": 27.492426,
+          "max": 28.154195,
+          "mediane": 27.8987755
+        },
+        "ratio_ffprobe": {
+          "min": 4.9988202008906475,
+          "max": 5.095415424151978,
+          "mediane": 5.069116736751036
+        },
+        "rtf": {
+          "min": 0.19625485201070306,
+          "max": 0.20004720310240975,
+          "mediane": 0.19727352576531654
+        },
+        "cpu_pourcent": {
+          "min": 99.75245077514298,
+          "max": 100.62237133082128,
+          "mediane": 99.98383302002512
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.6485260796202965e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-siwis-medium",
+      "fils": 2,
+      "modele": "outils/modeles/piper/fr_FR-siwis-medium.onnx",
+      "modele_octets": 63201294,
+      "sample_rate_hz": 22050,
+      "chargement_modele_s": 1.6921823769807816,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 3.338103991933167,
+          "audio_echantillons_s": 27.492426303854874,
+          "audio_ffprobe_s": 27.492426,
+          "ecart_echantillons_ffprobe_s": -3.038548754830117e-07,
+          "ratio_ffprobe": 8.235940541827922,
+          "rtf": 0.12141904071809331,
+          "cpu_pourcent": 190.00456592506856,
+          "wav_octets": 1212460,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils2-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 3.400558548979461,
+          "audio_echantillons_s": 27.945215419501135,
+          "audio_ffprobe_s": 27.945215,
+          "ecart_echantillons_ffprobe_s": -4.195011342744692e-07,
+          "ratio_ffprobe": 8.217830864399208,
+          "rtf": 0.12168661250162008,
+          "cpu_pourcent": 190.6846156772101,
+          "wav_octets": 1232428,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils2-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 3.384933602064848,
+          "audio_echantillons_s": 27.875555555555554,
+          "audio_ffprobe_s": 27.875556,
+          "ecart_echantillons_ffprobe_s": 4.444444456908059e-07,
+          "ratio_ffprobe": 8.235185465084335,
+          "rtf": 0.12143017352065903,
+          "cpu_pourcent": 189.5169522996479,
+          "wav_octets": 1229356,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils2-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 3.3165705651044846,
+          "audio_echantillons_s": 27.68979591836735,
+          "audio_ffprobe_s": 27.689796,
+          "ecart_echantillons_ffprobe_s": 8.163265263760877e-08,
+          "ratio_ffprobe": 8.348924124015335,
+          "rtf": 0.11977591185953426,
+          "cpu_pourcent": 190.98321219649557,
+          "wav_octets": 1221164,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils2-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 3.373983247205615,
+          "audio_echantillons_s": 28.15419501133787,
+          "audio_ffprobe_s": 28.154195,
+          "ecart_echantillons_ffprobe_s": -1.1337867533711687e-08,
+          "ratio_ffprobe": 8.344497567768821,
+          "rtf": 0.11983945011411674,
+          "cpu_pourcent": 191.07471874199052,
+          "wav_octets": 1241644,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils2-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 3.4603970921598375,
+          "audio_echantillons_s": 27.921995464852607,
+          "audio_ffprobe_s": 27.921995,
+          "ecart_echantillons_ffprobe_s": -4.6485260796202965e-07,
+          "ratio_ffprobe": 8.0690146987068,
+          "rtf": 0.12393086855576894,
+          "cpu_pourcent": 187.47157702502022,
+          "wav_octets": 1231404,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils2-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 3.3165705651044846,
+          "max": 3.4603970921598375,
+          "mediane": 3.3794584246352315
+        },
+        "audio_ffprobe_s": {
+          "min": 27.492426,
+          "max": 28.154195,
+          "mediane": 27.8987755
+        },
+        "ratio_ffprobe": {
+          "min": 8.0690146987068,
+          "max": 8.348924124015335,
+          "mediane": 8.235563003456129
+        },
+        "rtf": {
+          "min": 0.11977591185953426,
+          "max": 0.12393086855576894,
+          "mediane": 0.12142460711937617
+        },
+        "cpu_pourcent": {
+          "min": 187.47157702502022,
+          "max": 191.07471874199052,
+          "mediane": 190.34459080113933
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.6485260796202965e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-siwis-medium",
+      "fils": 3,
+      "modele": "outils/modeles/piper/fr_FR-siwis-medium.onnx",
+      "modele_octets": 63201294,
+      "sample_rate_hz": 22050,
+      "chargement_modele_s": 1.6693508978933096,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 4.94023914122954,
+          "audio_echantillons_s": 27.492426303854874,
+          "audio_ffprobe_s": 27.492426,
+          "ecart_echantillons_ffprobe_s": -3.038548754830117e-07,
+          "ratio_ffprobe": 5.56499902414797,
+          "rtf": 0.17969455082754576,
+          "cpu_pourcent": 193.89170698356165,
+          "wav_octets": 1212460,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils3-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 5.088152655865997,
+          "audio_echantillons_s": 27.945215419501135,
+          "audio_ffprobe_s": 27.945215,
+          "ecart_echantillons_ffprobe_s": -4.195011342744692e-07,
+          "ratio_ffprobe": 5.492212378451873,
+          "rtf": 0.18207598888990464,
+          "cpu_pourcent": 192.6973434788041,
+          "wav_octets": 1232428,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils3-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 5.083445144817233,
+          "audio_echantillons_s": 27.875555555555554,
+          "audio_ffprobe_s": 27.875556,
+          "ecart_echantillons_ffprobe_s": 4.444444456908059e-07,
+          "ratio_ffprobe": 5.483595318899073,
+          "rtf": 0.18236210767660502,
+          "cpu_pourcent": 193.1098638884385,
+          "wav_octets": 1229356,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils3-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 5.034457123838365,
+          "audio_echantillons_s": 27.68979591836735,
+          "audio_ffprobe_s": 27.689796,
+          "ecart_echantillons_ffprobe_s": 8.163265263760877e-08,
+          "ratio_ffprobe": 5.5000559780095575,
+          "rtf": 0.18181633132430317,
+          "cpu_pourcent": 192.67324681483228,
+          "wav_octets": 1221164,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils3-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 5.076947221998125,
+          "audio_echantillons_s": 28.15419501133787,
+          "audio_ffprobe_s": 28.154195,
+          "ecart_echantillons_ffprobe_s": -1.1337867533711687e-08,
+          "ratio_ffprobe": 5.5454968840348515,
+          "rtf": 0.18032649209107648,
+          "cpu_pourcent": 193.62011402063112,
+          "wav_octets": 1241644,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils3-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 4.9995316429995,
+          "audio_echantillons_s": 27.921995464852607,
+          "audio_ffprobe_s": 27.921995,
+          "ecart_echantillons_ffprobe_s": -4.6485260796202965e-07,
+          "ratio_ffprobe": 5.584922147477004,
+          "rtf": 0.17905352547335893,
+          "cpu_pourcent": 192.37171972832704,
+          "wav_octets": 1231404,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils3-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 4.94023914122954,
+          "max": 5.088152655865997,
+          "mediane": 5.055702172918245
+        },
+        "audio_ffprobe_s": {
+          "min": 27.492426,
+          "max": 28.154195,
+          "mediane": 27.8987755
+        },
+        "ratio_ffprobe": {
+          "min": 5.483595318899073,
+          "max": 5.584922147477004,
+          "mediane": 5.522776431022205
+        },
+        "rtf": {
+          "min": 0.17905352547335893,
+          "max": 0.18236210767660502,
+          "mediane": 0.1810714117076898
+        },
+        "cpu_pourcent": {
+          "min": 192.37171972832704,
+          "max": 193.89170698356165,
+          "mediane": 192.9036036836213
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.6485260796202965e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-siwis-medium",
+      "fils": 4,
+      "modele": "outils/modeles/piper/fr_FR-siwis-medium.onnx",
+      "modele_octets": 63201294,
+      "sample_rate_hz": 22050,
+      "chargement_modele_s": 1.6822785483673215,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 5.459422006737441,
+          "audio_echantillons_s": 27.492426303854874,
+          "audio_ffprobe_s": 27.492426,
+          "ecart_echantillons_ffprobe_s": -3.038548754830117e-07,
+          "ratio_ffprobe": 5.0357759422282715,
+          "rtf": 0.198579128911266,
+          "cpu_pourcent": 193.2733719243232,
+          "wav_octets": 1212460,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils4-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 5.445025628898293,
+          "audio_echantillons_s": 27.945215419501135,
+          "audio_ffprobe_s": 27.945215,
+          "ecart_echantillons_ffprobe_s": -4.195011342744692e-07,
+          "ratio_ffprobe": 5.132246733915601,
+          "rtf": 0.19484643896632367,
+          "cpu_pourcent": 192.7060534722048,
+          "wav_octets": 1232428,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils4-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 5.279532394837588,
+          "audio_echantillons_s": 27.875555555555554,
+          "audio_ffprobe_s": 27.875556,
+          "ecart_echantillons_ffprobe_s": 4.444444456908059e-07,
+          "ratio_ffprobe": 5.279928962507583,
+          "rtf": 0.18939648754764168,
+          "cpu_pourcent": 193.12346695646409,
+          "wav_octets": 1229356,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils4-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 5.369597346056253,
+          "audio_echantillons_s": 27.68979591836735,
+          "audio_ffprobe_s": 27.689796,
+          "ecart_echantillons_ffprobe_s": 8.163265263760877e-08,
+          "ratio_ffprobe": 5.156773257930972,
+          "rtf": 0.19391971490350643,
+          "cpu_pourcent": 193.36042036048795,
+          "wav_octets": 1221164,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils4-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 5.413068530149758,
+          "audio_echantillons_s": 28.15419501133787,
+          "audio_ffprobe_s": 28.154195,
+          "ecart_echantillons_ffprobe_s": -1.1337867533711687e-08,
+          "ratio_ffprobe": 5.201152515100541,
+          "rtf": 0.19226507915249424,
+          "cpu_pourcent": 193.1288130156145,
+          "wav_octets": 1241644,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils4-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 5.539381613954902,
+          "audio_echantillons_s": 27.921995464852607,
+          "audio_ffprobe_s": 27.921995,
+          "ecart_echantillons_ffprobe_s": -4.6485260796202965e-07,
+          "ratio_ffprobe": 5.040633945431463,
+          "rtf": 0.1983877446419893,
+          "cpu_pourcent": 192.99313073264364,
+          "wav_octets": 1231404,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-siwis-medium-fils4-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 5.279532394837588,
+          "max": 5.539381613954902,
+          "mediane": 5.429047079524025
+        },
+        "audio_ffprobe_s": {
+          "min": 27.492426,
+          "max": 28.154195,
+          "mediane": 27.8987755
+        },
+        "ratio_ffprobe": {
+          "min": 5.0357759422282715,
+          "max": 5.279928962507583,
+          "mediane": 5.144509995923286
+        },
+        "rtf": {
+          "min": 0.18939648754764168,
+          "max": 0.198579128911266,
+          "mediane": 0.19438307693491505
+        },
+        "cpu_pourcent": {
+          "min": 192.7060534722048,
+          "max": 193.36042036048795,
+          "mediane": 193.12613998603928
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.6485260796202965e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "fils": 1,
+      "modele": "outils/modeles/piper/fr_FR-tom-medium.onnx",
+      "modele_octets": 63511038,
+      "sample_rate_hz": 44100,
+      "chargement_modele_s": 1.8840288813225925,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 11.635986163746566,
+          "audio_echantillons_s": 31.30049886621315,
+          "audio_ffprobe_s": 31.300499,
+          "ecart_echantillons_ffprobe_s": 1.3378684826648168e-07,
+          "ratio_ffprobe": 2.6899738930182635,
+          "rtf": 0.3717508198111016,
+          "cpu_pourcent": 100.35203579376079,
+          "wav_octets": 2760748,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils1-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 11.53369573596865,
+          "audio_echantillons_s": 31.184399092970523,
+          "audio_ffprobe_s": 31.184399,
+          "ecart_echantillons_ffprobe_s": -9.297052372403414e-08,
+          "ratio_ffprobe": 2.7037646660600934,
+          "rtf": 0.36985467431867614,
+          "cpu_pourcent": 100.13940253323284,
+          "wav_octets": 2750508,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils1-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 11.230877105146646,
+          "audio_echantillons_s": 30.389115646258503,
+          "audio_ffprobe_s": 30.389116,
+          "ecart_echantillons_ffprobe_s": 3.53741498315685e-07,
+          "ratio_ffprobe": 2.7058542013672224,
+          "rtf": 0.36956906232963954,
+          "cpu_pourcent": 100.2029395802297,
+          "wav_octets": 2680364,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils1-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 11.614328789990395,
+          "audio_echantillons_s": 31.190204081632654,
+          "audio_ffprobe_s": 31.190204,
+          "ecart_echantillons_ffprobe_s": -8.163265263760877e-08,
+          "ratio_ffprobe": 2.685493459327648,
+          "rtf": 0.372371042843785,
+          "cpu_pourcent": 99.8027196370564,
+          "wav_octets": 2751020,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils1-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 11.26572599913925,
+          "audio_echantillons_s": 30.499410430839003,
+          "audio_ffprobe_s": 30.49941,
+          "ecart_echantillons_ffprobe_s": -4.308390018081809e-07,
+          "ratio_ffprobe": 2.707274258430419,
+          "rtf": 0.36937521083651287,
+          "cpu_pourcent": 100.1596435139831,
+          "wav_octets": 2690092,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils1-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 11.42168181296438,
+          "audio_echantillons_s": 30.894149659863945,
+          "audio_ffprobe_s": 30.89415,
+          "ecart_echantillons_ffprobe_s": 3.4013605443306005e-07,
+          "ratio_ffprobe": 2.7048687317600684,
+          "rtf": 0.3697037080795031,
+          "cpu_pourcent": 99.98412831845555,
+          "wav_octets": 2724908,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils1-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 11.230877105146646,
+          "max": 11.635986163746566,
+          "mediane": 11.477688774466515
+        },
+        "audio_ffprobe_s": {
+          "min": 30.389116,
+          "max": 31.300499,
+          "mediane": 31.039274499999998
+        },
+        "ratio_ffprobe": {
+          "min": 2.685493459327648,
+          "max": 2.707274258430419,
+          "mediane": 2.704316698910081
+        },
+        "rtf": {
+          "min": 0.36937521083651287,
+          "max": 0.372371042843785,
+          "mediane": 0.36977919119908964
+        },
+        "cpu_pourcent": {
+          "min": 99.8027196370564,
+          "max": 100.35203579376079,
+          "mediane": 100.14952302360797
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.308390018081809e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "fils": 2,
+      "modele": "outils/modeles/piper/fr_FR-tom-medium.onnx",
+      "modele_octets": 63511038,
+      "sample_rate_hz": 44100,
+      "chargement_modele_s": 1.897829616907984,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 7.040051379706711,
+          "audio_echantillons_s": 31.30049886621315,
+          "audio_ffprobe_s": 31.300499,
+          "ecart_echantillons_ffprobe_s": 1.3378684826648168e-07,
+          "ratio_ffprobe": 4.446061159471819,
+          "rtf": 0.22491818356335824,
+          "cpu_pourcent": 184.50862500013645,
+          "wav_octets": 2760748,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils2-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 6.930051215458661,
+          "audio_echantillons_s": 31.184399092970523,
+          "audio_ffprobe_s": 31.184399,
+          "ecart_echantillons_ffprobe_s": -9.297052372403414e-08,
+          "ratio_ffprobe": 4.499880019708639,
+          "rtf": 0.22222814733285903,
+          "cpu_pourcent": 184.4509167765801,
+          "wav_octets": 2750508,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils2-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 6.744971444830298,
+          "audio_echantillons_s": 30.389115646258503,
+          "audio_ffprobe_s": 30.389116,
+          "ecart_echantillons_ffprobe_s": 3.53741498315685e-07,
+          "ratio_ffprobe": 4.505447687742521,
+          "rtf": 0.22195352588835746,
+          "cpu_pourcent": 184.94589787420344,
+          "wav_octets": 2680364,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils2-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 6.859269646927714,
+          "audio_echantillons_s": 31.190204081632654,
+          "audio_ffprobe_s": 31.190204,
+          "ecart_echantillons_ffprobe_s": -8.163265263760877e-08,
+          "ratio_ffprobe": 4.547161083537542,
+          "rtf": 0.21991743455501972,
+          "cpu_pourcent": 186.19106198457104,
+          "wav_octets": 2751020,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils2-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 6.695414864923805,
+          "audio_echantillons_s": 30.499410430839003,
+          "audio_ffprobe_s": 30.49941,
+          "ecart_echantillons_ffprobe_s": -4.308390018081809e-07,
+          "ratio_ffprobe": 4.555268137271295,
+          "rtf": 0.21952604541936402,
+          "cpu_pourcent": 185.82113656883246,
+          "wav_octets": 2690092,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils2-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 6.751113896723837,
+          "audio_echantillons_s": 30.894149659863945,
+          "audio_ffprobe_s": 30.89415,
+          "ecart_echantillons_ffprobe_s": 3.4013605443306005e-07,
+          "ratio_ffprobe": 4.576155945908754,
+          "rtf": 0.2185240214320134,
+          "cpu_pourcent": 186.27121675583845,
+          "wav_octets": 2724908,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils2-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 6.695414864923805,
+          "max": 7.040051379706711,
+          "mediane": 6.8051917718257755
+        },
+        "audio_ffprobe_s": {
+          "min": 30.389116,
+          "max": 31.300499,
+          "mediane": 31.039274499999998
+        },
+        "ratio_ffprobe": {
+          "min": 4.446061159471819,
+          "max": 4.576155945908754,
+          "mediane": 4.526304385640032
+        },
+        "rtf": {
+          "min": 0.2185240214320134,
+          "max": 0.22491818356335824,
+          "mediane": 0.22093548022168857
+        },
+        "cpu_pourcent": {
+          "min": 184.4509167765801,
+          "max": 186.27121675583845,
+          "mediane": 185.38351722151793
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.308390018081809e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "fils": 3,
+      "modele": "outils/modeles/piper/fr_FR-tom-medium.onnx",
+      "modele_octets": 63511038,
+      "sample_rate_hz": 44100,
+      "chargement_modele_s": 1.9162261062301695,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 9.558316372800618,
+          "audio_echantillons_s": 31.30049886621315,
+          "audio_ffprobe_s": 31.300499,
+          "ecart_echantillons_ffprobe_s": 1.3378684826648168e-07,
+          "ratio_ffprobe": 3.274687484614913,
+          "rtf": 0.30537265149672593,
+          "cpu_pourcent": 189.09222393424776,
+          "wav_octets": 2760748,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils3-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 9.70260110590607,
+          "audio_echantillons_s": 31.184399092970523,
+          "audio_ffprobe_s": 31.184399,
+          "ecart_echantillons_ffprobe_s": -9.297052372403414e-08,
+          "ratio_ffprobe": 3.2140246372715198,
+          "rtf": 0.31113638284021666,
+          "cpu_pourcent": 187.80145448737792,
+          "wav_octets": 2750508,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils3-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 9.312909907195717,
+          "audio_echantillons_s": 30.389115646258503,
+          "audio_ffprobe_s": 30.389116,
+          "ecart_echantillons_ffprobe_s": 3.53741498315685e-07,
+          "ratio_ffprobe": 3.2631171462873847,
+          "rtf": 0.30645543974348305,
+          "cpu_pourcent": 188.97901059261412,
+          "wav_octets": 2680364,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils3-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 9.505564698018134,
+          "audio_echantillons_s": 31.190204081632654,
+          "audio_ffprobe_s": 31.190204,
+          "ecart_echantillons_ffprobe_s": -8.163265263760877e-08,
+          "ratio_ffprobe": 3.2812573467100816,
+          "rtf": 0.3047612224023329,
+          "cpu_pourcent": 189.1972183804044,
+          "wav_octets": 2751020,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils3-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 9.298111732117832,
+          "audio_echantillons_s": 30.499410430839003,
+          "audio_ffprobe_s": 30.49941,
+          "ecart_echantillons_ffprobe_s": -4.308390018081809e-07,
+          "ratio_ffprobe": 3.280172456376059,
+          "rtf": 0.30486201969539184,
+          "cpu_pourcent": 187.6465405307194,
+          "wav_octets": 2690092,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils3-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 9.407773220911622,
+          "audio_echantillons_s": 30.894149659863945,
+          "audio_ffprobe_s": 30.89415,
+          "ecart_echantillons_ffprobe_s": 3.4013605443306005e-07,
+          "ratio_ffprobe": 3.283896122339387,
+          "rtf": 0.30451633143852874,
+          "cpu_pourcent": 188.90211937185614,
+          "wav_octets": 2724908,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils3-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 9.298111732117832,
+          "max": 9.70260110590607,
+          "mediane": 9.456668959464878
+        },
+        "audio_ffprobe_s": {
+          "min": 30.389116,
+          "max": 31.300499,
+          "mediane": 31.039274499999998
+        },
+        "ratio_ffprobe": {
+          "min": 3.2140246372715198,
+          "max": 3.283896122339387,
+          "mediane": 3.2774299704954863
+        },
+        "rtf": {
+          "min": 0.30451633143852874,
+          "max": 0.31113638284021666,
+          "mediane": 0.3051173355960589
+        },
+        "cpu_pourcent": {
+          "min": 187.6465405307194,
+          "max": 189.1972183804044,
+          "mediane": 188.94056498223512
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.308390018081809e-07
+      },
+      "controle_cpu_tenu": true
+    },
+    {
+      "voix": "fr_FR-tom-medium",
+      "fils": 4,
+      "modele": "outils/modeles/piper/fr_FR-tom-medium.onnx",
+      "modele_octets": 63511038,
+      "sample_rate_hz": 44100,
+      "chargement_modele_s": 1.9851150270551443,
+      "passes": [
+        {
+          "passe": 1,
+          "temps_calcul_s": 9.545813207048923,
+          "audio_echantillons_s": 31.30049886621315,
+          "audio_ffprobe_s": 31.300499,
+          "ecart_echantillons_ffprobe_s": 1.3378684826648168e-07,
+          "ratio_ffprobe": 3.2789766907325135,
+          "rtf": 0.3049731957004559,
+          "cpu_pourcent": 188.2948011880985,
+          "wav_octets": 2760748,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils4-passe1.wav"
+        },
+        {
+          "passe": 2,
+          "temps_calcul_s": 9.422486749012023,
+          "audio_echantillons_s": 31.184399092970523,
+          "audio_ffprobe_s": 31.184399,
+          "ecart_echantillons_ffprobe_s": -9.297052372403414e-08,
+          "ratio_ffprobe": 3.309572072708914,
+          "rtf": 0.30215386703498837,
+          "cpu_pourcent": 188.09725576805235,
+          "wav_octets": 2750508,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils4-passe2.wav"
+        },
+        {
+          "passe": 3,
+          "temps_calcul_s": 9.134997905697674,
+          "audio_echantillons_s": 30.389115646258503,
+          "audio_ffprobe_s": 30.389116,
+          "ecart_echantillons_ffprobe_s": 3.53741498315685e-07,
+          "ratio_ffprobe": 3.3266691808484956,
+          "rtf": 0.3006009752207887,
+          "cpu_pourcent": 188.13151549034163,
+          "wav_octets": 2680364,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils4-passe3.wav"
+        },
+        {
+          "passe": 4,
+          "temps_calcul_s": 9.36068872641772,
+          "audio_echantillons_s": 31.190204081632654,
+          "audio_ffprobe_s": 31.190204,
+          "ecart_echantillons_ffprobe_s": -8.163265263760877e-08,
+          "ratio_ffprobe": 3.3320415742460336,
+          "rtf": 0.3001163033886447,
+          "cpu_pourcent": 187.33657866979343,
+          "wav_octets": 2751020,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils4-passe4.wav"
+        },
+        {
+          "passe": 5,
+          "temps_calcul_s": 9.190256538800895,
+          "audio_echantillons_s": 30.499410430839003,
+          "audio_ffprobe_s": 30.49941,
+          "ecart_echantillons_ffprobe_s": -4.308390018081809e-07,
+          "ratio_ffprobe": 3.3186679687593825,
+          "rtf": 0.30132571544173786,
+          "cpu_pourcent": 189.02930431435715,
+          "wav_octets": 2690092,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils4-passe5.wav"
+        },
+        {
+          "passe": 6,
+          "temps_calcul_s": 9.310204740148038,
+          "audio_echantillons_s": 30.894149659863945,
+          "audio_ffprobe_s": 30.89415,
+          "ecart_echantillons_ffprobe_s": 3.4013605443306005e-07,
+          "ratio_ffprobe": 3.3183104842771445,
+          "rtf": 0.30135817752383665,
+          "cpu_pourcent": 188.65827863330773,
+          "wav_octets": 2724908,
+          "wav": "media/tts/mesure-piper-fils/fr_FR-tom-medium-fils4-passe6.wav"
+        }
+      ],
+      "resume": {
+        "temps_calcul_s": {
+          "min": 9.134997905697674,
+          "max": 9.545813207048923,
+          "mediane": 9.335446733282879
+        },
+        "audio_ffprobe_s": {
+          "min": 30.389116,
+          "max": 31.300499,
+          "mediane": 31.039274499999998
+        },
+        "ratio_ffprobe": {
+          "min": 3.2789766907325135,
+          "max": 3.3320415742460336,
+          "mediane": 3.3184892265182633
+        },
+        "rtf": {
+          "min": 0.3001163033886447,
+          "max": 0.3049731957004559,
+          "mediane": 0.3013419464827872
+        },
+        "cpu_pourcent": {
+          "min": 187.33657866979343,
+          "max": 189.02930431435715,
+          "mediane": 188.21315833922006
+        },
+        "ecart_max_echantillons_ffprobe_s": 4.308390018081809e-07
+      },
+      "controle_cpu_tenu": true
+    }
+  ],
+  "charge_1_5_15_fin": [
+    2.61181640625,
+    1.87060546875,
+    0.91796875
+  ],
+  "memoire_max_ko": 1889540,
+  "controle_tenu": true
+}

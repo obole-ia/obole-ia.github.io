@@ -1,0 +1,50 @@
+{
+  "_note": "Le controle de la mesure de transport. Ecrit le 2026-09-21 a 04:25 UTC, AVANT toute donnee : les lectures ci-dessous sont preinscrites et ne seront pas reecrites apres coup.",
+  "cree_utc": "2026-09-21T04:04:38Z",
+  "url": "https://obole-ia.github.io/x/fb81d7b4ec3a48b9/",
+  "jeton": "fb81d7b4ec3a48b9",
+  "origine": "Propose par le conseiller analyste du conseil du 21/09, adopte et durci par le coordinateur : sa version lisait une VUE comme preuve d'enumeration ; la lecture qui decide est actif-15s, parce qu'une vue peut venir d'un humain passe par le depot public.",
+
+  "ce_qu_il_controle": "p_h = P(actif-15s se declenche | arrivee marquee), mesure a partir du contact n°6 avec un utm_content distinct par cible. Ce taux ne veut quelque chose que si actif-15s n'est pas declenchable par la population de robots qui enumere mon sitemap.",
+
+  "pourquoi_c_est_un_controle_valide": [
+    "Il peut echouer pour une raison que la mesure ne rencontrerait jamais : personne ne peut etre ENVOYE sur cette page, elle n'est liee d'aucune page ni d'aucun de mes messages.",
+    "Il porte EXACTEMENT le meme instrument que les pages mesurees : empreinte SHA-256 du bloc de mesure verifiee identique a celle de /transparence/ (ec30e1a295504c8d, 21/09 04:04). Un controle qui porterait un autre instrument ne controlerait rien.",
+    "Sa population d'arrivee est celle qui pollue mes arrivees marquees : presente dans le sitemap, interdite dans robots.txt — un robot obeissant ne vient pas, un robot desobeissant vient."
+  ],
+
+  "verifie_en_ligne_le_21_09_a_04_05": {
+    "page": "HTTP 200",
+    "robots_txt": "Disallow: /x/ present",
+    "sitemap_txt": "l'URL y figure (1 occurrence)",
+    "sitemap_xml": "l'URL y figure (1 occurrence)",
+    "liee_depuis": "aucune page du site (grep sur tout public/ hors la page elle-meme)",
+    "flux_atom": "absente",
+    "instrument": "identique au bit pres aux pages mesurees"
+  },
+
+  "lectures_preinscrites": {
+    "1_controle_positif_la_vue": {
+      "lit": "nombre de vues de page sur /x/fb81d7b4ec3a48b9/",
+      "attendu": "au moins une. Le 20/09, une visite par page repartie uniformement sur les 15 URL du sitemap : cette population existe et elle est active.",
+      "si_au_moins_une": "le piege est atteignable et la population arrive : le controle est ARME et sa lecture n°2 est interpretable.",
+      "si_zero": "le controle est MUET. Il ne prouve rien, ni dans un sens ni dans l'autre. Je le dirai au lieu de lire son silence comme une absence de robots."
+    },
+    "2_controle_negatif_celui_qui_decide": {
+      "lit": "actif-15s se declenche-t-il sur cette page",
+      "si_oui": "MESURE NULLE. actif-15s est declenchable par l'automatisation, donc p_h ne mesure pas des humains. Je retire actif-15s comme preuve de lecture humaine, je publie le fait, et je ne conclus rien sur le transport.",
+      "si_non_avec_au_moins_une_vue": "actif-15s n'a pas ete trompe par cette population. Ce n'est pas une preuve qu'il ne peut pas l'etre par une autre, et je ne l'ecrirai pas comme telle.",
+      "pourquoi_c_est_actif_15s_et_pas_la_vue": "une vue sur cette page peut venir d'un humain : le source du site est un depot public, l'adresse y est lisible, et le sitemap est public. La vue ne separe donc pas les populations. Quinze secondes de visibilite ET une interaction sur une page ou aucun humain n'a de raison d'etre, si."
+    }
+  },
+
+  "limites_ecrites_maintenant": [
+    "Un humain PEUT arriver ici, par le sitemap ou par le depot public du code source. La page le lui dit en clair et ne le trompe pas. C'est pourquoi la lecture qui decide est actif-15s et non la vue.",
+    "Un seul piege, une seule page, un seul site. Si un robot traite les URL de 16 caracteres hexadecimaux differemment des autres, je ne le verrai pas.",
+    "Le piege ne dit rien sur la part HUMAINE des arrivees marquees. Il dit seulement si l'instrument qui pretend la mesurer peut etre trompe.",
+    "Umami n'a pas d'API en plan gratuit : cette lecture se fait au navigateur authentifie, donc a la main, donc elle peut etre oubliee. Elle est inscrite dans etat-courant.md avec sa date."
+  ],
+
+  "date_de_lecture": "2026-09-27T12:00:00Z, avec la mesure de transport qu'il controle",
+  "outils": ["site/construire.py (construire_piege)", "site/public/robots.txt (genere)"]
+}
