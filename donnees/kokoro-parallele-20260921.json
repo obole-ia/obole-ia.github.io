@@ -1,0 +1,202 @@
+{
+  "outil": "kokoro-onnx",
+  "question": "pour K flux Kokoro simultanes a 1 fil sur 2 coeurs ARM, quel est le debit agrege, et bat-il un seul processus a 2 fils",
+  "origine": "thewh1teagle/kokoro-onnx issue #40 << Improve speed >>, ouverte par le mainteneur : << Things we tried: Using more threads / PARALLEL mode >>. Et issue #191 : le verrou espeak ajoute en 0.6.1 est AU NIVEAU DU MODULE, donc la phonemisation ne peut pas etre parallelisee par des fils dans un processus.",
+  "verrou_lu_dans_leur_code": "kokoro_onnx/tokenizer.py : _espeak_lock = threading.Lock() (module), et phonemize() fait `with _espeak_lock:`",
+  "version_kokoro_onnx": "0.6.1",
+  "version_onnxruntime": "1.30.0",
+  "machine": "aarch64",
+  "coeurs": 2,
+  "date_utc": "2026-09-21T05:11:16.040986Z",
+  "protocole": {
+    "source_du_texte": "outils/mesure_tts.py (importe, non recopie)",
+    "passes_par_bras": 3,
+    "K_testes": [
+      1,
+      2
+    ],
+    "une_instance_Kokoro_par_processus": true,
+    "synchronisation": "multiprocessing.Barrier avant chaque passe",
+    "controle": "% de processeur par enfant < 110 %, somme > 150 % a K=2",
+    "seuils_importes_de": "outils/mesure_piper_fils.py",
+    "commande": "outils/venv/bin/python outils/mesure_kokoro_parallele.py 3"
+  },
+  "bras": [
+    {
+      "flux_simultanes": 1,
+      "fils_par_flux": 1,
+      "mural_total_s": 172.49676339887083,
+      "enfants": [
+        {
+          "rang": 0,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 57.18278194591403,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.5163325799933918,
+              "rtf": 1.9367362021060117,
+              "cpu_pourcent": 100.09306132418723,
+              "sample_rate_hz": 24000
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 56.968913048971444,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.5182709613566412,
+              "rtf": 1.9294926294584802,
+              "cpu_pourcent": 100.04974985393208,
+              "sample_rate_hz": 24000
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 57.00966223701835,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.5179005132600402,
+              "rtf": 1.9308727726591295,
+              "cpu_pourcent": 99.91599277185819,
+              "sample_rate_hz": 24000
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 0.5163325799933918,
+              "max": 0.5182709613566412,
+              "mediane": 0.5179005132600402
+            },
+            "rtf": {
+              "min": 1.9294926294584802,
+              "max": 1.9367362021060117,
+              "mediane": 1.9308727726591295
+            },
+            "cpu_pourcent": {
+              "min": 99.91599277185819,
+              "max": 100.09306132418723,
+              "mediane": 100.04974985393208
+            }
+          }
+        }
+      ],
+      "debit_par_flux_mediane": [
+        0.5179005132600402
+      ],
+      "debit_agrege_mediane": 0.5179005132600402,
+      "cpu_somme_medianes": 100.04974985393208,
+      "controle_tenu": true
+    },
+    {
+      "flux_simultanes": 2,
+      "fils_par_flux": 1,
+      "mural_total_s": 187.72875838214532,
+      "enfants": [
+        {
+          "rang": 0,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 61.45202493807301,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.4804615203988293,
+              "rtf": 2.08133213076024,
+              "cpu_pourcent": 94.68801403800353,
+              "sample_rate_hz": 24000
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 61.54772261530161,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.4797144732369501,
+              "rtf": 2.0845733364105947,
+              "cpu_pourcent": 94.38951196149846,
+              "sample_rate_hz": 24000
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 61.52900744788349,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.47986038712459295,
+              "rtf": 2.083939468294464,
+              "cpu_pourcent": 94.35236550690855,
+              "sample_rate_hz": 24000
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 0.4797144732369501,
+              "max": 0.4804615203988293,
+              "mediane": 0.47986038712459295
+            },
+            "rtf": {
+              "min": 2.08133213076024,
+              "max": 2.0845733364105947,
+              "mediane": 2.083939468294464
+            },
+            "cpu_pourcent": {
+              "min": 94.35236550690855,
+              "max": 94.68801403800353,
+              "mediane": 94.38951196149846
+            }
+          }
+        },
+        {
+          "rang": 1,
+          "passes": [
+            {
+              "passe": 1,
+              "temps_calcul_s": 62.35685185389593,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.4734898003271897,
+              "rtf": 2.1119779123203553,
+              "cpu_pourcent": 93.82772102909576,
+              "sample_rate_hz": 24000
+            },
+            {
+              "passe": 2,
+              "temps_calcul_s": 61.85135116009042,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.47735955285621234,
+              "rtf": 2.094856998287022,
+              "cpu_pourcent": 94.22687606152984,
+              "sample_rate_hz": 24000
+            },
+            {
+              "passe": 3,
+              "temps_calcul_s": 61.96870075119659,
+              "audio_s": 29.525333333333332,
+              "ratio": 0.47645558121150716,
+              "rtf": 2.0988315373644078,
+              "cpu_pourcent": 93.97113267519256,
+              "sample_rate_hz": 24000
+            }
+          ],
+          "resume": {
+            "ratio": {
+              "min": 0.4734898003271897,
+              "max": 0.47735955285621234,
+              "mediane": 0.47645558121150716
+            },
+            "rtf": {
+              "min": 2.094856998287022,
+              "max": 2.1119779123203553,
+              "mediane": 2.0988315373644078
+            },
+            "cpu_pourcent": {
+              "min": 93.82772102909576,
+              "max": 94.22687606152984,
+              "mediane": 93.97113267519256
+            }
+          }
+        }
+      ],
+      "debit_par_flux_mediane": [
+        0.47986038712459295,
+        0.47645558121150716
+      ],
+      "debit_agrege_mediane": 0.9563159683361001,
+      "cpu_somme_medianes": 188.360644636691,
+      "controle_tenu": true
+    }
+  ],
+  "controle_tenu": true,
+  "memoire_max_ko": 58644
+}
