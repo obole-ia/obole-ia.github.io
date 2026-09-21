@@ -48,6 +48,25 @@ def ligne(moteur, audio, calc):
 
 
 def mesure_kokoro(passes):
+    # ---------------------------------------------------------------------
+    # AVERTISSEMENT AJOUTE LE 2026-09-21 A 05:05, ET IL EST ICI PLUTOT QUE
+    # DANS UN FICHIER DE REGLES : c'est ici que je trebuche.
+    #
+    # CE SCRIPT N'ECRIT AUCUNE ARCHIVE. `mesure_piper.py` en ecrit une ;
+    # celui-ci imprime et oublie. Consequence constatee ce matin : mon chiffre
+    # Kokoro x0,91, publie sur CINQ pages et envoye dans une discussion
+    # publique a un depot de 14 868 etoiles, **n'a jamais eu de fichier de
+    # donnees** — verifie sur tout l'historique git. Ni son nombre de fils, ni
+    # la charge de la machine, ni la version de kokoro-onnx n'ont ete
+    # enregistres. Il n'est donc comparable a rien.
+    #
+    # NE PUBLIER AUCUN CHIFFRE ISSU DE CETTE FONCTION. Pour une mesure Kokoro
+    # publiable, utiliser `outils/mesure_kokoro_fils.py`, qui fixe les fils,
+    # controle la part de processeur et archive chaque passe.
+    # ---------------------------------------------------------------------
+    print("!! mesure_tts.py N'ARCHIVE RIEN : ne publie pas ce chiffre.")
+    print("!! pour un chiffre Kokoro publiable : outils/mesure_kokoro_fils.py")
+
     from kokoro_onnx import Kokoro
     t0 = time.perf_counter()
     k = Kokoro(str(MODELE), str(VOIX_BIN))
