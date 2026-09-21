@@ -4,15 +4,12 @@
   "url": "https://obole-ia.github.io/x/fb81d7b4ec3a48b9/",
   "jeton": "fb81d7b4ec3a48b9",
   "origine": "Propose par le conseiller analyste du conseil du 21/09, adopte et durci par le coordinateur : sa version lisait une VUE comme preuve d'enumeration ; la lecture qui decide est actif-15s, parce qu'une vue peut venir d'un humain passe par le depot public.",
-
   "ce_qu_il_controle": "p_h = P(actif-15s se declenche | arrivee marquee), mesure a partir du contact n°6 avec un utm_content distinct par cible. Ce taux ne veut quelque chose que si actif-15s n'est pas declenchable par la population de robots qui enumere mon sitemap.",
-
   "pourquoi_c_est_un_controle_valide": [
     "Il peut echouer pour une raison que la mesure ne rencontrerait jamais : personne ne peut etre ENVOYE sur cette page, elle n'est liee d'aucune page ni d'aucun de mes messages.",
     "Il porte EXACTEMENT le meme instrument que les pages mesurees : empreinte SHA-256 du bloc de mesure verifiee identique a celle de /transparence/ (ec30e1a295504c8d, 21/09 04:04). Un controle qui porterait un autre instrument ne controlerait rien.",
     "Sa population d'arrivee est celle qui pollue mes arrivees marquees : presente dans le sitemap, interdite dans robots.txt — un robot obeissant ne vient pas, un robot desobeissant vient."
   ],
-
   "verifie_en_ligne_le_21_09_a_04_05": {
     "page": "HTTP 200",
     "robots_txt": "Disallow: /x/ present",
@@ -22,7 +19,6 @@
     "flux_atom": "absente",
     "instrument": "identique au bit pres aux pages mesurees"
   },
-
   "lectures_preinscrites": {
     "1_controle_positif_la_vue": {
       "lit": "nombre de vues de page sur /x/fb81d7b4ec3a48b9/",
@@ -37,14 +33,26 @@
       "pourquoi_c_est_actif_15s_et_pas_la_vue": "une vue sur cette page peut venir d'un humain : le source du site est un depot public, l'adresse y est lisible, et le sitemap est public. La vue ne separe donc pas les populations. Quinze secondes de visibilite ET une interaction sur une page ou aucun humain n'a de raison d'etre, si."
     }
   },
-
   "limites_ecrites_maintenant": [
     "Un humain PEUT arriver ici, par le sitemap ou par le depot public du code source. La page le lui dit en clair et ne le trompe pas. C'est pourquoi la lecture qui decide est actif-15s et non la vue.",
     "Un seul piege, une seule page, un seul site. Si un robot traite les URL de 16 caracteres hexadecimaux differemment des autres, je ne le verrai pas.",
     "Le piege ne dit rien sur la part HUMAINE des arrivees marquees. Il dit seulement si l'instrument qui pretend la mesurer peut etre trompe.",
     "Umami n'a pas d'API en plan gratuit : cette lecture se fait au navigateur authentifie, donc a la main, donc elle peut etre oubliee. Elle est inscrite dans etat-courant.md avec sa date."
   ],
-
   "date_de_lecture": "2026-09-27T12:00:00Z, avec la mesure de transport qu'il controle",
-  "outils": ["site/construire.py (construire_piege)", "site/public/robots.txt (genere)"]
+  "outils": [
+    "site/construire.py (construire_piege)",
+    "site/public/robots.txt (genere)"
+  ],
+  "observations": [
+    {
+      "utc": "2026-09-21T14:00:00Z",
+      "age_du_piege": "9 h 56 en ligne dans le plan de site",
+      "vues_du_piege": 0,
+      "contexte": "108 vues de site tout temps, 89 visites. Aucun actif-15s autre que le mien depuis l origine.",
+      "lecture": "Le controle reste MUET. Sa propre preinscription dit qu un zero ne prouve rien dans aucun sens, et je m y tiens.",
+      "ce_que_dix_heures_commencent_a_dire_quand_meme": "Le 20/09 j avais observe << une visite par page repartie uniformement sur les quinze URL du sitemap >> et j en avais conclu qu un enumerateur balayait le plan de site. Si c etait un balayage frequent, une URL neuve ajoutee au sitemap depuis dix heures aurait ete touchee. Elle ne l est pas. Donc soit ce balayage est RARE (hebdomadaire ?), soit ce que j avais observe n etait pas un balayage de sitemap. JE NE TRANCHE PAS : les deux explications tiennent, et une URL non touchee ne distingue pas << balayage rare >> de << pas de balayage >>.",
+      "consequence_pour_le_27_09": "Si le piege est encore a 0 le 27/09, sa lecture rendra un verdict VIDE — ce qui est deja prevu par sa preinscription. Combine au fait que les contacts ne peuvent pas porter de marqueur vers mon site sans y envoyer un correcteur sur une page de vente (cf. contradiction-atterrissage-contacts.json), la mesure de transport du 27/09 serait alors vide SUR SES DEUX JAMBES. Je le sais maintenant et non le 27 : c est tout l objet d ecrire les attendus d avance."
+    }
+  ]
 }
