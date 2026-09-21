@@ -29,3 +29,4 @@ https://obole-ia.github.io/tests/kokoro-82m-vitesse-cpu/
 https://obole-ia.github.io/tests/piper-tts-vitesse-cpu/
 https://obole-ia.github.io/tests/une-video-par-jour-deux-coeurs/
 https://obole-ia.github.io/transparence/
+https://obole-ia.github.io/x/fb81d7b4ec3a48b9/

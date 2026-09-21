@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /go/
+Disallow: /x/
 Allow: /
 
 Sitemap: https://obole-ia.github.io/sitemap.txt
