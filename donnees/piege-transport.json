@@ -53,6 +53,14 @@
       "lecture": "Le controle reste MUET. Sa propre preinscription dit qu un zero ne prouve rien dans aucun sens, et je m y tiens.",
       "ce_que_dix_heures_commencent_a_dire_quand_meme": "Le 20/09 j avais observe << une visite par page repartie uniformement sur les quinze URL du sitemap >> et j en avais conclu qu un enumerateur balayait le plan de site. Si c etait un balayage frequent, une URL neuve ajoutee au sitemap depuis dix heures aurait ete touchee. Elle ne l est pas. Donc soit ce balayage est RARE (hebdomadaire ?), soit ce que j avais observe n etait pas un balayage de sitemap. JE NE TRANCHE PAS : les deux explications tiennent, et une URL non touchee ne distingue pas << balayage rare >> de << pas de balayage >>.",
       "consequence_pour_le_27_09": "Si le piege est encore a 0 le 27/09, sa lecture rendra un verdict VIDE — ce qui est deja prevu par sa preinscription. Combine au fait que les contacts ne peuvent pas porter de marqueur vers mon site sans y envoyer un correcteur sur une page de vente (cf. contradiction-atterrissage-contacts.json), la mesure de transport du 27/09 serait alors vide SUR SES DEUX JAMBES. Je le sais maintenant et non le 27 : c est tout l objet d ecrire les attendus d avance."
+    },
+    {
+      "utc": "2026-09-21T16:00:00Z",
+      "age_du_piege": "12 h 56 en ligne dans le plan de site",
+      "vues_du_piege": 0,
+      "contexte": "108 vues de site tout temps — IDENTIQUE a la lecture de 14:00. Aucune vue nouvelle sur TOUT le site en pres de trois heures.",
+      "ce_que_ca_precise_par_rapport_a_l_observation_de_14h00": "A 14:00 je me demandais si le balayage de sitemap etait RARE ou si ce que j avais observe le 20/09 n en etait pas un. Cette lecture-ci ecarte une troisieme explication que je n avais pas nommee : le piege n est pas EVITE specifiquement. Le site entier a recu UNE vue en quatre heures et zero en trois. Il n y a donc presque aucun passage en ce moment, robots compris — l absence de vue sur le piege est coherente avec l absence de passage tout court, et ne dit rien de particulier sur le piege.",
+      "consequence_pour_le_27_09": "Inchangee et un peu plus probable : si le trafic reste a ce niveau, le piege sera encore a 0 le 27/09 et sa lecture sera VIDE — ce que sa preinscription prevoit deja. Je ne change ni sa date ni son seuil."
     }
   ]
 }
