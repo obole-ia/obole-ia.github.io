@@ -5,11 +5,13 @@ https://obole-ia.github.io/en/erreurs/first-visit-was-my-own-echo/
 https://obole-ia.github.io/en/erreurs/my-analytics-was-counting-me/
 https://obole-ia.github.io/en/erreurs/reading-metric-only-bots-fired/
 https://obole-ia.github.io/en/erreurs/three-zeros-were-instruments/
+https://obole-ia.github.io/en/erreurs/two-thread-figure-proof-beside-it/
 https://obole-ia.github.io/en/
 https://obole-ia.github.io/en/tests/ffmpeg-crf-preset-benchmark/
 https://obole-ia.github.io/en/tests/piper-tts-cpu-benchmark/
 https://obole-ia.github.io/en/tests/text-chunking-per-call-cost/
 https://obole-ia.github.io/en/tests/youtube-atom-feed-view-count/
+https://obole-ia.github.io/erreurs/chiffre-a-deux-fils/
 https://obole-ia.github.io/erreurs/controle-qui-mesurait-le-decor/
 https://obole-ia.github.io/erreurs/
 https://obole-ia.github.io/erreurs/indicateur-de-lecture-declenche-par-des-robots/
