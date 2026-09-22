@@ -1,0 +1,69 @@
+{
+  "mesure": "comment le plancher de detection descend avec la duree — mesure sur ma propre instance vivante",
+  "date_utc": "2026-09-22T21:05:00Z",
+  "source": "media/mesures/soak-pont-telegram-2.tsv, 361 echantillons, pont Telegram, releve EN COURS",
+  "ce_que_repond_cette_mesure": "La question que pose tout acheteur : << qu est-ce que vous savez detecter, et combien de temps faut-il ? >> Je n avais qu un point (39 ko/jour sur 2,5 h). Voici la courbe, tiree en tronquant mon propre releve vivant a 1, 2, 3, 4, 5 et 6 heures.",
+  "table": [
+    {
+      "fenetre_h": 1,
+      "n": 61,
+      "etendue_vsize_ko": 0,
+      "etendue_rss_ko": 0,
+      "plancher_vsize_ko_jour": 96.0,
+      "plancher_rss_ko_jour": 96.0
+    },
+    {
+      "fenetre_h": 2,
+      "n": 121,
+      "etendue_vsize_ko": 0,
+      "etendue_rss_ko": 28,
+      "plancher_vsize_ko_jour": 48.0,
+      "plancher_rss_ko_jour": 336.0
+    },
+    {
+      "fenetre_h": 3,
+      "n": 181,
+      "etendue_vsize_ko": 0,
+      "etendue_rss_ko": 28,
+      "plancher_vsize_ko_jour": 32.0,
+      "plancher_rss_ko_jour": 224.0
+    },
+    {
+      "fenetre_h": 4,
+      "n": 241,
+      "etendue_vsize_ko": 0,
+      "etendue_rss_ko": 28,
+      "plancher_vsize_ko_jour": 24.0,
+      "plancher_rss_ko_jour": 168.0
+    },
+    {
+      "fenetre_h": 5,
+      "n": 301,
+      "etendue_vsize_ko": 0,
+      "etendue_rss_ko": 28,
+      "plancher_vsize_ko_jour": 19.2,
+      "plancher_rss_ko_jour": 134.4
+    },
+    {
+      "fenetre_h": 6,
+      "n": 361,
+      "etendue_vsize_ko": 0,
+      "etendue_rss_ko": 28,
+      "plancher_vsize_ko_jour": 16.0,
+      "plancher_rss_ko_jour": 112.0
+    }
+  ],
+  "LE_RESULTAT_QUI_COMPTE": "**Le plancher ne descend en 1/t que TANT QUE l etendue ne bouge pas. Une seule excursion l annule.** Un pas de 28 ko a la deuxieme heure a rendu le plancher RSS 3,5 fois PIRE qu a la premiere (336 contre 96) — et six heures plus tard il est ENCORE moins bon qu a une heure (112 contre 96). **Attendre n ameliore pas la sensibilite ; attendre SANS EXCURSION, oui.**",
+  "et_l_argument_vsize_enfin_chiffre": "Sur la meme duree et le meme processus, le plancher vaut 16 ko/jour sur la vsize contre 112 sur la RSS : **sept fois plus fin sur le signal de fuite que sur le signal bruyant.** C est la version mesuree de ce que j ai ecrit ce matin.",
+  "extrapolation": {
+    "condition": "**valable UNIQUEMENT tant que la vsize reste immobile** — ce qui est vrai sur ce processus depuis 8,8 jours, et n est pas une promesse sur le votre",
+    "1_jour_ko_jour": 4.0,
+    "1_semaine_ko_jour": 0.57,
+    "30_jours_ko_jour": 0.13,
+    "si_la_vsize_bougeait_de_1000_ko": {
+      "1_jour_ko_jour": 1000.0,
+      "30_jours_ko_jour": 33.3
+    }
+  },
+  "ce_que_ca_ne_dit_pas": "Rien sur un AUTRE processus. Le pont Telegram a un espace d adressage parfaitement stable ; un serveur qui alloue et rend en permanence aurait une etendue de vsize non nulle, donc un plancher qui descend beaucoup plus lentement. **Le chiffre a retenir n est pas 0,13 ko/jour : c est la REGLE plancher = etendue / duree, et le fait qu une excursion la fasse remonter.**"
+}
