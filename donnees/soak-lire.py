@@ -168,10 +168,30 @@ def main():
         print("                   au 2026-09-22 15:05.)")
     else:
         couverture = duree / duree_demandee if duree_demandee else 0
-        tronque = (not fin_normale) and couverture < 0.99
+        # EN COURS N'EST PAS TRONQUE, et pour un client la difference est tout :
+        # << votre soak tourne, voici la lecture intermediaire >> n'est pas
+        # << votre soak est mort >>. Trouve le 2026-09-22 a 18:10 en lisant mon
+        # propre releve vivant, que l'outil declarait TRONQUE a 0,42 %.
+        # Le discriminant n'est pas dans les donnees : c'est l'ecart entre le
+        # DERNIER echantillon et MAINTENANT, compare a l'intervalle.
+        from datetime import datetime, timezone
+        retard_s = None
+        try:
+            dern = datetime.strptime(lignes[-1][i["horodatage_utc"]], "%Y-%m-%dT%H:%M:%SZ") \
+                .replace(tzinfo=timezone.utc)
+            retard_s = (datetime.now(timezone.utc) - dern).total_seconds()
+        except Exception:
+            pass
+        en_cours = (retard_s is not None and retard_s < 3 * intervalle
+                    and couverture < 0.99 and not fin_normale and not arret_signal)
+        tronque = (not fin_normale) and couverture < 0.99 and not en_cours
         print("COUVERTURE       : %.2f h observees / %.2f h demandees = %.2f %%%s"
               % (duree / 3600, duree_demandee / 3600, 100 * couverture,
-                 "   *** TRONQUE ***" if tronque else ""))
+                 "   *** TRONQUE ***" if tronque else
+                 ("   (EN COURS, dernier echantillon il y a %ds)" % retard_s) if en_cours else ""))
+        if en_cours:
+            print("  -> Le releve TOURNE ENCORE : ceci est une lecture INTERMEDIAIRE, pas la")
+            print("     livraison. Fin prevue %s." % (fin_prevue or "?"))
         if tronque:
             print("  -> *** CE RELEVE EST TRONQUE. Il ne porte AUCUN marqueur de fin normale.")
             print("     Le harnais s'est arrete a %.1f %% de la fenetre demandee (fin prevue %s)."
@@ -275,7 +295,22 @@ def main():
         print("l'espace d'adressage grandit.**")
     s = pente(xs, rss)
     if s is not None and abs(s * 86400) * (duree / 86400) > etendue_rss and s > 0:
-        print("DERIVE DE MEMOIRE : hausse de %+.0f ko/jour, superieure a l'etendue observee." % (s * 86400))
+        # NE PAS SE CONTREDIRE TROIS LIGNES PLUS BAS. Trouve le 2026-09-22 a 18:10
+        # en lisant mon propre releve : l'outil expliquait que les 28 ko d'etendue
+        # de RSS sont du mouvement de pages parce que la vsize est immobile, puis
+        # annoncait << DERIVE DE MEMOIRE : +329 ko/jour >>. Sur un processus dont
+        # l'espace d'adressage n'a pas bouge d'un octet en huit jours.
+        # **Un faux positif dans ce que je vends**, et la faute du jour une
+        # septieme fois : un verdict rendu sur une population que l'outil venait
+        # lui-meme de declarer non pertinente.
+        if vsize_plate:
+            print("PAS DE DERIVE D'ALLOCATION ETABLIE, malgre une pente de RSS de %+.0f ko/jour."
+                  % (s * 86400))
+            print("La memoire VIRTUELLE n'a pas bouge (%d ko) : cette hausse est du retour de" % vs[0])
+            print("pages residentes, pas de l'allocation. **Une fuite ferait grandir la vsize.**")
+            print("Sur %d ko de base, l'etendue de RSS vaut %.3f %%." % (rss[0], 100 * etendue_rss / rss[0]))
+        else:
+            print("DERIVE DE MEMOIRE : hausse de %+.0f ko/jour, superieure a l'etendue observee." % (s * 86400))
     elif etendue_rss == 0:
         print("AUCUNE DERIVE : %s immobile sur toute la duree." % nom1)
     else:
