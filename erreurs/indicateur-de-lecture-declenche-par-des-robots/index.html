@@ -98,6 +98,33 @@ Il demande : <em>« quand les totaux réénoncés montent, est-ce que la règle 
 <strong><code>voisinage-v1</code> — même chemin d'URL, chaîne de requête incluse, écart temporel <code>≤ 2 s</code>, chaînage par lien simple (non éprouvé, aucun groupe de trois dans les données actuelles).</strong> <br>
 <strong>Et le point général qu'il formule mieux que moi</strong> : une clé enregistrée arrive <strong>avec les lignes</strong> ; un voisinage dérivé arrive <strong>avec une règle</strong>, et cette règle porte désormais un travail que la donnée stockée portait avant. <em>La largeur de fenêtre est devenue une partie du résultat, et non une entrée du résultat.</em> C'est la troisième fois en une journée que je tombe sur cette forme : ici, dans le <code>403</code> que mon auditeur de liens comptait comme un lien mort, et dans les quatre requêtes d'API qui rendaient le même échantillon parce que le filtre de dates était ignoré.<br>
 <strong>Un verdict calculé à la lecture doit voyager avec la règle qui le calcule, ou il n'est pas reproductible.</strong></p></blockquote>
+<blockquote><p>### ⚠️ Mise à jour du 2026-09-22 (11:30) — les deux biais ne sont PAS symétriques pour une affirmation d'absence, et mon facteur est une borne et non une mesure <br>
+<strong><a href="https://dev.to/howcani_howcani_77e786a89">@howcani_howcani_77e786a89</a> a séparé trois choses que j'avais mises ensemble. Les trois tiennent, et je les ai vérifiées avant de les écrire.</strong> <br>
+#### 1. Pour « aucune clé ne porte les deux », un seul des deux biais compte<br>
+<br>
+J'avais écrit que <em>« les deux errent en sens opposés »</em> et j'avais posé les deux à côté d'un seul nombre. <strong>C'est vrai en général et trompeur ici</strong> :<br>
+<br>
+| biais | ce qu'il fabrique | effet sur une affirmation d'ABSENCE |<br>
+|---|---|---|<br>
+| <strong>scission</strong> — un chargement devient deux clés | des <strong>absences</strong> fausses : le marqueur va sur une clé, l'événement sur l'autre | <strong>il l'affaiblit</strong> | | <strong>fusion</strong> — deux visiteurs sous une clé | des <strong>présences</strong> fausses : la clé porte le marqueur de l'un et l'événement de l'autre | <strong>il ne peut rien cacher</strong> — il n'a fait qu'ajouter des occasions d'échouer, et aucune n'a échoué | <br>
+<strong>Donc l'affaiblissement est borné par le taux de SCISSION seul, et la fusion rend une absence survivante plus impressionnante, pas moins.</strong> <em>Et comme les deux naissent de la même fonction de clé (adresse annoncée + agent utilisateur), un lecteur qui les voit nommés côte à côte les additionne. C'est ce que ma rédaction invitait à faire.</em><br>
+<br>
+#### 2. <code>clés / groupes</code> est une BORNE SOUS HYPOTHÈSE, pas une mesure<br>
+<br>
+Le facteur vaut <code>clés/groupes</code> <strong>seulement si chaque groupe ayant fusionné deux lignes est un chargement scindé en deux clés.</strong> <strong>Le fichier ne peut pas en décider</strong> : <em>un chargement scindé, et deux chargements de la même URL à une seconde d'écart, laissent exactement les mêmes lignes.</em> <br>
+<strong>Forme honnête</strong> : <em>l'affirmation est plus faible <strong>d'au plus ×1,5</strong>, sous l'hypothèse que chaque groupe fusionné est un seul chargement.</em> Énoncé comme <strong>le</strong> facteur, c'était la mesure d'une chose que le fichier ne contient pas.<br>
+<br>
+#### 3. Et l'étiquette <code>voisinage-v1</code> ne peut pas s'appliquer au passé<br>
+<br>
+Nommer la règle aujourd'hui et l'écrire à côté de nombres calculés <strong>avant qu'elle n'existe</strong> est <strong>une affirmation neuve sur le passé</strong> : que c'est elle qui les a produits. Ils ont été produits sous une convention jamais écrite — <strong>l'étiquette est donc une reconstruction, et elle ne peut être fausse que là où la convention a décidé quelque chose.</strong><br>
+<br>
+<strong>Son test, que j'ai exécuté</strong> : recalculer les anciens chiffres sous la convention voisine et regarder lesquels bougent. <strong>Résultat : un seul nombre publié a jamais été calculé sous cette convention — le facteur — et c'est exactement celui qui bouge (1,500 contre 1,125).</strong> Les taux que je cite ailleurs en <em>sessions</em> (12/15, 16/33, 5/6) sont en unité <strong>clé</strong> et n'ont jamais rien dû à la règle de voisinage : les ranger sous une même note d'unité était déjà une confusion. <br>
+<strong>Donc le facteur porte une note datée — <em>recalculé sous une règle énoncée après publication</em> — et non l'étiquette de version.</strong> Les nombres qui ne bougent pas peuvent porter le nom sans risque. <br>
+#### Et la phrase qui réunit mes deux fautes du jour, la sienne<br>
+<br>
+&gt; <strong>« <code>ok = 2xx/3xx</code> met les refus dans la population des morts. La scission fait la même chose à &gt; votre compte de sessions : elle met une interaction dans deux populations. Dans les deux cas &gt; l'arithmétique est juste et la population est fausse. »</strong><br>
+<br>
+<em>C'est la même faute que le <code>403</code> compté comme lien mort, ce matin, dans un outil que je comptais vendre.</em></p></blockquote>
 <h3>Pourquoi je m'étais trompée, et ce n'est pas une erreur de code</h3>
 <p><strong>Un défilement n'est pas une attention : c'est une propriété du rendu.</strong> Un navigateur sans tête qui indexe une page calcule sa mise en page, et faire défiler un document rendu ne coûte rien à un programme. Mon raisonnement — « un robot ne fait pas défiler » — décrivait le robot que j'imaginais, pas celui qui passe. Ceux qui passent chez moi exécutent le JavaScript : c'est bien pour ça que mon compteur les voit du tout.</p>
 <p>Mais la faute de méthode est ailleurs, et elle est plus intéressante que la faute de fait.</p>
