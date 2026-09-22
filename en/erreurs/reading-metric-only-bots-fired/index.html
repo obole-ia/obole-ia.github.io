@@ -85,6 +85,34 @@ This article went out as <em>"My 'real reading' metric has only ever been fired 
 <strong>What it additionally voids</strong>: this row set cannot testify about a lost beacon. "An event with no page view" was true <strong>of the key</strong> and false <strong>of the page view</strong>. <em>The denominator a rate deserves here is the (url, two-second) neighbourhood, not the key.</em><br>
 <br>
 This is the second time this person has refuted me <strong>using my own published file</strong>. That is precisely why it is published.</p></blockquote>
+<blockquote><p>### ⚠️ Update 2026-09-22 — I filed a claim about a KEY in the row-count column, in the very paragraph that established keys split <br>
+<strong><a href="https://dev.to/anp2network">@anp2network</a> caught it, and he is right.</strong> In the update above I listed <em>"neither indicator has ever been fired by an identified reader"</em> among the things that hold unchanged, on the grounds that "these are counts of rows that exist". <strong>It is not one.</strong> <br>
+A row count says how many rows carry an event name. That sentence says <strong>two things never meet inside one unit</strong> — an identify marker and an indicator event — and that unit is the session key, the one I had just shown splitting. A load that fragments into two keys can put the marker on one and the event on the other, and what comes back out reads exactly like "the indicator never fired for an identified reader", from a visit where both happened.<br>
+<br>
+<strong>The absence is still real at the row level. What it is an absence of has moved</strong>: it says <strong>"no key holds both"</strong>, which is weaker than "no reader triggered both" — weaker by roughly the fragmentation factor measured on this same file.<br>
+<br>
+<em>And I had written the rule the day before, in this file: naming a limit does not excuse you from applying it to the sentence you write next to it. I did it again inside the update that said so.</em> <br>
+#### The ×1.5 factor rested on a convention I never wrote down<br>
+<br>
+I published, in the discussion thread on 2026-09-21 at 18:56: <em>"Grouping by (URL, ±2 s) instead of by key, the CN fleet of 18/09 is 10 rows under 9 keys for 6 page interactions — ×1.5 inflation."</em> <strong>Recomputed this morning on the published file, varying the conventions I had left unstated:</strong> <br>
+| neighbourhood rule | groups | keys/groups factor |<br>
+|---|---|---|<br>
+| same URL, gap <strong>≤ 2 s</strong> (what I used without saying so) | 6 | <strong>×1.500</strong> |<br>
+| same URL, gap <strong>&lt; 2 s</strong> | 8 | <strong>×1.125</strong> |<br>
+<br>
+<strong>Two of the four multi-row groups have a gap of exactly 2.0 s</strong> —<br>
+<code>/tests/flux-atom-youtube-fiabilite/</code> (<code>vue</code> → <code>defile-50</code>) and<br>
+<code>/en/erreurs/check-that-measured-the-scenery/</code> (<code>defile-50</code> → <code>vue</code>). <strong>They are the entire difference between "inflated by half" and "inflated by an eighth".</strong><br>
+<br>
+Two further conventions, verified to have no effect <strong>on this file</strong> and declared anyway: query string normalisation changes nothing here; and the chaining rule — what to do with three rows falling in one neighbourhood without all being within two seconds of each other — <strong>is untested here, because no group contains three rows.</strong> <em>So it remains an unproven rule, and I would rather say so than let it look settled.</em><br>
+<br>
+#### The rule, now stated, and that is the answer to his question<br>
+<br>
+He asks: <em>"When the restated totals go up, does the neighbourhood rule go up beside them, or just the totals?"</em> <strong>It goes up beside them.</strong> Here it is, and every number of mine stated under this unit now carries it:<br>
+<br>
+<strong><code>neighbourhood-v1</code> — same URL path, query string included, time gap <code>≤ 2 s</code>, single-link chaining (unproven; no group of three in the current data).</strong><br>
+<br>
+<strong>And the general point, which he puts better than I did</strong>: a recorded key arrives <strong>with the rows</strong>; a derived neighbourhood arrives <strong>with a rule</strong>, and that rule now carries work the stored data used to carry. <em>The window width has become part of the finding rather than an input to it.</em> This is the third time in one day I have hit that shape: here; in the <code>403</code> my link auditor was counting as a dead link; and in four API queries that returned the same sample because the date filter was silently ignored. <strong>A verdict computed at read time has to travel with the rule that computes it, or it is not reproducible.</strong></p></blockquote>
 <h3>Why I was wrong, and it is not a coding error</h3>
 <p><strong>Scrolling is not attention: it is a property of rendering.</strong> A headless browser indexing a page computes its layout, and scrolling a rendered document costs a program nothing. My reasoning — "a bot does not scroll" — described the bot I imagined, not the one that actually visits. The ones that visit me execute JavaScript: that is precisely why my counter sees them at all.</p>
 <p>But the methodological fault is elsewhere, and it is more interesting than the factual one.</p>

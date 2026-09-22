@@ -69,8 +69,18 @@ def cpu_total():
     return r.ru_utime + r.ru_stime
 
 
-def enfant(nom, passes, barriere, tube, rang):
-    """Un flux : un fil, son propre modele, ses propres passes."""
+def enfant(nom, passes, barriere, tube, rang, affinite=False):
+    """Un flux : un fil, son propre modele, ses propres passes.
+
+    `affinite` lie l'enfant au coeur `rang % coeurs`, ce que csukuangfj a
+    recommande le 2026-09-21T03:56:46Z : << Process 0 runs on CPU 0, and
+    process 1 runs on CPU 1. You can use `taskset` >>. os.sched_setaffinity
+    fait de l'interieur ce que taskset fait de l'exterieur, et permet de POSER
+    l'affinite avant qu'onnxruntime ne cree ses fils.
+    """
+    if affinite:
+        os.sched_setaffinity(0, {rang % os.cpu_count()})
+    vu = sorted(os.sched_getaffinity(0))
     modele = MODELES / ("%s.onnx" % nom)
     config = MODELES / ("%s.onnx.json" % nom)
     so = onnxruntime.SessionOptions()
@@ -97,7 +107,8 @@ def enfant(nom, passes, barriere, tube, rang):
         lignes.append({"passe": n, "temps_calcul_s": calc, "audio_s": audio,
                        "ratio": audio / calc, "rtf": calc / audio,
                        "cpu_pourcent": cpu})
-    tube.put({"rang": rang, "voix": nom, "sample_rate_hz": sr, "passes": lignes})
+    tube.put({"rang": rang, "voix": nom, "sample_rate_hz": sr, "passes": lignes,
+              "affinite_effective": vu})
 
 
 def bornes(vals):
@@ -107,10 +118,10 @@ def bornes(vals):
     return {"min": v[0], "max": v[-1], "mediane": med}
 
 
-def un_bras(nom, K, passes):
+def un_bras(nom, K, passes, affinite=False):
     barriere = mp.Barrier(K)
     tube = mp.Queue()
-    procs = [mp.Process(target=enfant, args=(nom, passes, barriere, tube, r))
+    procs = [mp.Process(target=enfant, args=(nom, passes, barriere, tube, r, affinite))
              for r in range(K)]
     t0 = time.perf_counter()
     for p in procs:
@@ -126,6 +137,7 @@ def un_bras(nom, K, passes):
         p = r["passes"]
         enfants.append({
             "rang": r["rang"],
+            "affinite_effective": r["affinite_effective"],
             "passes": p,
             "resume": {"ratio": bornes([x["ratio"] for x in p]),
                        "rtf": bornes([x["rtf"] for x in p]),
@@ -136,10 +148,27 @@ def un_bras(nom, K, passes):
     tenu = all(e["resume"]["cpu_pourcent"]["max"] < PLAFOND_ENFANT for e in enfants)
     if K >= 2:
         tenu = tenu and sum(cpus) > PLANCHER_SOMME_K2
+
+    # CONTROLE DE L AFFINITE, et il peut echouer.
+    # Sans lui, un sched_setaffinity qui ne prend pas rendrait deux bras
+    # IDENTIQUES et je conclurais << l affinite ne change rien >> en ayant
+    # mesure deux fois la meme chose. Un garde qui ne peut pas crier n est
+    # pas un garde : ici il exige des singletons DISTINCTS quand on demande
+    # l affinite, et l ensemble COMPLET quand on ne la demande pas.
+    vus = [e["affinite_effective"] for e in enfants]
+    if affinite:
+        aff_ok = (all(len(v) == 1 for v in vus)
+                  and len({v[0] for v in vus}) == min(K, os.cpu_count()))
+    else:
+        aff_ok = all(len(v) == os.cpu_count() for v in vus)
+    tenu = tenu and aff_ok
     return {
         "voix": nom,
         "flux_simultanes": K,
         "fils_par_flux": 1,
+        "affinite_demandee": affinite,
+        "affinites_vues": vus,
+        "controle_affinite_tenu": aff_ok,
         "mural_total_s": mural,
         "enfants": enfants,
         "debit_par_flux_mediane": debits,
@@ -170,7 +199,8 @@ if __name__ == "__main__":
         "protocole": {
             "source_du_texte": "outils/mesure_tts.py (importe, non recopie)",
             "passes_par_bras": passes,
-            "K_testes": [1, 2],
+            "conditions": "(K=1, sans affinite), (K=2, sans affinite), (K=2, un coeur par processus)",
+            "dimensions": "2 voix x 3 conditions = 6 bras ; la voix ne se moyenne jamais",
             "synchronisation": "multiprocessing.Barrier avant chaque passe",
             "pourquoi_barriere": ("sans elle un enfant qui finit tot mesure une machine "
                                   "libre, et le chiffre est faux dans le sens qui m'arrange"),
@@ -181,21 +211,35 @@ if __name__ == "__main__":
         "bras": [],
     }
 
+    CONDITIONS = [(1, False), (2, False), (2, True)]
+    print("DIMENSIONS : %d voix x %d conditions = %d bras. "
+          "La voix NE SE MOYENNE PAS (x1,64 publie a tort le 21/09)."
+          % (len(VOIX), len(CONDITIONS), len(VOIX) * len(CONDITIONS)))
     for nom in VOIX:
-        for K in (1, 2):
-            b = un_bras(nom, K, passes)
+        for K, aff in CONDITIONS:
+            b = un_bras(nom, K, passes, aff)
             res["bras"].append(b)
-            print("%-18s K=%d  debit/flux %s  agrege x%.2f  cpu somme %.0f %%  %s"
-                  % (nom, K, " ".join("x%.2f" % d for d in b["debit_par_flux_mediane"]),
+            print("%-18s K=%d aff=%-5s  debit/flux %s  agrege x%.2f  cpu %.0f %%  aff_vue %s  %s"
+                  % (nom, K, str(aff),
+                     " ".join("x%.2f" % d for d in b["debit_par_flux_mediane"]),
                      b["debit_agrege_mediane"], b["cpu_somme_medianes"],
+                     b["affinites_vues"],
                      "OK" if b["controle_tenu"] else "CONTROLE EN ECHEC"))
 
     res["controle_tenu"] = all(b["controle_tenu"] for b in res["bras"])
     if not res["controle_tenu"]:
         print("CONTROLE EN ECHEC : rien ne doit etre publie de ce run.")
 
-    dest = (RACINE / "media" / "mesures"
-            / ("piper-parallele-%s.json" % datetime.now().strftime("%Y%m%d")))
+    # Le nom etait a la JOURNEE : un second releve du meme jour ecrasait le
+    # premier en silence. Troisieme instance de ce defaut (auditer-liens.py le
+    # 21/09, ou un controle a ecrase un vrai relevé). Seconde + refus d ecraser.
+    base = RACINE / "media" / "mesures"
+    dest = base / ("piper-parallele-%s.json" % datetime.utcnow().strftime("%Y%m%d-%H%M%S"))
+    n = 0
+    while dest.exists():
+        n += 1
+        dest = base / ("piper-parallele-%s-%d.json"
+                       % (datetime.utcnow().strftime("%Y%m%d-%H%M%S"), n))
     dest.write_text(json.dumps(res, ensure_ascii=False, indent=2))
     print("archive brute : %s" % dest.relative_to(RACINE))
     sys.exit(0 if res["controle_tenu"] else 3)

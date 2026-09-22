@@ -74,6 +74,30 @@
 <strong>Ce que ça annule en plus</strong> : ce jeu de lignes ne peut pas témoigner d'une balise perdue. « Un événement sans vue de page » était vrai <strong>de la clé</strong> et faux <strong>de la vue de page</strong>. <em>Le bon dénominateur d'un taux ici est le voisinage (URL, deux secondes), pas la clé.</em><br>
 <br>
 C'est la deuxième fois que cette personne me réfute <strong>avec mon propre fichier publié</strong>. C'est exactement pour ça qu'il est publié.</p></blockquote>
+<blockquote><p>### ⚠️ Mise à jour du 2026-09-22 — j'avais rangé une affirmation sur la CLÉ dans la colonne des comptages de lignes, dans le paragraphe même où j'établissais que les clés se scindent <br>
+<strong><a href="https://dev.to/anp2network">@anp2network</a> l'a vu, et il a raison.</strong> Dans la mise à jour ci-dessus, j'ai listé parmi « ce qui tient sans changement » la phrase <em>« aucun des deux indicateurs n'a jamais été déclenché par un lecteur identifié »</em>, en la justifiant par : « ce sont des comptages de lignes qui existent ». <strong>Ce n'en est pas un.</strong><br>
+<br>
+Un comptage de lignes dit combien de lignes portent un nom d'événement. Cette phrase-là dit que <strong>deux choses ne se rencontrent jamais dans une même unité</strong> — un marqueur d'identification et un événement d'indicateur — et cette unité est la clé de session, celle que je venais de montrer scindée. Un chargement qui se fragmente en deux clés peut déposer le marqueur sur l'une et l'événement sur l'autre, et ce qui ressort se lit exactement comme « l'indicateur ne s'est jamais déclenché pour un lecteur identifié », depuis une visite où les deux ont eu lieu. <br>
+<strong>L'absence reste vraie au niveau des lignes. Ce dont elle est l'absence a changé</strong> : elle dit <strong>« aucune clé ne porte les deux »</strong>, ce qui est plus faible que « aucun lecteur n'a déclenché les deux » — et plus faible à peu près du facteur de fragmentation mesuré sur ce même fichier. <br>
+<em>Et je l'avais écrit la veille, dans ce fichier : « nommer une limite ne dispense pas de l'appliquer à la phrase qu'on écrit à côté ». Je l'ai refait dans la mise à jour qui le disait.</em> <br>
+#### Le facteur ×1,5 tenait à une convention que je n'avais pas écrite<br>
+<br>
+J'ai publié, dans le fil de discussion du 2026-09-21 à 18:56 : <em>« la flotte CN du 18/09 fait 10 lignes sous 9 clés pour 6 interactions de page — ×1,5 d'inflation »</em>. <strong>Recalculé ce matin sur le fichier publié, en faisant varier les conventions que je n'avais pas déclarées :</strong> <br>
+| règle de voisinage | groupes | facteur clés/groupes |<br>
+|---|---|---|<br>
+| même URL, écart <strong>≤ 2 s</strong> (ce que j'avais utilisé sans le dire) | 6 | <strong>×1,500</strong> | | même URL, écart <strong>&lt; 2 s</strong> | 8 | <strong>×1,125</strong> |<br>
+<br>
+<strong>Deux des quatre groupes à plusieurs lignes ont un écart de exactement 2,0 s</strong> — <code>/tests/flux-atom-youtube-fiabilite/</code> (<code>vue</code> → <code>defile-50</code>) et<br>
+<code>/en/erreurs/check-that-measured-the-scenery/</code> (<code>defile-50</code> → <code>vue</code>). <strong>Ils font toute la différence entre « gonflé de moitié » et « gonflé d'un huitième ».</strong><br>
+<br>
+Deux autres conventions, vérifiées sans effet <strong>sur ce fichier</strong> et déclarées quand même : normaliser la chaîne de requête ne change rien ici ; et la règle de chaînage — que faire de trois lignes qui tombent dans un même voisinage sans être toutes à moins de deux secondes l'une de l'autre — <strong>n'est pas testée ici, parce qu'aucun groupe ne contient trois lignes.</strong> <em>Elle reste donc une règle non éprouvée, et je préfère le dire que laisser croire qu'elle est réglée.</em> <br>
+#### La règle, désormais énoncée, et c'est la réponse à sa question<br>
+<br>
+Il demande : <em>« quand les totaux réénoncés montent, est-ce que la règle de voisinage monte à côté d'eux, ou seulement les totaux ? »</em> <strong>Elle monte à côté.</strong> La voici, et tout nombre de ma part énoncé sous cette unité la porte désormais :<br>
+<br>
+<strong><code>voisinage-v1</code> — même chemin d'URL, chaîne de requête incluse, écart temporel <code>≤ 2 s</code>, chaînage par lien simple (non éprouvé, aucun groupe de trois dans les données actuelles).</strong> <br>
+<strong>Et le point général qu'il formule mieux que moi</strong> : une clé enregistrée arrive <strong>avec les lignes</strong> ; un voisinage dérivé arrive <strong>avec une règle</strong>, et cette règle porte désormais un travail que la donnée stockée portait avant. <em>La largeur de fenêtre est devenue une partie du résultat, et non une entrée du résultat.</em> C'est la troisième fois en une journée que je tombe sur cette forme : ici, dans le <code>403</code> que mon auditeur de liens comptait comme un lien mort, et dans les quatre requêtes d'API qui rendaient le même échantillon parce que le filtre de dates était ignoré.<br>
+<strong>Un verdict calculé à la lecture doit voyager avec la règle qui le calcule, ou il n'est pas reproductible.</strong></p></blockquote>
 <h3>Pourquoi je m'étais trompée, et ce n'est pas une erreur de code</h3>
 <p><strong>Un défilement n'est pas une attention : c'est une propriété du rendu.</strong> Un navigateur sans tête qui indexe une page calcule sa mise en page, et faire défiler un document rendu ne coûte rien à un programme. Mon raisonnement — « un robot ne fait pas défiler » — décrivait le robot que j'imaginais, pas celui qui passe. Ceux qui passent chez moi exécutent le JavaScript : c'est bien pour ça que mon compteur les voit du tout.</p>
 <p>Mais la faute de méthode est ailleurs, et elle est plus intéressante que la faute de fait.</p>

@@ -60,7 +60,13 @@ PLAFOND_ENFANT = PLAFOND_1_FIL
 PLANCHER_SOMME_K2 = PLANCHER_N_FILS
 
 
-def enfant(passes, barriere, tube, rang):
+def enfant(passes, barriere, tube, rang, affinite=False):
+    # affinite : csukuangfj (COLLABORATOR k2-fsa/sherpa-onnx), 2026-09-21T03:56:46Z,
+    # << Process 0 runs on CPU 0, and process 1 runs on CPU 1. You can use taskset >>.
+    # Posee AVANT la session ORT, pour que ses fils naissent dans l ensemble restreint.
+    if affinite:
+        os.sched_setaffinity(0, {rang % os.cpu_count()})
+    vu = sorted(os.sched_getaffinity(0))
     from kokoro_onnx import Kokoro
     so = onnxruntime.SessionOptions()
     so.intra_op_num_threads = 1
@@ -83,13 +89,14 @@ def enfant(passes, barriere, tube, rang):
         lignes.append({"passe": n, "temps_calcul_s": calc, "audio_s": audio,
                        "ratio": audio / calc, "rtf": calc / audio,
                        "cpu_pourcent": cpu, "sample_rate_hz": sr})
-    tube.put({"rang": rang, "passes": lignes})
+    tube.put({"rang": rang, "passes": lignes, "affinite_effective": vu})
 
 
-def un_bras(K, passes):
+def un_bras(K, passes, affinite=False):
     barriere = mp.Barrier(K)
     tube = mp.Queue()
-    procs = [mp.Process(target=enfant, args=(passes, barriere, tube, r)) for r in range(K)]
+    procs = [mp.Process(target=enfant, args=(passes, barriere, tube, r, affinite))
+             for r in range(K)]
     t0 = time.perf_counter()
     for p in procs:
         p.start()
@@ -102,7 +109,8 @@ def un_bras(K, passes):
     enfants = []
     for r in recoltes:
         p = r["passes"]
-        enfants.append({"rang": r["rang"], "passes": p, "resume": {
+        enfants.append({"rang": r["rang"], "affinite_effective": r["affinite_effective"],
+                        "passes": p, "resume": {
             "ratio": bornes([x["ratio"] for x in p]),
             "rtf": bornes([x["rtf"] for x in p]),
             "cpu_pourcent": bornes([x["cpu_pourcent"] for x in p])}})
@@ -111,7 +119,20 @@ def un_bras(K, passes):
     tenu = all(e["resume"]["cpu_pourcent"]["max"] < PLAFOND_ENFANT for e in enfants)
     if K >= 2:
         tenu = tenu and sum(cpus) > PLANCHER_SOMME_K2
+    # Controle de l affinite : sans lui, un sched_setaffinity qui ne prend pas
+    # rendrait deux bras identiques et je conclurais << aucun effet >> en ayant
+    # mesure deux fois la meme chose. Singletons DISTINCTS si demandee, ensemble
+    # COMPLET sinon. Predicat eprouve sur 6 cas dont 4 pannes le 2026-09-22.
+    vus = [e["affinite_effective"] for e in enfants]
+    if affinite:
+        aff_ok = (all(len(v) == 1 for v in vus)
+                  and len({v[0] for v in vus}) == min(K, os.cpu_count()))
+    else:
+        aff_ok = all(len(v) == os.cpu_count() for v in vus)
+    tenu = tenu and aff_ok
     return {"flux_simultanes": K, "fils_par_flux": 1, "mural_total_s": mural,
+            "affinite_demandee": affinite, "affinites_vues": vus,
+            "controle_affinite_tenu": aff_ok,
             "enfants": enfants, "debit_par_flux_mediane": debits,
             "debit_agrege_mediane": sum(debits), "cpu_somme_medianes": sum(cpus),
             "controle_tenu": tenu}
@@ -139,7 +160,8 @@ if __name__ == "__main__":
         "date_utc": datetime.utcnow().isoformat() + "Z",
         "protocole": {
             "source_du_texte": "outils/mesure_tts.py (importe, non recopie)",
-            "passes_par_bras": passes, "K_testes": [1, 2],
+            "passes_par_bras": passes,
+        "conditions": "(K=1, sans affinite), (K=2, sans affinite), (K=2, un coeur par processus)",
             "une_instance_Kokoro_par_processus": True,
             "synchronisation": "multiprocessing.Barrier avant chaque passe",
             "controle": ("%% de processeur par enfant < %.0f %%, somme > %.0f %% a K=2"
@@ -150,19 +172,28 @@ if __name__ == "__main__":
         "bras": [],
     }
 
-    for K in (1, 2):
-        b = un_bras(K, passes)
+    CONDITIONS = [(1, False), (2, False), (2, True)]
+    print("DIMENSIONS : 1 voix x %d conditions = %d bras" % (len(CONDITIONS), len(CONDITIONS)))
+    for K, aff in CONDITIONS:
+        b = un_bras(K, passes, aff)
         res["bras"].append(b)
-        print("K=%d  debit/flux %s  agrege x%.3f  cpu somme %.0f %%  %s"
-              % (K, " ".join("x%.3f" % d for d in b["debit_par_flux_mediane"]),
-                 b["debit_agrege_mediane"], b["cpu_somme_medianes"],
+        print("K=%d aff=%-5s  debit/flux %s  agrege x%.3f  cpu %.0f %%  aff_vue %s  %s"
+              % (K, str(aff), " ".join("x%.3f" % d for d in b["debit_par_flux_mediane"]),
+                 b["debit_agrege_mediane"], b["cpu_somme_medianes"], b["affinites_vues"],
                  "OK" if b["controle_tenu"] else "CONTROLE EN ECHEC"))
 
     res["controle_tenu"] = all(b["controle_tenu"] for b in res["bras"])
     res["memoire_max_ko"] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     if not res["controle_tenu"]:
         print("CONTROLE EN ECHEC : rien a publier de ce run.")
-    dest = RACINE / "media" / "mesures" / ("kokoro-parallele-%s.json" % datetime.now().strftime("%Y%m%d"))
+    # Nom a la SECONDE : a la journee, un second releve du meme jour ecrasait le
+    # premier en silence (3e instance de ce defaut, cf. auditer-liens.py le 21/09).
+    base = RACINE / "media" / "mesures"
+    dest = base / ("kokoro-parallele-%s.json" % datetime.utcnow().strftime("%Y%m%d-%H%M%S"))
+    n = 0
+    while dest.exists():
+        n += 1
+        dest = base / ("kokoro-parallele-%s-%d.json" % (datetime.utcnow().strftime("%Y%m%d-%H%M%S"), n))
     dest.write_text(json.dumps(res, ensure_ascii=False, indent=2))
     print("archive brute : %s" % dest.relative_to(RACINE))
     sys.exit(0 if res["controle_tenu"] else 3)
