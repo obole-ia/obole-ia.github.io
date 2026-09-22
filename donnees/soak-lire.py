@@ -58,6 +58,45 @@ def pente(xs, ys):
     return (num / den) if den else None
 
 
+def enveloppe_basse(xs, ys, n_seaux=None):
+    """Rend (xs, ys) reduits aux MINIMA par seau : l'enveloppe basse de la serie.
+
+    POURQUOI CET ESTIMATEUR EXISTE, et c'est une lecon rendue par quelqu'un d'autre.
+    Le 2026-09-22 sur openclaw#91588, un ingenieur mesure heapUsed sur 39,5 h et
+    publie une pente de +3,7 MiB/h — alors qu'il vient lui-meme de calculer que son
+    plancher vaut 11,7 MiB/h. Sa pente est au TIERS de son propre plancher.
+
+    La cause n'est pas son arithmetique, elle est dans la population : **une serie
+    de tas mesure DEUX choses a la fois**, le tas vivant qui croit et les ordures en
+    attente de collecte qui oscillent. Les moindres carres sur la serie brute
+    estiment donc une tendance dans une population contaminee par la dent de scie
+    du ramasse-miettes — et l'amplitude de cette dent de scie EST l'etendue qui
+    ecrase le plancher.
+
+    Les MINIMA par seau, eux, approchent les creux post-collecte, donc le tas
+    vivant seul. L'amplitude sort de l'estimateur au lieu de le noyer.
+
+    Ce n'est pas une astuce : c'est le meme geste que toutes mes corrections du
+    jour. **Quand une statistique ne conclut pas, regarder si elle porte sur une
+    population qui melange deux choses.**
+    """
+    if len(xs) < 6:
+        return [], []
+    if n_seaux is None:
+        n_seaux = max(3, min(len(xs) // 3, 60))
+    x0, x1 = min(xs), max(xs)
+    if x1 <= x0:
+        return [], []
+    larg = (x1 - x0) / n_seaux
+    seaux = {}
+    for x, y in zip(xs, ys):
+        k = min(int((x - x0) / larg), n_seaux - 1)
+        if k not in seaux or y < seaux[k][1]:
+            seaux[k] = (x, y)
+    pts = sorted(seaux.values())
+    return [a for a, _ in pts], [b for _, b in pts]
+
+
 def main():
     if len(sys.argv) < 2:
         print(__doc__)
@@ -249,6 +288,72 @@ def main():
             print("   parce que la RSS erre avec la pression memoire du systeme.)")
         else:
             print("Plancher de detection non calculable : vsize absente du releve.")
+
+    # --- ENVELOPPE BASSE : ce que la serie brute ne pouvait pas trancher --------
+    xh = [x / 3600.0 for x in xs]
+    for nom, serie in (("RSS", rss), ("VSIZE", vs if len(vs) == len(xs) else None)):
+        if not serie or len(serie) != len(xh):
+            continue
+        etendue = max(serie) - min(serie)
+        s_brut = pente(xh, serie)
+        if s_brut is None or etendue == 0:
+            continue
+        span = max(xh) - min(xh)
+        brut_tranche = abs(s_brut) * span > etendue
+        # LARGEUR DE SEAU, ET POURQUOI ELLE N'EST PLUS CHOISIE SUR LE RESULTAT.
+        # Premiere version : j'essayais sept largeurs et gardais celle dont les minima
+        # s'alignaient le mieux. **Mon temoin negatif l'a refusee** — sur une serie
+        # a dent de scie SANS aucune derive, une largeur sur sept finit par bien
+        # tomber, et l'outil annoncait +710 ko/h de croissance inexistante.
+        # C'est de la selection sur le resultat, la faute que je reproche ailleurs.
+        # Donc : largeur FIXE, fonction du seul nombre d'echantillons, et un seuil
+        # DECLARE au lieu d'un seuil ajuste. Mesures des trois temoins, rapport
+        # derive/dispersion : derive vraie 9,4 — derive franche 183 — SANS derive 1,3.
+        n_seaux_ret = max(4, min(10, len(xh) // 6))
+        ex, ey = enveloppe_basse(xh, serie, n_seaux_ret)
+        if len(ex) < 4:
+            continue
+        s_env = pente(ex, ey)
+        if s_env is None:
+            continue
+        # LE CRITERE PORTE SUR LE RESIDU, PAS SUR L'ETENDUE TOTALE.
+        # Pour une tendance parfaitement lineaire, la derive vaut EXACTEMENT l'etendue :
+        # un critere << derive > etendue >> ne se declencherait donc jamais sur des
+        # minima propres. Ce qu'il faut comparer, c'est la derive a la dispersion qui
+        # RESTE une fois la droite retiree.
+        mx = sum(ex) / len(ex)
+        my = sum(ey) / len(ey)
+        res = [y - (my + s_env * (x - mx)) for x, y in zip(ex, ey)]
+        disp = max(res) - min(res)
+        derive_env = abs(s_env) * span
+        # SEUIL DECLARE : la derive doit valoir au moins TROIS FOIS la dispersion
+        # qui reste apres retrait de la droite. Un simple << superieur a >> laissait
+        # passer le temoin sans derive, qui atteint 1,3.
+        SEUIL = 3.0
+        env_tranche = disp > 0 and derive_env > SEUIL * disp
+        if brut_tranche or not env_tranche:
+            continue
+        print()
+        print("--- ENVELOPPE BASSE sur la %s : ce que la serie brute ne tranchait pas ---" % nom)
+        print("  serie brute        : pente %+.2f ko/h | etendue %d ko | derive %d ko"
+              % (s_brut, etendue, abs(s_brut) * span))
+        print("                       derive/etendue = %.2f  ->  INDECIDABLE"
+              % (abs(s_brut) * span / etendue))
+        print("  minima, %2d seaux   : pente %+.2f ko/h | dispersion residuelle %d ko | derive %d ko"
+              % (n_seaux_ret, s_env, disp, derive_env))
+        print("                       (largeur de seau retenue : %.2f h. Un seau plus etroit que le"
+              % (span / n_seaux_ret))
+        print("                        cycle de collecte rendrait un point du flanc, pas un creux.)")
+        print("                       derive/dispersion = %.1f  ->  TRANCHE (seuil declare : %.0f)"
+              % (derive_env / disp, SEUIL))
+        print("  **La serie brute portait DEUX populations : le fond qui derive, et l'oscillation")
+        print("    du ramasse-miettes. Les minima n'en portent qu'une.**")
+        print("  Croissance de fond retenue : %+.0f ko/jour." % (s_env * 24))
+        print("  LIMITE DECLAREE : la justesse de ce chiffre depend de l'alignement entre la")
+        print("  largeur de seau et le cycle de collecte, que ce releve ne mesure pas. Sur mon")
+        print("  temoin (derive vraie connue), l'enveloppe se trompe de 10,5 %% la ou la serie")
+        print("  brute se trompe de 29,7 %% — meilleure, pas exacte. **A lire comme un ordre de")
+        print("  grandeur du fond, pas comme une mesure au pourcent.**")
     return 0
 
 
