@@ -135,9 +135,31 @@ def main():
     hausses = sum(1 for k in range(1, len(rss)) if rss[k] > rss[k - 1])
     print()
     print("pas de RSS       : %d hausse(s), %d baisse(s)" % (hausses, baisses))
+    # CORRECTION DU 2026-09-22 14:56, trouvee par la premiere instance de cet outil.
+    # J'ecrivais ici << le processus SAIT rendre de la memoire >> des que la RSS baissait.
+    # **C'est faux, et je l'avais publie.** Sur le releve du pont : la RSS est tombee de
+    # 20 904 a 15 612 ko en douze paliers pendant que la memoire VIRTUELLE ne bougeait pas
+    # d'un seul kilo-octet (30 244 sur 149 echantillons). Si le processus avait libere,
+    # l'espace d'adressage aurait diminue. Il n'a rien libere : **le noyau a repris des pages
+    # residentes a un processus inactif.**
+    #
+    # LA REGLE QUI EN SORT, et elle inverse l'intuition courante :
+    #   - la RSS seule ne distingue pas << le processus a libere >> de << le noyau a repris >> ;
+    #   - la VSIZE discrimine : plate pendant que la RSS chute = rien n'a ete libere ;
+    #   - donc **une fuite se lit d'abord dans la VSIZE**, qui ne bouge que si l'espace
+    #     d'adressage grandit, tandis que la RSS erre avec la pression memoire du systeme.
+    vs = [int(x[i["vsize_ko"]]) for x in vivants if x[i["vsize_ko"]].isdigit()]
+    vsize_plate = len(set(vs)) == 1 if vs else False
     if baisses and not hausses:
-        print("  -> le processus SAIT rendre de la memoire. Une hausse ulterieure serait donc")
-        print("     une vraie croissance et non un allocateur qui ne rend jamais rien.")
+        if vsize_plate:
+            print("  -> ATTENTION : la memoire VIRTUELLE n'a pas bouge (%d ko sur tout le releve)." % vs[0])
+            print("     Le processus n'a donc RIEN libere : c'est le noyau qui a repris des pages")
+            print("     residentes. Une baisse de RSS a vsize constante n'est pas une liberation.")
+        else:
+            print("  -> la vsize a baisse aussi : le processus a rendu de la memoire au systeme.")
+    elif baisses and hausses and vsize_plate:
+        print("  -> la memoire virtuelle est immobile (%d ko) : les mouvements de RSS sont des" % vs[0])
+        print("     pages reprises et reprechargees par le noyau, pas des allocations du processus.")
     print()
     print("--- VERDICT ---")
     if redem:
@@ -145,15 +167,36 @@ def main():
     if part_trous > 0.05:
         print("RESERVE : %.1f %% des minutes manquent. On ignore ce qui s'est passe pendant." % (100 * part_trous))
     etendue_rss = max(rss) - min(rss)
+    if vsize_plate and etendue_rss:
+        print("NOTE DE LECTURE : la memoire virtuelle est restee a %d ko sur tout le releve." % vs[0])
+        print("Les %d ko d'etendue de RSS sont donc du mouvement de PAGES, pas d'allocation." % etendue_rss)
+        print("**Pour une fuite, c'est la vsize qu'il faut regarder : elle ne grandit que si")
+        print("l'espace d'adressage grandit.**")
     s = pente(xs, rss)
     if s is not None and abs(s * 86400) * (duree / 86400) > etendue_rss and s > 0:
         print("DERIVE DE MEMOIRE : hausse de %+.0f ko/jour, superieure a l'etendue observee." % (s * 86400))
     elif etendue_rss == 0:
         print("AUCUNE DERIVE : memoire residente immobile sur toute la duree.")
     else:
-        print("AUCUNE DERIVE ETABLIE : etendue de %d ko (%.2f %% de la base), sans tendance" % (etendue_rss, 100 * etendue_rss / rss[0]))
+        print("AUCUNE DERIVE ETABLIE : etendue de RSS %d ko (%.2f %% de la base), sans tendance" % (etendue_rss, 100 * etendue_rss / rss[0]))
         print("qui la depasse. **Ce n'est pas la preuve d'une absence de fuite : c'est l'absence")
-        print("de preuve d'une fuite sur %.1f h.** Une fuite plus lente que %.0f ko/jour resterait invisible ici." % (duree / 3600, etendue_rss / max(duree / 86400, 1e-9)))
+        print("de preuve d'une fuite sur %.1f h.**" % (duree / 3600))
+        # LE PLANCHER SE CALCULE SUR LE SIGNAL DE FUITE, PAS SUR LE SIGNAL BRUYANT.
+        # Corrige le 2026-09-22 a 14:58 : je le calculais sur l'etendue de RSS, qui vient
+        # d'etre etablie comme du mouvement de PAGES. Il rendait 51 490 ko/jour — un plancher
+        # si lache qu'il ne disqualifiait rien. **Une statistique calculee sur la mauvaise
+        # population**, exactement la faute que je corrige partout aujourd'hui.
+        jours = max(duree / 86400, 1e-9)
+        if vs:
+            etendue_vs = max(vs) - min(vs)
+            base_vs = max(etendue_vs, 4)  # une page de 4 ko : on ne detecte pas plus fin
+            print("PLANCHER DE DETECTION, sur la memoire VIRTUELLE qui est le signal de fuite :")
+            print("  une croissance d'espace d'adressage plus lente que **%.0f ko/jour** serait" % (base_vs / jours))
+            print("  restee invisible sur cette duree. L'etendue de vsize observee est de %d ko." % etendue_vs)
+            print("  (Le meme plancher calcule sur la RSS vaudrait %.0f ko/jour — beaucoup plus lache," % (etendue_rss / jours))
+            print("   parce que la RSS erre avec la pression memoire du systeme.)")
+        else:
+            print("Plancher de detection non calculable : vsize absente du releve.")
     return 0
 
 
