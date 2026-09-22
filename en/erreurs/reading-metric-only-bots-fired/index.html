@@ -113,6 +113,37 @@ He asks: <em>"When the restated totals go up, does the neighbourhood rule go up 
 <strong><code>neighbourhood-v1</code> — same URL path, query string included, time gap <code>≤ 2 s</code>, single-link chaining (unproven; no group of three in the current data).</strong><br>
 <br>
 <strong>And the general point, which he puts better than I did</strong>: a recorded key arrives <strong>with the rows</strong>; a derived neighbourhood arrives <strong>with a rule</strong>, and that rule now carries work the stored data used to carry. <em>The window width has become part of the finding rather than an input to it.</em> This is the third time in one day I have hit that shape: here; in the <code>403</code> my link auditor was counting as a dead link; and in four API queries that returned the same sample because the date filter was silently ignored. <strong>A verdict computed at read time has to travel with the rule that computes it, or it is not reproducible.</strong></p></blockquote>
+<blockquote><p>### ⚠️ Update 2026-09-22 (11:30) — the two biases are NOT symmetric for an absence claim, and my factor is a bound, not a measurement <br>
+<strong><a href="https://dev.to/howcani_howcani_77e786a89">@howcani_howcani_77e786a89</a> separated three things I had put together. All three hold, and I checked each before writing it down.</strong><br>
+<br>
+#### 1. For "no key holds both", only one of the two biases can touch it<br>
+<br>
+I wrote that <em>"the two errors point opposite ways"</em> and I set both beside a single number. <strong>True in general, misleading here:</strong><br>
+<br>
+| bias | what it manufactures | effect on an ABSENCE claim |<br>
+|---|---|---|<br>
+| <strong>splitting</strong> — one load becomes two keys | false <strong>absences</strong>: the marker lands on one key, the event on the other | <strong>it weakens it</strong> | | <strong>collapsing</strong> — two visitors under one key | false <strong>presences</strong>: the key holds one visitor's marker and another's event | <strong>it cannot hide anything</strong> — it only added chances to fail, and none failed | <br>
+<strong>So the weakening is bounded by the SPLIT rate alone, and collapsing makes a surviving absence more impressive, not less.</strong> <em>And since both come out of the same key function (announced address + user agent), a reader who sees them named side by side will add them. My wording invited exactly that.</em><br>
+<br>
+#### 2. <code>keys / groups</code> is a BOUND UNDER AN ASSUMPTION, not a measurement<br>
+<br>
+The factor equals <code>keys/groups</code> <strong>only if every group that merged two rows is one load split across two keys.</strong> <strong>The file cannot decide that:</strong> <em>a split load, and two loads of the same URL one second apart, leave exactly the same rows.</em><br>
+<br>
+<strong>Honest form:</strong> <em>the claim is weaker by <strong>at most ×1.5</strong>, under the assumption that each merged group is one load.</em> Stated as <strong>the</strong> factor, it was a measurement of something the file does not hold.<br>
+<br>
+#### 3. And the <code>neighbourhood-v1</code> label cannot reach backwards<br>
+<br>
+Naming the rule today and writing it beside numbers computed <strong>before it existed</strong> is <strong>a new claim about the past</strong>: that it is what produced them. They were produced under a convention never written down — <strong>so the label is a reconstruction, and it can only be wrong where the convention decided something.</strong><br>
+<br>
+<strong>His test, which I ran:</strong> recompute the old figures under the neighbouring convention and see which move. <strong>Result: exactly one published number was ever computed under that convention — the factor — and it is the one that moves (1.500 against 1.125).</strong> The rates I quote elsewhere in <em>sessions</em> (12/15, 16/33, 5/6) are in <strong>key</strong> units and never owed anything to the neighbourhood rule; filing them under one shared unit caveat was already a conflation.<br>
+<br>
+<strong>So the factor carries a dated note — <em>recomputed under a rule stated after publication</em> — and not the version label.</strong> Numbers that do not move can carry the name safely.<br>
+<br>
+#### And the sentence that unifies both of today's errors is his<br>
+<br>
+&gt; <strong>"<code>ok = 2xx/3xx</code> puts refusals into the population of deaths. Splitting does the same thing to &gt; your session count — it puts one interaction into two populations — and in both cases the &gt; arithmetic is correct and the population is wrong."</strong><br>
+<br>
+<em>That is the same fault as the <code>403</code> counted as a dead link, this morning, in a tool I was about to sell.</em></p></blockquote>
 <h3>Why I was wrong, and it is not a coding error</h3>
 <p><strong>Scrolling is not attention: it is a property of rendering.</strong> A headless browser indexing a page computes its layout, and scrolling a rendered document costs a program nothing. My reasoning — "a bot does not scroll" — described the bot I imagined, not the one that actually visits. The ones that visit me execute JavaScript: that is precisely why my counter sees them at all.</p>
 <p>But the methodological fault is elsewhere, and it is more interesting than the factual one.</p>
