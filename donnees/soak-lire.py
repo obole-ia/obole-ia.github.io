@@ -127,6 +127,16 @@ def main():
             duree_demandee = float(e.split("\t")[1]) * 3600
         elif e.startswith("# fin_prevue_utc"):
             fin_prevue = e.split("\t")[1].strip()
+    # NOM REEL DE LA SERIE. Une serie importee atterrit dans la colonne `rss_ko`,
+    # mais ce n'est pas forcement de la memoire residente : sur la premiere serie
+    # cliente que j'ai fait passer, c'etait un tas JavaScript. L'en-tete le disait,
+    # le corps du verdict disait << RSS >>. **Dans une livraison payee, un verdict
+    # juste sous une etiquette fausse est un verdict faux.**
+    nom1 = "memoire residente"
+    for e in entete:
+        if "lue comme `rss_ko` est en realite" in e:
+            bout = e.split("est en realite", 1)[1].strip().rstrip(".")
+            nom1 = bout.split(", multipliee")[0].strip()
     fin_normale = any(e.startswith("# FIN_NORMALE") for e in entete)
     arret_signal = [e for e in entete if e.startswith("# ARRET_SIGNAL")]
 
@@ -182,7 +192,7 @@ def main():
 
     vivants = [x for x in lignes if x[i["vivant"]] == "1" and x[i["rss_ko"]] not in ("None", "")]
     xs = [int(x[i["seconde_ecoulee"]]) for x in vivants]
-    for champ, libelle, unite in (("rss_ko", "memoire residente", "ko"),
+    for champ, libelle, unite in (("rss_ko", nom1, "ko"),
                                   ("vsize_ko", "memoire virtuelle", "ko"),
                                   ("descripteurs", "descripteurs ouverts", ""),
                                   ("fils", "fils", ""),
@@ -267,9 +277,10 @@ def main():
     if s is not None and abs(s * 86400) * (duree / 86400) > etendue_rss and s > 0:
         print("DERIVE DE MEMOIRE : hausse de %+.0f ko/jour, superieure a l'etendue observee." % (s * 86400))
     elif etendue_rss == 0:
-        print("AUCUNE DERIVE : memoire residente immobile sur toute la duree.")
+        print("AUCUNE DERIVE : %s immobile sur toute la duree." % nom1)
     else:
-        print("AUCUNE DERIVE ETABLIE : etendue de RSS %d ko (%.2f %% de la base), sans tendance" % (etendue_rss, 100 * etendue_rss / rss[0]))
+        print("AUCUNE DERIVE ETABLIE : etendue de %s %d ko (%.2f %% de la base), sans tendance"
+              % (nom1, etendue_rss, 100 * etendue_rss / rss[0]))
         print("qui la depasse. **Ce n'est pas la preuve d'une absence de fuite : c'est l'absence")
         print("de preuve d'une fuite sur %.1f h.**" % (duree / 3600))
         # LE PLANCHER SE CALCULE SUR LE SIGNAL DE FUITE, PAS SUR LE SIGNAL BRUYANT.
@@ -334,7 +345,8 @@ def main():
         if brut_tranche or not env_tranche:
             continue
         print()
-        print("--- ENVELOPPE BASSE sur la %s : ce que la serie brute ne tranchait pas ---" % nom)
+        etiq = nom1 if nom == "RSS" else nom
+        print("--- ENVELOPPE BASSE sur %s : ce que la serie brute ne tranchait pas ---" % etiq)
         print("  serie brute        : pente %+.2f ko/h | etendue %d ko | derive %d ko"
               % (s_brut, etendue, abs(s_brut) * span))
         print("                       derive/etendue = %.2f  ->  INDECIDABLE"
@@ -351,8 +363,10 @@ def main():
         print("  Croissance de fond retenue : %+.0f ko/jour." % (s_env * 24))
         print("  LIMITE DECLAREE : la justesse de ce chiffre depend de l'alignement entre la")
         print("  largeur de seau et le cycle de collecte, que ce releve ne mesure pas. Sur mon")
-        print("  temoin (derive vraie connue), l'enveloppe se trompe de 10,5 %% la ou la serie")
-        print("  brute se trompe de 29,7 %% — meilleure, pas exacte. **A lire comme un ordre de")
+        print("  temoins (derive vraie connue) : quand la largeur de seau tombe pres du cycle")
+        print("  de collecte, l'enveloppe se trompe de 10,5 % contre 29,7 % pour la serie brute ;")
+        print("  quand elle en est loin, les deux se valent (14,6 % contre 15,3 %) et c'est la")
+        print("  DECIDABILITE qu'elle apporte, pas la justesse. **A lire comme un ordre de")
         print("  grandeur du fond, pas comme une mesure au pourcent.**")
     return 0
 
