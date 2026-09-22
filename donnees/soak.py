@@ -42,6 +42,7 @@ en-tete et ses limites des la premiere ligne.
 import argparse
 import json
 import os
+import signal
 import re
 import subprocess
 import sys
@@ -160,10 +161,26 @@ def main():
     sortie = Path(a.sortie)
     sortie.parent.mkdir(parents=True, exist_ok=True)
     neuf = not sortie.exists()
+
+    # LA FIN PREVUE S'ECRIT AU DEBUT, ET C'EST TOUT L'INTERET.
+    # Corrige le 2026-09-22 a 15:05, apres que ma PREMIERE INSTANCE de ce harnais
+    # soit morte a 2 h 28 sur les 720 h demandees — sans rien ecrire, parce qu'elle
+    # tournait hors de tmux et a pris un signal quand son shell est parti.
+    # Le fichier qu'elle laisse est PROPRE : 150 echantillons, zero trou. Mon
+    # analyseur en tirait un verdict confiant. **Il ne pouvait pas voir la
+    # troncature, parce que sa duree, il la lisait dans les donnees elles-memes.**
+    # On ne voit pas la queue manquante depuis la queue : il faut un temoin
+    # exterieur aux echantillons, et c'est la fin annoncee avant de commencer.
+    t0 = time.time()
+    fin = t0 + a.duree_h * 3600
+
     f = open(sortie, "a", encoding="utf-8")
     if neuf:
         f.write("# soak.py — %s\n" % (a.etiquette or a.cible))
         f.write("# debut_utc\t%s\n" % datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
+        f.write("# duree_demandee_h\t%.2f\n" % a.duree_h)
+        f.write("# fin_prevue_utc\t%s\n"
+                % datetime.fromtimestamp(fin, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
         f.write("# machine\t%s, %d coeurs\n" % (os.uname().machine, os.cpu_count()))
         f.write("# intervalle_s\t%d\n" % a.intervalle)
         f.write("# arbre\t%s (si faux et enfants>0, le chiffre peut etre au mauvais endroit)\n" % a.arbre)
@@ -173,13 +190,33 @@ def main():
         f.write("\t".join(COLONNES) + "\n")
         f.flush()
 
-    t0 = time.time()
     pid = trouver_pid(a.cible)
     pid_initial = pid
     redemarrages = 0
-    fin = t0 + a.duree_h * 3600
+    def _arret(signum, _frame):
+        # Un soak qui meurt en silence laisse un fichier PROPRE et MENSONGER.
+        # SIGKILL (9) ne passe pas ici : aucun programme ne peut l'intercepter.
+        # C'est precisement pour ce cas-la que la fin prevue est dans l'en-tete.
+        try:
+            f.write("# ARRET_SIGNAL\t%s\tsignal=%d\tseconde_ecoulee=%d\n"
+                    % (datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                       signum, int(time.time() - t0)))
+            f.flush()
+            os.fsync(f.fileno())
+        except Exception:
+            pass
+        sys.exit(128 + signum)
+
+    for _s in (signal.SIGTERM, signal.SIGHUP, signal.SIGINT):
+        try:
+            signal.signal(_s, _arret)
+        except Exception:
+            pass
+
     print("soak : cible=%s pid=%s sortie=%s intervalle=%ds duree=%.1f h"
           % (a.cible, pid, sortie, a.intervalle, a.duree_h))
+    print("soak : fin prevue %s — RELANCER DANS TMUX, jamais depuis un shell jetable."
+          % datetime.fromtimestamp(fin, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
     while time.time() < fin:
         maintenant = time.time()
         courant = trouver_pid(a.cible)
@@ -224,6 +261,10 @@ def main():
         dors = a.intervalle - (time.time() - maintenant)
         if dors > 0:
             time.sleep(dors)
+    f.write("# FIN_NORMALE\t%s\tduree_atteinte\n"
+            % datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    f.flush()
+    os.fsync(f.fileno())
     f.close()
     print("soak termine. PID initial %s, %d redemarrage(s)." % (pid_initial, redemarrages))
     return 0

@@ -1,0 +1,12 @@
+# soak.py — pont Telegram (pont.py) — relance dans tmux apres mort du premier soak a 2h28
+# debut_utc	2026-09-22T15:04:03Z
+# duree_demandee_h	720.00
+# fin_prevue_utc	2026-10-22T15:04:03Z
+# machine	aarch64, 2 coeurs
+# intervalle_s	60
+# arbre	True (si faux et enfants>0, le chiffre peut etre au mauvais endroit)
+# inotify_max_user_watches	93600
+# NON MESURE : energie (pas de /sys/class/powercap, VPS partage) ; percentiles de latence (mes propres processus partagent les 2 coeurs)
+horodatage_utc	seconde_ecoulee	pid	vivant	rss_ko	vsize_ko	fils	descripteurs	instances_inotify	cpu_ticks	redemarrages	enfants	charge_1min	note
+2026-09-22T15:04:03Z	0	781853	1	18956	30244	1	4	0	6035	0	0	0.22	
+2026-09-22T15:05:03Z	60	781853	1	18956	30244	1	4	0	6036	0	0	0.37	

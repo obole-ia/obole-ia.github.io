@@ -21,10 +21,20 @@ Ce qu'il refuse de conclure, et pourquoi
    processus dont l'étendue dépasse déjà ce chiffre est du bruit. On compare donc
    toujours la dérive projetée sur la durée à l'ÉTENDUE observée — et si la
    seconde domine, le verdict dit << indécidable >>, pas << aucune dérive >>.
-3. **Une baisse n'est pas une fuite négative**, mais elle est informative : elle
-   prouve que le processus SAIT rendre de la mémoire, donc qu'une hausse
-   ultérieure serait une vraie croissance et non un allocateur qui ne rend rien.
-   C'est dit dans le verdict quand ça se produit.
+3. **Une baisse de RSS n'est pas une libération.** Corrigé le 2026-09-22 : cette
+   notice affirmait qu'une baisse « prouve que le processus SAIT rendre de la
+   mémoire ». C'est faux, et ma propre première instance l'a montré — la RSS a
+   chuté de 25 % pendant que la mémoire VIRTUELLE ne bougeait pas d'un octet.
+   Un processus qui libère voit son espace d'adressage diminuer. Le mien ne l'a
+   pas vu : c'est le noyau qui a repris des pages à un processus inactif.
+   **Une fuite se lit d'abord dans la vsize ; la RSS erre avec la pression
+   mémoire du système.**
+4. **La TRONCATURE.** Un relevé interrompu est *propre* : pas un trou, pas une
+   anomalie, juste une fin. La durée ne peut donc pas se lire dans les données —
+   sinon un soak mort au bout de 1 % de sa fenêtre rend un verdict confiant sur
+   1 % de sa fenêtre, sans le dire. Il faut un témoin EXTÉRIEUR aux échantillons :
+   la fin annoncée dans l'en-tête avant de commencer. **On ne voit pas la queue
+   manquante depuis la queue.**
 
     outils/venv/bin/python outils/soak-lire.py <fichier.tsv>
 """
@@ -69,9 +79,17 @@ def main():
 
     i = {c: n for n, c in enumerate(COLS)}
     intervalle = 60
+    duree_demandee = None
+    fin_prevue = ""
     for e in entete:
         if e.startswith("# intervalle_s"):
             intervalle = int(e.split("\t")[1])
+        elif e.startswith("# duree_demandee_h"):
+            duree_demandee = float(e.split("\t")[1]) * 3600
+        elif e.startswith("# fin_prevue_utc"):
+            fin_prevue = e.split("\t")[1].strip()
+    fin_normale = any(e.startswith("# FIN_NORMALE") for e in entete)
+    arret_signal = [e for e in entete if e.startswith("# ARRET_SIGNAL")]
 
     print("=" * 72)
     for e in entete:
@@ -86,6 +104,32 @@ def main():
     print("echantillons     : %d observes / %d attendus" % (len(lignes), attendus))
     print("TROUS            : %d (%.1f %%)%s" % (trous, 100 * part_trous,
           "  *** au-dela de 5 %, le verdict porte une reserve ***" if part_trous > 0.05 else ""))
+
+    # --- TRONCATURE ---------------------------------------------------------
+    # Un releve interrompu n'a pas de trou : il a une fin. Rien dans les donnees
+    # ne le distingue d'un releve court mais complet. Le temoin est l'en-tete.
+    tronque = False
+    couverture = None
+    if arret_signal:
+        print("ARRET PAR SIGNAL : %s" % arret_signal[-1].lstrip("# ").strip())
+    if duree_demandee is None:
+        print("COUVERTURE       : *** NON TESTABLE *** — l'en-tete ne declare aucune")
+        print("                   duree demandee. Ce releve peut etre complet ou tronque :")
+        print("                   le fichier ne permet pas de le savoir. (Releves anterieurs")
+        print("                   au 2026-09-22 15:05.)")
+    else:
+        couverture = duree / duree_demandee if duree_demandee else 0
+        tronque = (not fin_normale) and couverture < 0.99
+        print("COUVERTURE       : %.2f h observees / %.2f h demandees = %.2f %%%s"
+              % (duree / 3600, duree_demandee / 3600, 100 * couverture,
+                 "   *** TRONQUE ***" if tronque else ""))
+        if tronque:
+            print("  -> *** CE RELEVE EST TRONQUE. Il ne porte AUCUN marqueur de fin normale.")
+            print("     Le harnais s'est arrete a %.1f %% de la fenetre demandee (fin prevue %s)."
+                  % (100 * couverture, fin_prevue or "?"))
+            print("     **Tout verdict ci-dessous ne vaut QUE pour les %.2f h observees.**"
+                  % (duree / 3600))
+    print()
 
     morts = [x for x in lignes if x[i["vivant"]] == "0"]
     redem = int(lignes[-1][i["redemarrages"]])
@@ -166,6 +210,14 @@ def main():
         print("REDEMARRAGES DETECTES : %d. Tout le reste se lit sous cette reserve." % redem)
     if part_trous > 0.05:
         print("RESERVE : %.1f %% des minutes manquent. On ignore ce qui s'est passe pendant." % (100 * part_trous))
+    if tronque:
+        print("RESERVE MAJEURE : releve TRONQUE a %.2f %% de la fenetre demandee." % (100 * couverture))
+        print("Une fuite lente est justement ce qu'une fenetre ecourtee ne peut pas voir :")
+        print("le plancher de detection ci-dessous est celui des %.2f h observees, pas des" % (duree / 3600))
+        print("%.0f h achetees. **Relancer le soak ; ce verdict n'est pas la livraison.**" % (duree_demandee / 3600))
+    elif duree_demandee is None:
+        print("RESERVE : duree demandee non declaree dans l'en-tete — la troncature n'a PAS")
+        print("pu etre testee. Ce verdict suppose le releve complet sans pouvoir le verifier.")
     etendue_rss = max(rss) - min(rss)
     if vsize_plate and etendue_rss:
         print("NOTE DE LECTURE : la memoire virtuelle est restee a %d ko sur tout le releve." % vs[0])
