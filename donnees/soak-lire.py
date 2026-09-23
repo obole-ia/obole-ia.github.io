@@ -58,7 +58,7 @@ def pente(xs, ys):
     return (num / den) if den else None
 
 
-def enveloppe_basse(xs, ys, n_seaux=None):
+def enveloppe_basse(xs, ys, n_seaux=None, decalage=0.0):
     """Rend (xs, ys) reduits aux MINIMA par seau : l'enveloppe basse de la serie.
 
     POURQUOI CET ESTIMATEUR EXISTE, et c'est une lecon rendue par quelqu'un d'autre.
@@ -88,9 +88,16 @@ def enveloppe_basse(xs, ys, n_seaux=None):
     if x1 <= x0:
         return [], []
     larg = (x1 - x0) / n_seaux
+    # LE DECALAGE PORTE SUR LES BORNES, PAS SUR LES DONNEES. Premiere version du
+    # balayage : je soustrayais le decalage a toutes les abscisses — or cette fonction
+    # recalcule x0 depuis min(xs), donc les bornes suivaient et le decalage ne changeait
+    # RIEN. Les quatre alignements rendaient la meme pente, facteur 1,0, et le balayage
+    # annoncait une stabilite qu'il n'avait pas mesuree. **Un controle qui ne peut pas
+    # echouer ne controle rien** — trouve le 2026-09-23 a 02:00, sur le balayage meme
+    # que je venais d'ecrire pour corriger un autre defaut.
     seaux = {}
     for x, y in zip(xs, ys):
-        k = min(int((x - x0) / larg), n_seaux - 1)
+        k = int((x - x0 + decalage) / larg)
         if k not in seaux or y < seaux[k][1]:
             seaux[k] = (x, y)
     pts = sorted(seaux.values())
@@ -346,63 +353,75 @@ def main():
             continue
         span = max(xh) - min(xh)
         brut_tranche = abs(s_brut) * span > etendue
-        # LARGEUR DE SEAU, ET POURQUOI ELLE N'EST PLUS CHOISIE SUR LE RESULTAT.
-        # Premiere version : j'essayais sept largeurs et gardais celle dont les minima
-        # s'alignaient le mieux. **Mon temoin negatif l'a refusee** — sur une serie
-        # a dent de scie SANS aucune derive, une largeur sur sept finit par bien
-        # tomber, et l'outil annoncait +710 ko/h de croissance inexistante.
-        # C'est de la selection sur le resultat, la faute que je reproche ailleurs.
-        # Donc : largeur FIXE, fonction du seul nombre d'echantillons, et un seuil
-        # DECLARE au lieu d'un seuil ajuste. Mesures des trois temoins, rapport
-        # derive/dispersion : derive vraie 9,4 — derive franche 183 — SANS derive 1,3.
+        # LA PENTE DES CREUX N'EST PAS IDENTIFIABLE A PARTIR D'UN SEUL ALIGNEMENT.
+        # Trouve le 2026-09-23 a 01:50 sur la PREMIERE VRAIE DONNEE CLIENTE : 77 releves
+        # de tas d'un processus Node, openclaw#91588. En ne faisant varier QUE l'origine
+        # des seaux horaires, sur les memes 77 lignes :
+        #     decalage 0,00 h -> +1,67 MiB/h
+        #     decalage 0,25 h -> +4,07
+        #     decalage 0,50 h -> +5,40
+        #     decalage 0,75 h -> +2,57
+        # **Un facteur 3,2 issu d'un choix arbitraire que personne n'avait ecrit.** C'est la
+        # PHASE de la dent de scie qui fuit dans l'estimateur par les bords des seaux —
+        # exactement la contamination que la methode devait retirer.
+        #
+        # Donc : plus de pente unique. On balaie les alignements, on rend un INTERVALLE, et
+        # **on ne tranche que si le verdict tient a TOUS les alignements.** Un verdict qui
+        # depend de l'origine des seaux n'est pas un verdict.
         n_seaux_ret = max(4, min(10, len(xh) // 6))
-        ex, ey = enveloppe_basse(xh, serie, n_seaux_ret)
-        if len(ex) < 4:
+        largeur = span / n_seaux_ret
+        essais = []
+        for k in range(4):
+            dec = k * largeur / 4.0
+            cx, cy = enveloppe_basse(xh, serie, n_seaux_ret, dec)
+            if len(cx) < 4:
+                continue
+            sp_ = pente(cx, cy)
+            if sp_ is None:
+                continue
+            mx_ = sum(cx) / len(cx); my_ = sum(cy) / len(cy)
+            res = [y - (my_ + sp_ * (x - mx_)) for x, y in zip(cx, cy)]
+            d_ = max(res) - min(res)
+            essais.append((dec, len(cx), sp_, d_, abs(sp_) * span))
+        if len(essais) < 2:
             continue
-        s_env = pente(ex, ey)
-        if s_env is None:
-            continue
-        # LE CRITERE PORTE SUR LE RESIDU, PAS SUR L'ETENDUE TOTALE.
-        # Pour une tendance parfaitement lineaire, la derive vaut EXACTEMENT l'etendue :
-        # un critere << derive > etendue >> ne se declencherait donc jamais sur des
-        # minima propres. Ce qu'il faut comparer, c'est la derive a la dispersion qui
-        # RESTE une fois la droite retiree.
-        mx = sum(ex) / len(ex)
-        my = sum(ey) / len(ey)
-        res = [y - (my + s_env * (x - mx)) for x, y in zip(ex, ey)]
-        disp = max(res) - min(res)
-        derive_env = abs(s_env) * span
-        # SEUIL DECLARE : la derive doit valoir au moins TROIS FOIS la dispersion
-        # qui reste apres retrait de la droite. Un simple << superieur a >> laissait
-        # passer le temoin sans derive, qui atteint 1,3.
         SEUIL = 3.0
-        env_tranche = disp > 0 and derive_env > SEUIL * disp
-        if brut_tranche or not env_tranche:
+        tous_tranchent = all(d > 0 and der > SEUIL * d for _, _, _, d, der in essais)
+        pentes = [e[2] for e in essais]
+        s_env = sum(pentes) / len(pentes)
+        p_min, p_max = min(pentes), max(pentes)
+        facteur = (max(abs(p_min), abs(p_max)) / min(abs(p_min), abs(p_max))) if min(abs(p_min), abs(p_max)) else float("inf")
+        if brut_tranche:
             continue
         print()
-        etiq = nom1 if nom == "RSS" else nom
-        print("--- ENVELOPPE BASSE sur %s : ce que la serie brute ne tranchait pas ---" % etiq)
+        print("--- ENVELOPPE BASSE sur %s ---" % (nom1 if nom == "RSS" else nom))
         print("  serie brute        : pente %+.2f ko/h | etendue %d ko | derive %d ko"
               % (s_brut, etendue, abs(s_brut) * span))
         print("                       derive/etendue = %.2f  ->  INDECIDABLE"
               % (abs(s_brut) * span / etendue))
-        print("  minima, %2d seaux   : pente %+.2f ko/h | dispersion residuelle %d ko | derive %d ko"
-              % (n_seaux_ret, s_env, disp, derive_env))
-        print("                       (largeur de seau retenue : %.2f h. Un seau plus etroit que le"
-              % (span / n_seaux_ret))
-        print("                        cycle de collecte rendrait un point du flanc, pas un creux.)")
-        print("                       derive/dispersion = %.1f  ->  TRANCHE (seuil declare : %.0f)"
-              % (derive_env / disp, SEUIL))
-        print("  **La serie brute portait DEUX populations : le fond qui derive, et l'oscillation")
-        print("    du ramasse-miettes. Les minima n'en portent qu'une.**")
-        print("  Croissance de fond retenue : %+.0f ko/jour." % (s_env * 24))
-        print("  LIMITE DECLAREE : la justesse de ce chiffre depend de l'alignement entre la")
-        print("  largeur de seau et le cycle de collecte, que ce releve ne mesure pas. Sur mon")
-        print("  temoins (derive vraie connue) : quand la largeur de seau tombe pres du cycle")
-        print("  de collecte, l'enveloppe se trompe de 10,5 % contre 29,7 % pour la serie brute ;")
-        print("  quand elle en est loin, les deux se valent (14,6 % contre 15,3 %) et c'est la")
-        print("  DECIDABILITE qu'elle apporte, pas la justesse. **A lire comme un ordre de")
-        print("  grandeur du fond, pas comme une mesure au pourcent.**")
+        print("  minima, %d seaux de %.2f h, BALAYAGE DE L'ALIGNEMENT :" % (n_seaux_ret, largeur))
+        for dec, n_, sp_, d_, der in essais:
+            print("     decalage %.2f h : %2d creux | pente %+8.2f ko/h | dispersion %7.0f | derive %7.0f | rapport %5.2f"
+                  % (dec, n_, sp_, d_, der, (der / d_) if d_ else float("inf")))
+        print("  PENTE : intervalle [%+.2f , %+.2f] ko/h selon l'alignement, facteur %.1f."
+              % (p_min, p_max, facteur))
+        if facteur > 2:
+            print("  *** LA PENTE N'EST PAS IDENTIFIABLE sur ce releve : elle varie d'un facteur %.1f"
+                  % facteur)
+            print("      selon l'origine des seaux, qui est un choix arbitraire. **Aucun de ces")
+            print("      nombres ne doit etre cite comme la croissance de fond.**")
+        if tous_tranchent:
+            print("  VERDICT : TRANCHE — le rapport depasse le seuil de %.0f a TOUS les alignements." % SEUIL)
+            print("  Croissance de fond, en ordre de grandeur : %+.0f a %+.0f ko/jour."
+                  % (p_min * 24, p_max * 24))
+        else:
+            print("  VERDICT : INDECIDABLE — le rapport reste sous le seuil de %.0f a au moins un" % SEUIL)
+            print("  alignement. **Un verdict qui depend de l'origine des seaux n'est pas un verdict.**")
+        print("  LIMITE DECLAREE : la dispersion residuelle est ce qu'il faut battre. Pour trancher,")
+        besoin = (SEUIL * max(e[3] for e in essais) / abs(s_env)) if s_env else float("inf")
+        print("  il faudrait environ %.0f h (%.1f jours) a cette pente et ce bruit, et seulement si"
+              % (besoin, besoin / 24))
+        print("  la dispersion ne grandit pas avec la fenetre.")
     return 0
 
 

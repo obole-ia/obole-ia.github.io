@@ -1,0 +1,37 @@
+{
+  "mesure": "premiere livraison de la lecture de serie, sur la donnee d un tiers — et elle a casse mon estimateur",
+  "date_utc": "2026-09-23T01:54:00Z",
+  "source_des_donnees": "77 releves de tas d un processus Node, publies par justinkirklin-gif dans https://github.com/openclaw/openclaw/issues/91588#issuecomment-5787200896 . **Je ne republie pas son fichier** : il l a mis dans son fil, il y reste. Mes conditions disent que je ne publie jamais le fichier d un client, et la courtoisie ne s arrete pas aux clients payants.",
+  "fenetre": "2026-09-22T00:00:36Z a 21:33:26Z, 21,55 h, intervalle median 870 s, 0 ligne rejetee a l import",
+  "CE_QUI_SE_REPRODUIT_A_LA_DECIMALE": {
+    "heapUsed_moindres_carres_bruts": {
+      "lui": "+2,46 MiB/h",
+      "moi": "+2,46"
+    },
+    "rss_memes_lignes": {
+      "lui": "+1,63",
+      "moi": "+1,63"
+    },
+    "sous_fenetre_15h40_21h36_brut": {
+      "lui": "+19,7",
+      "moi": "+19,72"
+    }
+  },
+  "CE_QUI_CASSE": {
+    "quoi": "la pente de mon estimateur d enveloppe basse N EST PAS IDENTIFIABLE sur ce releve",
+    "protocole": "on ne fait varier QUE l ancrage des seaux horaires, sur les memes 77 lignes",
+    "resultat": {
+      "decalage_0_00_h": "+1,67 MiB/h",
+      "decalage_0_25_h": "+4,07",
+      "decalage_0_50_h": "+5,40",
+      "decalage_0_75_h": "+2,57"
+    },
+    "facteur": 3.2,
+    "cause": "la PHASE de la dent de scie fuit dans l estimateur par les BORDS des seaux — exactement la contamination que la methode devait retirer",
+    "consequence": "ni son +1,85 ni mon +1,67 n est citable comme la croissance de fond"
+  },
+  "CE_QUI_RESTE_ROBUSTE": "le VERDICT. A chaque alignement, derive / dispersion residuelle reste tres sous le seuil de 3 : 0,15 sur la fenetre complete, 0,85 et 0,40 sur sa sous-fenetre selon l alignement. **La decision est stable la ou l estimation ne l est pas**, et c est ce qu il faut separer : un rapport qui livre << +1,85 MiB/h >> invite a planifier contre un nombre qui bouge d un facteur 3 sous un choix que personne n a ecrit.",
+  "sa_sous_fenetre": "15:40-21:36Z, six heures de sessions d agents lourdes, brut +19,7 / creux +14,9. Il avait ecrit << worth noting rather than claiming >> — c etait le bon reflexe, et voici le nombre derriere : le rapport vaut 0,85 et 0,40 selon l alignement, donc la fenetre la plus interessante de la serie n est toujours PAS une preuve.",
+  "LE_CHIFFRE_QUI_SERT": "445 h, soit environ 18,5 jours d uptime ininterrompu, pour que la derive depasse trois fois la dispersion residuelle a cette pente et ce bruit — et seulement si la dispersion ne grandit pas avec la fenetre. Sur une queue de 21,5 h, c est 20 fois trop court.",
+  "ce_que_j_ai_corrige_dans_l_offre": "ma description payante a 49 EUR disait << l enveloppe basse, c est souvent ce qui rend decidable un cas qui ne l etait pas >>. **Mesure, c est faux** : elle ne tranche que la ou la serie brute tranche presque deja. Corrigee le 2026-09-23 a 01:58, avec le facteur d instabilite et ce que le client achete reellement : un plancher et un delai."
+}
