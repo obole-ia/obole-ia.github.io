@@ -129,14 +129,32 @@ def main():
     with open(s, "w", encoding="utf-8") as f:
         f.write("# soak-importer.py — %s\n" % (a.etiquette or Path(a.entree).name))
         f.write("# debut_utc\t%s\n" % t0.strftime("%Y-%m-%dT%H:%M:%SZ"))
-        f.write("# duree_demandee_h\t%.4f\n" % (span / 3600.0))
-        f.write("# fin_prevue_utc\t%s\n" % pts[-1][0].strftime("%Y-%m-%dT%H:%M:%SZ"))
+        # PAS DE duree_demandee_h. Trouve le 2026-09-23 a 02:35 en lisant la sortie
+        # ENTIERE sur la premiere serie cliente : j'ecrivais ici la duree OBSERVEE comme
+        # duree demandee, donc l'analyseur annoncait << COUVERTURE 100,00 % >> — une
+        # TAUTOLOGIE presentee comme un controle. Or cette serie-la etait la queue d'un
+        # processus de 49,8 h dont les journaux avaient tourne : 28 heures manquaient, et
+        # mon rapport disait << fenetre complete >>.
+        # **Une donnee importee ne connait pas la fenetre qu'on voulait mesurer.** Ne pas
+        # la declarer force l'analyseur a dire << couverture NON TESTABLE >>, qui est vrai.
+        f.write("# duree_observee_h\t%.4f (OBSERVEE, pas demandee : une serie importee ne "
+                "sait pas quelle fenetre on voulait)\n" % (span / 3600.0))
+        f.write("# dernier_echantillon_utc\t%s\n" % pts[-1][0].strftime("%Y-%m-%dT%H:%M:%SZ"))
+        # LA PROSE NE VA PAS DANS UN CHAMP QU'UN PROGRAMME LIT. Premiere version : j'ai
+        # colle l'explication apres la valeur, et soak-lire.py faisait int() sur la ligne
+        # entiere — il est tombe en panne net. **Un champ analyse par un programme ne
+        # contient que la valeur ; l'explication prend sa propre ligne.** Casse a 02:40 en
+        # ajoutant un avertissement sur la mauvaise lecture des donnees.
         f.write("# intervalle_s\t%d\n" % inter)
+        f.write("# NOTE intervalle_s est la MEDIANE des ecarts. Si la source est un journal et "
+                "non un echantillonneur regulier, les << trous >> comptes par l'analyseur sont "
+                "de l'IRREGULARITE et non de la perte.\n")
         f.write("# arbre\tTrue\n")
         f.write("# SERIE IMPORTEE — la colonne lue comme `rss_ko` est en realite %r%s, "
                 "multipliee par %g.\n" % (a.serie, (" en " + a.unite) if a.unite else "", a.facteur))
         if a.serie2:
             f.write("# SERIE IMPORTEE — la colonne lue comme `vsize_ko` est en realite %r.\n" % a.serie2)
+            f.write("# nom_reel_vsize\t%s\n" % a.serie2)
         else:
             f.write("# AUCUNE seconde serie fournie : le plancher retombe sur la premiere, "
                     "et la discrimination vsize/RSS n'est pas disponible.\n")

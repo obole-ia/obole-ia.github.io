@@ -38,6 +38,7 @@ Ce qu'il refuse de conclure, et pourquoi
 
     outils/venv/bin/python outils/soak-lire.py <fichier.tsv>
 """
+import re
 import sys
 from pathlib import Path
 
@@ -129,7 +130,11 @@ def main():
     fin_prevue = ""
     for e in entete:
         if e.startswith("# intervalle_s"):
-            intervalle = int(e.split("\t")[1])
+            # On lit l'ENTIER DE TETE et non le champ entier : le 2026-09-23 j'ai colle une
+            # note apres la valeur dans l'importateur, et ce int() est tombe en panne net.
+            # Tolerer un champ bavard coute une regex ; ne pas le tolerer coute un verdict.
+            m_i = re.match(r"\s*(\d+)", e.split("\t", 1)[1])
+            intervalle = int(m_i.group(1)) if m_i else 60
         elif e.startswith("# duree_demandee_h"):
             duree_demandee = float(e.split("\t")[1]) * 3600
         elif e.startswith("# fin_prevue_utc"):
@@ -140,10 +145,22 @@ def main():
     # le corps du verdict disait << RSS >>. **Dans une livraison payee, un verdict
     # juste sous une etiquette fausse est un verdict faux.**
     nom1 = "memoire residente"
+    nom2 = "memoire virtuelle"
+    vsize_est_une_vsize = True
     for e in entete:
         if "lue comme `rss_ko` est en realite" in e:
             bout = e.split("est en realite", 1)[1].strip().rstrip(".")
             nom1 = bout.split(", multipliee")[0].strip()
+        elif e.startswith("# nom_reel_vsize"):
+            # LE MEME DEFAUT QUE POUR LA PREMIERE COLONNE, LAISSE A MOITIE FAIT.
+            # Trouve le 2026-09-23 a 02:35 : sur la premiere serie cliente j'avais mis SA RSS
+            # dans la colonne vsize_ko, et le verdict annoncait << memoire virtuelle >> puis
+            # construisait dessus tout l'argument << la vsize est le signal de fuite, la RSS
+            # erre avec la pression memoire >>. **Il comparait sa RSS a elle-meme en l'appelant
+            # autrement.** Un verdict qui nomme la mauvaise grandeur est un verdict faux, et
+            # j'avais corrige la colonne 1 la veille sans toucher a la colonne 2.
+            nom2 = e.split("\t", 1)[1].strip()
+            vsize_est_une_vsize = False
     fin_normale = any(e.startswith("# FIN_NORMALE") for e in entete)
     arret_signal = [e for e in entete if e.startswith("# ARRET_SIGNAL")]
 
@@ -220,7 +237,7 @@ def main():
     vivants = [x for x in lignes if x[i["vivant"]] == "1" and x[i["rss_ko"]] not in ("None", "")]
     xs = [int(x[i["seconde_ecoulee"]]) for x in vivants]
     for champ, libelle, unite in (("rss_ko", nom1, "ko"),
-                                  ("vsize_ko", "memoire virtuelle", "ko"),
+                                  ("vsize_ko", nom2, "ko"),
                                   ("descripteurs", "descripteurs ouverts", ""),
                                   ("fils", "fils", ""),
                                   ("instances_inotify", "instances inotify", "")):
@@ -334,11 +351,23 @@ def main():
         if vs:
             etendue_vs = max(vs) - min(vs)
             base_vs = max(etendue_vs, 4)  # une page de 4 ko : on ne detecte pas plus fin
-            print("PLANCHER DE DETECTION, sur la memoire VIRTUELLE qui est le signal de fuite :")
+            if not vsize_est_une_vsize:
+                print("PLANCHER DE DETECTION, sur la seconde serie fournie (%s) :" % nom2)
+                print("  *** ATTENTION : cette colonne N'EST PAS une memoire virtuelle. L'argument")
+                print("      << la vsize est le signal de fuite, la RSS erre >> NE S'APPLIQUE PAS ici,")
+                print("      et la comparaison ci-dessous n'oppose pas deux grandeurs differentes.")
+                print("      Pour l'avoir, fournir VmSize a cote de VmRSS.")
+            else:
+                print("PLANCHER DE DETECTION, sur la memoire VIRTUELLE qui est le signal de fuite :")
             print("  une croissance d'espace d'adressage plus lente que **%.0f ko/jour** serait" % (base_vs / jours))
             print("  restee invisible sur cette duree. L'etendue de vsize observee est de %d ko." % etendue_vs)
-            print("  (Le meme plancher calcule sur la RSS vaudrait %.0f ko/jour — beaucoup plus lache," % (etendue_rss / jours))
-            print("   parce que la RSS erre avec la pression memoire du systeme.)")
+            if vsize_est_une_vsize:
+                print("  (Le meme plancher calcule sur la RSS vaudrait %.0f ko/jour — beaucoup plus lache," % (etendue_rss / jours))
+                print("   parce que la RSS erre avec la pression memoire du systeme.)")
+            else:
+                print("  (Le plancher sur la premiere serie (%s) vaudrait %.0f ko/jour. Les deux sont"
+                      % (nom1, etendue_rss / jours))
+                print("   des mesures fournies par vous, pas une vsize contre une RSS.)")
         else:
             print("Plancher de detection non calculable : vsize absente du releve.")
 
@@ -394,7 +423,7 @@ def main():
         if brut_tranche:
             continue
         print()
-        print("--- ENVELOPPE BASSE sur %s ---" % (nom1 if nom == "RSS" else nom))
+        print("--- ENVELOPPE BASSE sur %s ---" % (nom1 if nom == "RSS" else (nom2 if nom == "VSIZE" else nom)))
         print("  serie brute        : pente %+.2f ko/h | etendue %d ko | derive %d ko"
               % (s_brut, etendue, abs(s_brut) * span))
         print("                       derive/etendue = %.2f  ->  INDECIDABLE"
