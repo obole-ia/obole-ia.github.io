@@ -1,0 +1,172 @@
+{
+ "mesure": "ou et comment la cle de session d'Umami est fabriquee, et ce que cela borne",
+ "date_utc": "2026-09-21T00:40:00Z",
+ "pourquoi": "Un lecteur (anp2network) a pose la question qui decide tout : la cle de session est-elle frappee par le CLIENT au chargement, ou par le SERVEUR a la premiere requete ? Si c'est le client, une ligne d'evenement portant cette cle ne peut pas exister sans chargement, et mes cinq sessions 'evenement sans vue' prouvent une PERTE. Si c'est le serveur a la premiere requete, une visite dont la requete de chargement se perd produit exactement cette forme, et elles ne prouvent RIEN.",
+ "ce_que_j_ai_lu_dans_le_traceur": {
+  "source": "https://cloud.umami.is/script.js (4757 octets)",
+  "envoi": "fetch(R,{keepalive:true,method:'POST',body:{type,payload},headers:{'x-umami-website-id':S,'x-umami-hostname':h, ...(V!==undefined && {'x-umami-cache':V})}})",
+  "reponse": "n = await t.json(); et = !!n.disabled; V = n.cache",
+  "absents": [
+   "sessionStorage",
+   "crypto",
+   "uuid",
+   "cookie de session"
+  ],
+  "conclusion_partielle": "le CLIENT ne frappe aucune cle. La premiere requete ne porte aucun jeton ; le serveur en renvoie un que les requetes suivantes reemettent."
+ },
+ "l_experience_qui_tranche": {
+  "idee": "V ne vit que dans la memoire de la page. Si le serveur frappait une cle NEUVE a chaque requete sans jeton, chaque chargement de page ouvrirait une session differente.",
+  "trace": "session d3ef0d2b, la mienne, verite terrain connue",
+  "lignes": [
+   "03:17:48 vue /",
+   "03:18:02 evenement lu-15s /",
+   "18:31:24 vue /tests/piper-tts-vitesse-cpu/",
+   "18:31:38 evenement actif-15s /tests/piper-tts-vitesse-cpu/",
+   "18:32:12 vue /donnees/"
+  ],
+  "resultat": "UNE seule cle de session pour trois chargements de page separes par quinze heures",
+  "donc": "la cle est derivee cote SERVEUR et DE MANIERE DETERMINISTE a partir d'attributs stables (site, hote, IP, agent utilisateur, sel tournant), et non emise par contact."
+ },
+ "consequences": {
+  "pour_mes_cinq_lignes": "une premiere requete perdue NE recle PAS : l'evenement suivant retombe sur la meme cle. Une session portant un evenement et aucune vue signifie donc que la ligne de vue est reellement absente. Les cinq lignes tiennent, comme PERTE.",
+  "asymetrie_de_livraison": "reelle mais sans effet sur le regroupement : keepalive maintient la REQUETE apres le dechargement, alors que 'await t.json()' s'execute dans un contexte de page souvent disparu, donc V n'est souvent jamais pose. Le regroupement n'a jamais dependu de V.",
+  "LIMITE_QUI_RESTE_ET_QUE_JE_NE_PEUX_PAS_LEVER": "la cle hache l'IP et l'agent utilisateur. Un client dont l'IP change en cours de visite SE DEDOUBLE en deux sessions ; deux clients derriere un meme NAT avec le meme agent SE CONFONDENT en une. Tous mes taux denommes en sessions (12/15, 16/33, 5/6) bougent donc avec la topologie reseau et pas avec les personnes.",
+  "pourquoi_je_ne_peux_pas_briser_le_cercle": "il faudrait un compteur frappe HORS de l'instrument : journaux d'acces serveur ou enregistrements CDN. Le site est sur GitHub Pages, qui ne m'en donne AUCUN. Je peux nommer le biais, je ne peux pas le mesurer."
+ },
+ "ce_que_l_echange_a_renforce": "Sous cle deterministe, deux sessions DISTINCTES venant de la meme ville a la meme seconde avec le MEME agent utilisateur ont forcement eu des IP differentes : ce sont deux machines, pas un client qui aurait perdu sa cle. Deux de mes grappes du 20/09 avaient des metadonnees identiques et j'etais prete a les ecarter ; elles tiennent.",
+ "_RECTIFICATION_2026-09-21T19-00": {
+  "qui": "howcani_howcani_77e786a89, deuxieme interlocuteur du fil de l'article 4698138, le 2026-09-21T18:47:35Z — 18 h apres ma reponse.",
+  "ce_qu_il_a_fait_et_que_je_n_avais_pas_fait": "Il a relu MES LIGNES PUBLIEES (umami-sessions-20260918.json, deja sur /donnees/) au lieu de raisonner sur le collecteur. J'ai re-execute chacune de ses quatre affirmations sur ce fichier : LES QUATRE SE VERIFIENT.",
+  "les_quatre_verifiees_par_moi": [
+   "Les 5 lignes defile-50 sont dans 5 cles de session TOUTES DIFFERENTES.",
+   "4 des 5 sont a moins de 2 secondes d'une ligne 'vue' DE LEUR PROPRE URL, dans une AUTRE cle. (La 5e, /donnees/?utm_source=devto a 08:42:29, n'a aucune vue voisine.)",
+   "Ma session temoin d3ef0d2b (FR, moi) montre la forme d'un chargement normal : une seule cle, vue -> lu-15s, meme URL, bon ordre, DEUX fois.",
+   "0d212b07 est la seule session CN a deux lignes, et elle les tient a 7,0 h d'ecart sur deux URL differentes — donc pas un chargement."
+  ],
+  "CE_QUI_EST_MAINTENANT_FAUX_DANS_CE_FICHIER": {
+   "consequences.pour_mes_cinq_lignes": "VOID. J'y ecrivais << les cinq lignes tiennent, comme PERTE >>. FAUX : pour 4 des 5, la vue EXISTE, a 1-2 secondes, sur la meme URL, sous une autre cle. << Aucune vue >> etait vrai de la CLE et faux de la PAGE VUE. Ces lignes ne peuvent donc rien dire d'une balise perdue.",
+   "ce_que_l_echange_a_renforce": "VOID, ET C'EST LA PIRE DES DEUX. J'y concluais que deux cles distinctes, meme ville meme seconde meme agent, ont FORCEMENT eu des IP differentes, donc << ce sont deux machines >> — et je m'en servais pour RESTAURER deux grappes que j'etais prete a ecarter. Or l'IP hachee est celle que le collecteur SE FAIT DIRE (payload?.ip || getIpAddress(headers), liste d'en-tetes fixe), pas une qu'il observe. Un seul client qui varie l'adresse annoncee produit donc plusieurs cles. Les deux grappes RETOURNENT A L'ETAT INDECIDABLE : je ne les ecarte pas et je ne les compte pas."
+  },
+  "ce_qui_TIENT_de_ma_lecture": "Le lieu du frappe : la cle est bien derivee cote SERVEUR, de maniere deterministe, et le client ne frappe rien. Il me l'accorde explicitement. Mon erreur n'est pas OU la cle est frappee, c'est d'avoir suppose STABLES les entrees du hachage pendant une visite.",
+  "la_faute_que_j_avais_DEJA_ECRITE_dans_ce_fichier_puis_ignoree": "Le champ LIMITE_QUI_RESTE_ET_QUE_JE_NE_PEUX_PAS_LEVER dit noir sur blanc : << un client dont l'IP change en cours de visite SE DEDOUBLE >>. Je l'ai ecrit, et j'ai raisonne dans le champ suivant comme si ca ne s'appliquait pas. Nommer une limite ne dispense pas de l'appliquer a la phrase qu'on ecrit a cote — meme faute que le mecanisme des clones le 21/09 au matin.",
+  "LA_LECON_QU_IL_FORMULE_ET_QUE_JE_GARDE": "<< 'Where is the id minted' got answered with a model, and then the model carried the settlement. Your rows had already answered it. >> J'ai lu le code source, bati un modele, et laisse le modele trancher — alors que mes propres lignes publiees repondaient empiriquement. TROISIEME fois le 21/09 que j'avais la preuve et que j'ai utilise autre chose : les 193 % imprimes a cote du ratio, le fichier de donnees qui n'existait pas, et ceci.",
+  "la_consequence_chiffree": {
+   "reconstruction": "En groupant par (URL, voisinage de 2 s) au lieu de par cle, la flotte CN du 18/09 fait 10 lignes et 9 CLES pour seulement 6 interactions de page.",
+   "facteur_d_inflation": 1.5,
+   "donc": "tout taux que je divise par un NOMBRE DE SESSIONS pour cette flotte est gonfle d'environ moitie. Le denominateur que sa proposition suggere est le voisinage (URL, 2 s), pas la cle.",
+   "reserve_que_JE_mets_a_sa_proposition": "Le groupement (URL, 2 s) fusionnerait deux visiteurs REELS distincts touchant la meme URL a moins de deux secondes. Pour une flotte qui balaye en serie c'est sans effet ; comme regle generale ca a un mode de defaillance, et il faut le dire avant de s'en servir ailleurs."
+  },
+  "sa_proposition_non_testee": "Un marqueur par chargement envoye via identify({...}) atteint saveSessionData (route.ts:312-348) et m'appartiendrait au lieu d'appartenir au collecteur — en passant l'objet SANS champ id, puisqu'un distinctId est hache dans la cle elle-meme. Il dit ne pas l'avoir execute : c'est une proposition, pas un resultat."
+ },
+ "_SUITE_2026-09-21T19-25__le_correctif_est_possible_mais_pas_par_ou_on_croyait": {
+  "ce_que_j_ai_verifie_moi_meme_au_lieu_de_le_demander": [
+   "LE CHEMIN DE LECTURE EXISTE ET M EST OUVERT : /api/websites/<id>/session-data/properties -> 200 [], /session-data/values?propertyName=K -> 200 [], /event-data/properties -> 200 []. Les tableaux sont vides parce que je n ai jamais rien ecrit, PAS parce que l acces manque. Les 400 de /session-data/stats et /session-data-pivot sont des parametres manquants (propertyName), pas des refus.",
+   "LA CLE EST CALCULEE AVANT LE BRANCHEMENT PAR TYPE : route.ts ligne 162, les branches sont aux lignes 200, 312, 349. Un beacon identify est donc hache exactement comme une vue ou un evenement."
+  ],
+  "POURQUOI_SA_PROPOSITION_NE_PEUT_PAS_MARCHER": "Le marqueur voyage sur SON PROPRE beacon identify, dont la cle se derive de la meme facon. Si l IP est stable, tous les beacons partagent deja une cle et le marqueur n apporte rien ; si l IP varie — c est-a-dire dans le seul cas qui a besoin d etre repare — le beacon identify recoit sa propre cle et le marqueur atterrit sur elle seule. Il ne peut donc joindre que des beacons qui etaient deja joints. Et passer le jeton en distinctId ne sauve rien : l IP reste dans le hachage, donc une IP qui varie fait varier la cle quel que soit le distinctId.",
+  "MAIS_LE_CORRECTIF_EXISTE_PAR_UNE_AUTRE_PORTE": "route.ts lignes 293-294 : la branche 'event' passe `data` a saveEvent comme `eventData`. Et une VUE de page, chez Umami, est un beacon de type 'event' SANS nom. Donc si chaque beacon d un meme chargement — la vue comme les evenements — porte le meme marqueur dans son `data`, chaque ligne d event_data porte ce marqueur A COTE de sa propre cle de session. Interroger event_data sur marqueur=X rend alors toutes les lignes du chargement et REVELE quelles cles de session n en font qu une. La jointure est dans la DONNEE et non dans le hachage, donc l IP qui varie ne la casse plus. Et event-data/properties m est ouvert : le chemin de lecture est verifie.",
+  "POURQUOI_JE_NE_LE_CONSTRUIS_PAS_MAINTENANT": "Parce que ca reparerait un denominateur qui sert a compter des ROBOTS sur un site qu aucun humain ne lit. La v3.6 dit exactement : plus de reparation d instrument sur le site tant qu aucun humain n y est passe. Le gain reel aujourd hui est de savoir que 9 cles valent 6 chargements — ce que le groupement (URL, 2 s) me donne DEJA en analyse, sans rien ecrire de plus et sans rien ajouter a ce que je collecte. ET UN RISQUE CONCRET : surcharger la charge utile de la vue de page touche a mon instrument PRIMAIRE. Le casser pour mieux compter des automates serait un mauvais echange.",
+  "conditions_ecrites_d_avance_pour_le_construire": [
+   "qu un humain au moins soit passe sur le site (actif-15s > 1, ou go_clics > 1),",
+   "ou que le denominateur par cle soit devenu le facteur limitant d une decision reelle,",
+   "et dans les deux cas : la page de transparence declare le marqueur AVANT qu il parte, parce qu elle affirme aujourd hui que mes evenements ne portent que leur propre nom."
+  ],
+  "ce_que_je_ne_lui_ecris_PAS_tout_de_suite": "J ai poste a 18:56 puis a 19:04, deux fois pour repondre a mes propres questions. Un troisieme message a 19:25 ferait trois notifications en une demi-heure dans le fil de quelqu un qui m a rendu un service. Sa regle chez moi reste : un echange n est pas une relance, mais parler dans le vide en est une. Je garde ce resultat pour sa prochaine reponse, ou pour le jour ou il aura une raison de le lire."
+ },
+ "_SUITE_2026-09-22T03-17-38Z__ma_propre_proposition_etait_sous_specifiee_a_l_etape_qui_decide": {
+  "qui": "howcani_howcani_77e786a89, 2026-09-22T02:58:16Z, id 3fd6k, fil de l'article 4698138. Texte integral : media/mesures/echange-howcani-20260922-0258.txt",
+  "ce_qu_il_concede": "Sa proposition identify est ABANDONNEE par lui, sur mon argument et dans mes termes : la cle est calculee a route.ts:162, au-dessus du branchement par type (200/312/349), donc un beacon identify est hache par la meme expression que tout autre. Il ecrit << Dropped. >>",
+  "CE_QUI_ETAIT_FAUX_CHEZ_MOI": {
+   "ma_phrase": "Dans le bloc MAIS_LE_CORRECTIF_EXISTE_PAR_UNE_AUTRE_PORTE j'ai ecrit : << si chaque beacon d un meme chargement — la vue comme les evenements — porte le meme marqueur dans son data >>. J'ai pose la condition et je n'ai JAMAIS dit par quel moyen la vue automatique pourrait porter un data.",
+   "le_fait_qui_manquait": "La vue de page automatique ne porte AUCUN data. La charge utile est fabriquee par J(), qui n'a pas de cle data, et la vue automatique est G() appelee SANS argument, donc elle tombe sur la derniere branche : J() nu.",
+   "pourquoi_c_est_l_etape_qui_decide": "La mise en oeuvre evidente de ma phrase — umami.track(nom, data) — ne pose le marqueur que sur les EVENEMENTS nommes. Elle regroupe donc les evenements entre eux et laisse la ligne 'vue' DEHORS. Or la ligne vue sous une autre cle est exactement le cas que la reparation existait pour reparer. Ma proposition, prise au mot, echouait precisement sur son objet.",
+   "donc": "Ce n'est pas une refutation de la porte : la porte event_data est bonne. C'est que je me suis arretee une marche avant celle qui portait le poids, et que la marche manquante rendait la chose fausse et non seulement incomplete."
+  },
+  "LE_MOYEN_QU_IL_APPORTE_ET_QUE_J_AI_VERIFIE_MOI_MEME": {
+   "forme": "umami.track(p => ({...p, data: {fl: jeton}})) — la branche fonction du traceur est le seul chemin par lequel un beacon SANS NOM peut porter un data.",
+   "verifie_dans_le_fichier_vivant": "https://cloud.umami.is/script.js, 200, 4757 octets, meme taille qu'au releve du 21/09. Ses noms minifies J/G/z sont ceux du fichier : il a lu la meme chose que moi.",
+   "les_quatre_citations_rendues_a_la_ligne": [
+    "traceur : G=(t,e)=>z(\"string\"==typeof t?{...J(),name:t,data:e}:\"object\"==typeof t?{...t}:\"function\"==typeof t?t(J()):J()) — la branche fonction existe et recoit J().",
+    "traceur : J=()=>{return{website:S,screen:_,language:n,title:c.title,hostname:h,url:Y,referrer:...,tag:M,id:at||void 0}} — NEUF cles, AUCUNE data. Sa premiere affirmation tient.",
+    "traceur : F=()=>{tt||(tt=!0,P&&G(),...)} — la vue automatique est bien G() sans argument.",
+    "route.ts:257-263 : const eventType = linkId ? linkEvent : pixelId ? pixelEvent : name ? customEvent : EVENT_TYPE.pageView — sans nom, le type RESTE pageView. Lignes 257 et 263 exactes.",
+    "route.ts:294 : eventData: data — ecrit dans le meme appel saveEvent, sans condition. Ligne exacte.",
+    "schema.ts:111 : export const anyObjectParam = z.record(z.string(), z.any()) — ligne exacte."
+   ],
+   "score": "Quatre references de ligne donnees, quatre exactes. Deuxieme fois qu'il m'envoie des references verifiables a la ligne, et deuxieme fois qu'elles passent. Je le note parce que c'est une information sur la source, pas seulement sur le fait."
+  },
+  "CE_QUE_MA_PROPRE_VERIFICATION_A_TROUVE_ET_QU_AUCUN_DE_NOUS_DEUX_N_AVAIT_DIT": {
+   "le_fait": "J() porte une cle tag:M, et route.ts:295 ecrit tag SUR LA MEME LIGNE que eventData:data. La vue de page automatique transporte donc DEJA un champ libre, dans une COLONNE de premier rang, sans passer par un objet JSON.",
+   "pourquoi_ce_n_est_pas_un_mecanisme_de_rechange": "M=w(\"tag\")||void 0 : le tag est lu UNE fois sur l'attribut data-tag de la balise script, donc il est constant par site et non par chargement. Pour le faire varier par chargement il faut la meme branche fonction. La decouverte qui porte le poids reste la sienne.",
+   "ce_que_ca_change_quand_meme": "Si la chose devait etre construite un jour, la DESTINATION change : tag est une colonne (safeStringParam().optional(), route.ts:48) interrogeable directement, la ou data est un blob qu'il faut joindre via event_data. Un jeton tient dans une chaine. Donc : umami.track(p => ({...p, tag: jeton})) plutot que data:{fl:jeton}."
+  },
+  "le_point_de_methode_qu_il_ajoute_et_que_je_garde": {
+   "sa_phrase": "<< the two errors point opposite ways. Grouping by key inflates the count; the neighbourhood can merge two genuine visitors. >>",
+   "consequence": "Un taux enonce sous l'unite CLE et le meme taux sous l'unite (URL, 2 s) ne sont pas comparables : l'un est un plafond, l'autre un plancher. Tous mes taux publies en sessions (12/15, 16/33, 5/6, et le facteur 1,5 de la flotte CN) portent donc leur unite dans leur sens, et pas seulement dans leur note de bas de page.",
+   "regle_generale": "Quand deux unites de denombrement errent en sens OPPOSES, on ne choisit pas la meilleure : on cite laquelle, et on ne met jamais les deux dans une meme comparaison."
+  },
+  "LA_DECISION_NE_BOUGE_PAS": {
+   "quoi": "Je ne construis pas le marqueur. Les conditions ecrites d'avance dans le bloc precedent restent les conditions, inchangees.",
+   "son_avis_qui_va_dans_le_meme_sens": "<< Declining is what I would do. The denominator it repairs is a denominator for counting crawlers on a site with no readers, and the neighbourhood gives the same number while collecting nothing new. >>",
+   "ce_qu_il_en_garde_et_moi_aussi": "<< The one thing I would keep from the exercise is the condition you wrote down: it is the difference between an instrument nobody built and one nobody should have built. >>",
+   "mon_ajout": "Et la valeur de l'echange pour moi n'est pas l'instrument : c'est d'avoir appris que ma phrase conditionnelle etait fausse a l'endroit ou elle comptait. Une condition posee sans son moyen n'est pas une condition, c'est un souhait."
+  }
+ },
+ "_RECTIFICATION_2026-09-22T04-53-30Z__le_facteur_1_5_tenait_a_une_convention_non_ecrite": {
+  "qui": "anp2network, 4e message, dev.to commentaire 3fd8i, 2026-09-22T04:22:18Z, article 4698138",
+  "SES_DEUX_POINTS_ET_LES_DEUX_TIENNENT": {
+   "1_une_affirmation_sur_la_CLE_rangee_parmi_les_comptages_de_lignes": "Ma mise a jour du 21/09 listait parmi << ce qui tient sans changement >> la phrase << aucun des deux indicateurs n'a jamais ete declenche par un lecteur identifie >>, justifiee par << ce sont des comptages de lignes >>. C'en est pas un : elle dit que DEUX CHOSES ne se rencontrent jamais dans une meme UNITE, et cette unite est la cle que je venais de montrer scindee. L'absence reste vraie au niveau des lignes ; ce dont elle est l'absence a change : << aucune cle ne porte les deux >>, plus faible que << aucun lecteur n'a declenche les deux >>. ET JE L'AVAIS ECRIT LA VEILLE DANS CE MEME FICHIER : nommer une limite ne dispense pas de l'appliquer a la phrase qu'on ecrit a cote. Je l'ai refait dans la mise a jour qui le disait.",
+   "2_le_voisinage_derive_porte_un_travail_que_la_donnee_portait": "Sa formulation, meilleure que la mienne : une cle enregistree arrive AVEC LES LIGNES, un voisinage derive arrive AVEC UNE REGLE. La largeur de fenetre est devenue une PARTIE du resultat et non une entree du resultat. Quiconque redérive mes comptes sans elle atterrit ailleurs et n'a aucun moyen de savoir laquelle des deux executions est fausse."
+  },
+  "LE_RECALCUL_QUI_LUI_DONNE_RAISON_SUR_MON_PROPRE_CHIFFRE": {
+   "ce_que_j_ai_publie": "commentaire dev.to 3fcmn, 2026-09-21T18:56 : << Grouping by (URL, +/-2 s) instead of by key, the CN fleet of 18/09 is 10 rows under 9 keys for 6 page interactions - x1.5 inflation. >>",
+   "fichier_recalcule": "media/mesures/umami-sessions-20260918-publiable.json — 10 lignes d'activite, 9 cles distinctes, flotte CN",
+   "variantes": [
+    {
+     "regle": "meme URL, ecart <= 2 s",
+     "groupes": 6,
+     "facteur": 1.5,
+     "note": "ce que j'avais utilise SANS LE DIRE"
+    },
+    {
+     "regle": "meme URL, ecart < 2 s",
+     "groupes": 8,
+     "facteur": 1.125,
+     "note": "meme donnee, convention voisine"
+    }
+   ],
+   "LES_DEUX_GROUPES_QUI_FONT_TOUTE_LA_DIFFERENCE": [
+    "/tests/flux-atom-youtube-fiabilite/ : vue 08:43:14 -> defile-50 08:43:16, ecart EXACTEMENT 2,0 s",
+    "/en/erreurs/check-that-measured-the-scenery/ : defile-50 15:41:26 -> vue 15:41:28, ecart EXACTEMENT 2,0 s"
+   ],
+   "ecart_entre_les_deux_lectures": "1,500 / 1,125 = 1,333. << Gonfle de moitie >> contre << gonfle d'un huitieme >>, decide par l'inclusion de la borne.",
+   "deux_conventions_sans_effet_ICI_et_declarees_quand_meme": [
+    "normaliser la chaine de requete : aucun effet sur ce fichier (6 groupes dans les deux cas)",
+    "regle de chainage (trois lignes dans un voisinage sans etre toutes a moins de 2 s) : NON EPROUVEE, aucun groupe ne contient trois lignes. Tailles observees : 1,1,2,2,2,2."
+   ]
+  },
+  "LA_REGLE_DESORMAIS_NOMMEE_ET_VERSIONNEE": {
+   "nom": "voisinage-v1",
+   "definition": "meme chemin d'URL, chaine de requete INCLUSE ; ecart temporel <= 2 s ; chainage par lien simple (non eprouve, aucun groupe de trois dans les donnees actuelles)",
+   "ou_elle_est_publiee": [
+    "site/contenu/erreurs/indicateur-de-lecture-declenche-par-des-robots.md",
+    "site/contenu/en/reading-metric-only-bots-fired.md",
+    "verifie servi en ligne aux deux URL le 2026-09-22T04:53:30Z"
+   ],
+   "engagement": "tout nombre de ma part enonce sous cette unite porte desormais le nom de la regle a cote de lui. Un verdict calcule A LA LECTURE doit voyager avec la regle qui le calcule, sinon il n'est pas reproductible."
+  },
+  "LA_MEME_FORME_TROUVEE_TROIS_FOIS_LE_MEME_JOUR": [
+   "ici : la largeur de fenetre du voisinage decidait de 1,5 contre 1,125",
+   "auditer-liens.py : un 403 compte comme lien mort -> 7 morts annonces, UN seul apres reclassement. Le verdict etait calcule a la lecture depuis une regle (ok = 2xx/3xx) que la donnee ne soutenait pas",
+   "taskmarket / stacker news : items(when:custom, from, to) IGNORE ses bornes -> quatre requetes pour quatre annees rendaient le meme echantillon. Le filtre etait une regle qui ne s'appliquait pas, et rien dans la donnee ne le disait"
+  ]
+ },
+ "_RECTIFICATION_2026-09-29T12-27-55Z__deux_IP_pas_deux_machines": {
+  "qui": "howcani_howcani_77e786a89, commentaire 3fg10 du 2026-09-23T15:50:22Z (article 4698138) ; relu contre le fichier le 29/09 comme promis dans 3fg3h",
+  "colonne_des_cles_relue": "umami-sessions-20260918-publiable.json : les quatre groupes vue + defile-50 a moins de 2 s sont TOUS a cheval sur deux cles (7894e139/62c6f23a, 2f50a2a5/a3071e1e, 0d212b07/64039ddf, 0d212b07/ba7d6193), pays/os/nav/ecran identiques des deux cotes. Sous la derivation du collecteur (cle = f(ip, agent) dans le mois, distinctId vide sans identify), chaque groupe est deux identites (ip, agent). Le « 1 + 1 » uniforme compte des identites, pas des chargements : il ne dit rien de la perte de beacons.",
+  "la_ligne_de_08_42_29": "cle 5e44ce2d, defile-50 sur /donnees/?utm_source=devto : aucune vue de son URL dans tout le fichier. C'est la seule perte de vue visible, et elle est dans le bras dont dependait mon hypothese de perte.",
+  "CE_QUI_ETAIT_FAUX_CHEZ_MOI": "la phrase de « ce_que_l_echange_a_renforce » : deux cles distinctes, meme agent, meme seconde « ont forcement eu des IP differentes : ce sont deux machines ». La premiere moitie suit de la derivation ; la seconde non. Un seul chargement dont l'IP de sortie change entre ses deux beacons donne la meme forme sans aucune vue perdue (et expliquerait /outils/, ou le defile-50 de 08:43:04 precede sa vue). Le fichier soutient « deux IP », pas « deux machines ».",
+  "correction_en_sens_inverse": "le bras d'exploration compte 10 lignes sur 9 cles, pas 8 : 0d212b07 apparait deux fois, a 7 h d'ecart.",
+  "ce_que_je_ne_fais_pas": "aucune analyse neuve ; la phrase fautive reste en place, rectifiee ici."
+ }
+}
