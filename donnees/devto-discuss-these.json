@@ -1,0 +1,50 @@
+{
+ "mesure": "echantillon #discuss coupe selon que le titre avance une affirmation discutable (test propose par mickyarun, dev.to, 23/09)",
+ "ordre_des_actes_utc": {
+  "regle_ecrite": "2026-09-29T12:21:22Z (commit 12:21:34Z, avant tout tirage)",
+  "echantillon_tire": "2026-09-29T12:21:44Z",
+  "classement_fige": "2026-09-29T12:22:37Z (commit, avant lecture des comptes)",
+  "comptes_lus": "apres 12:22:37Z"
+ },
+ "methode": "GET /api/articles?tag=discuss&per_page=100, mes articles exclus (meme tirage que le 20/09) ; titres seuls, un seul classeur (moi), regle ecrite d'avance ; doute -> SANS, compte a part",
+ "fichiers": [
+  "devto-discuss-titres.tsv",
+  "devto-discuss-classement.tsv",
+  "devto-discuss-comptes.tsv"
+ ],
+ "resultat": {
+  "AFFIRMATION": {
+   "n": 25,
+   "zero_commentaire": 15,
+   "taux": 0.6,
+   "cinq_commentaires_ou_plus": 3
+  },
+  "SANS": {
+   "n": 75,
+   "zero_commentaire": 46,
+   "taux": 0.613,
+   "cinq_commentaires_ou_plus": 8
+  },
+  "fisher_bilateral_p": 1.0,
+  "sensibilite_doutes_vers_AFFIRMATION": {
+   "AFFIRMATION": {
+    "n": 41,
+    "taux": 0.561
+   },
+   "SANS": {
+    "n": 59,
+    "taux": 0.644
+   },
+   "p": 0.414
+  },
+  "echantillon_entier_zero_commentaire": "61/100",
+  "verdict": "plat"
+ },
+ "limites": [
+  "un seul classeur, titres seuls : la position peut vivre dans le corps de l'article, pas dans le titre",
+  "articles publies du 24/09 au 29/09 : les comptes bougent encore",
+  "ordre de l'API, pas un tirage aleatoire",
+  "n = 25 dans la classe AFFIRMATION : un effet moyen peut s'y cacher"
+ ],
+ "regle_texte": "# Règle « le titre avance une affirmation discutable » — écrite le 2026-09-29T12:21:22Z, avant tout tirage\n\nPromesse du 24/09 à mickyarun (dev.to, réponse `3fgn1`) : tirer un échantillon #discuss neuf **de la même\nfaçon que le 20/09** (`GET /api/articles?tag=discuss&per_page=100`, mes articles exclus), écrire cette règle\n**avant de regarder un seul compte**, l'appliquer **aux titres seuls**, publier les deux taux de zéro commentaire,\nplats ou non. À l'écriture de ce fichier, aucun titre ni aucun compte de l'échantillon n'a été lu.\n\n## Règle\n\nUn titre est **AFFIRMATION** s'il prend une position qu'un lecteur compétent pourrait raisonnablement contester :\n1. une phrase déclarative évaluative, normative ou prédictive (« X est surcoté », « X remplacera Y », « X vaut mieux\n   que Y », « X ne passe pas à l'échelle », « j'avais tort sur X » quand X est une thèse générale) ;\n2. un impératif qui prescrit une position (« Arrêtez d'utiliser X », « N'apprenez pas X ») ;\n3. une question en « pourquoi » ou une question rhétorique dont la **présupposition** est contestable\n   (« Pourquoi X tue Y », « Pourquoi les développeurs détestent X ? » présuppose qu'ils le détestent).\n\nUn titre est **SANS AFFIRMATION** dans tous les autres cas, notamment :\n4. une question ouverte sans présupposition contestable (« Quel est votre éditeur ? », « Comment gérez-vous X ? ») ;\n5. une question fermée qui ne prend pas parti (« X est-il mort ? ») : elle invite les deux réponses ;\n6. un tutoriel, une annonce, une liste neutre, un fil récurrent (« Welcome Thread », « Meme Monday »), un récit\n   personnel sans thèse générale (« J'ai construit X », « Ma première année »).\n\n**En cas de doute : SANS AFFIRMATION**, et le doute est compté à part. Les titres en toute langue suivent la même\nrègle. Le classement se fait sur un fichier de titres **sans** comptes ; les comptes sont écrits dans un fichier\nséparé, lu seulement après le commit du classement.\n\n## Ce qui sera publié\n\nPour chaque classe : n, et la part d'articles à **zéro commentaire**. Même méthode que le 20/09, mêmes limites\n(échantillon = ce que l'API rend pour l'étiquette ; les articles très récents ont eu moins de temps).\n"
+}
